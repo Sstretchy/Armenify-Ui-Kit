@@ -1,0 +1,30 @@
+/*
+ * Armenify icon design tokens.
+ */
+
+:root {
+  /* Icon stroke scale */
+  --slim-xxxx-sm-10: 0.05rem;
+  --slim-xxx-sm-12: 0.06rem;
+  --slim-xx-sm-14: 0.07rem;
+  --slim-x-sm-16: 0.08rem;
+  --slim-base-20: 0.1rem;
+  --slim-sm-18: 0.09rem;
+  --slim-lg-22: 0.11rem;
+  --slim-xx-lg-28: 0.14rem;
+  --slim-x-lg-24: 0.12rem;
+  --slim-xxx-lg-32: 0.16rem;
+  --slim-xxxx-lg-36: 0.18rem;
+  --bold-xx-lg-28: 0.170563rem;
+  --bold-x-lg-24: 0.146025rem;
+  --bold-lg-22: 0.133763rem;
+  --bold-xxx-lg-32: 0.173481rem;
+  --bold-sm-18: 0.109231rem;
+  --bold-x-sm-16: 0.097544rem;
+  --bold-xx-sm-14: 0.085862rem;
+  --bold-xxxx-lg-36: 0.195094rem;
+  --bold-base-20: 0.122081rem;
+  --bold-xxx-sm-12: 0.073012rem;
+  --bold-xxxx-sm-10: 0.061331rem;
+  --bold-caret-12: 0.097544rem;
+}

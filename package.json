@@ -1,0 +1,70 @@
+{
+  "name": "@armenify/ui-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Armenify React UI kit with shadcn/ui-compatible tokens and a microfrontend-ready mount API.",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "src/styles"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./microfrontend": {
+      "types": "./dist/types/microfrontend/index.d.ts",
+      "import": "./dist/microfrontend.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./globals.css": "./src/styles/globals.css",
+    "./tokens.css": "./src/styles/tokens.css",
+    "./tokens/colors.css": "./src/styles/tokens/colors.css",
+    "./tokens/texts.css": "./src/styles/tokens/texts.css",
+    "./tokens/spacing.css": "./src/styles/tokens/spacing.css",
+    "./tokens/icons.css": "./src/styles/tokens/icons.css"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "prebuild": "rm -rf dist",
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview --host 0.0.0.0",
+    "storybook": "storybook dev -p 6006 --host 0.0.0.0",
+    "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "react": ">=18.3.0 <20",
+    "react-dom": ">=18.3.0 <20"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.14.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.3.6",
+    "@storybook/addon-docs": "^10.3.6",
+    "@storybook/react-vite": "^10.3.6",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/node": "^25.6.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "storybook": "^10.3.6",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.12"
+  }
+}

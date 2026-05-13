@@ -1,0 +1,27 @@
+:root {
+  --font-primary: "Roboto", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-secondary: "Bainsley", ui-serif, Georgia, serif;
+
+  --control-transition-duration: 250ms;
+  --control-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --control-shadow-outer: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0),
+    0 0.0625rem 0.125rem 0 rgba(42, 52, 134, 0.35);
+  --control-shadow-outer-focused: 0 0 0 0.125rem #6772f4, 0 0.0625rem 0.125rem 0 rgba(42, 52, 134, 0.35);
+  --control-shadow-inner: inset 0.0625rem 0.0625rem 0.25rem 0 rgba(42, 52, 134, 0.2);
+  --control-shadow-hover: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0.2), 0 0.0625rem 0.125rem 0 rgba(42, 52, 134, 0.35);
+  --control-shadow-hover-inner: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0.2);
+  --control-shadow-active: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0.33), 0 0.0625rem 0.125rem 0 rgba(42, 52, 134, 0.35);
+  --control-shadow-active-inner: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0.33);
+  --control-shadow-pressed: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0.5), 0 0.0625rem 0.125rem 0 rgba(42, 52, 134, 0.35);
+  --control-shadow-pressed-inner: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0.5);
+  --input-shadow-outer: 0 0.0625rem 0.0625rem 0 rgba(42, 52, 134, 0.35);
+  --input-error-shadow-outer: 0 0.0625rem 0.0625rem 0 rgba(42, 52, 134, 0.35), 0 0 0.03125rem 0.09375rem rgba(255, 61, 85, 0.25);
+  --input-success-shadow-outer: 0 0.0625rem 0.0625rem 0 rgba(42, 52, 134, 0.35), 0 0 0.03125rem 0.09375rem rgba(163, 201, 4, 0.35);
+
+  --gradient-brand-primary: linear-gradient(69.8823382924deg, var(--primitive-colors-brand-150) 0%, var(--primitive-colors-brand-400) 50%, var(--primitive-colors-brand-600) 100%);
+  --gradient-brand-primary-inverse: linear-gradient(69.8823382924deg, var(--primitive-colors-brand-600) 0%, var(--primitive-colors-brand-400) 50%, var(--primitive-colors-brand-150) 100%);
+  --gradient-card-rainbow1: linear-gradient(180deg, rgba(209, 223, 252, 0.35) 0%, rgba(96, 132, 242, 0.35) 50%, rgba(109, 96, 246, 0.35) 100%);
+  --gradient-card-rainbow2: linear-gradient(180deg, rgba(209, 223, 252, 0.35) 0%, rgba(96, 132, 242, 0.35) 50%, rgba(109, 96, 246, 0.35) 100%);
+  --gradient-card-rainbow3: linear-gradient(180deg, rgba(209, 223, 252, 0.35) 0%, rgba(96, 132, 242, 0.35) 50%, rgba(42, 52, 134, 0.35) 100%);
+}

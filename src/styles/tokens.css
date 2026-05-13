@@ -1,0 +1,10 @@
+/*
+ * Armenify design tokens aggregator.
+ * Import the grouped token files directly when you only need part of the system.
+ */
+
+@import "./tokens/colors.css";
+@import "./tokens/texts.css";
+@import "./tokens/spacing.css";
+@import "./tokens/icons.css";
+@import "./tokens/styles.css";
