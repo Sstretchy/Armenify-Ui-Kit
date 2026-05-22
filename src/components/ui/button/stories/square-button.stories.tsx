@@ -1,12 +1,12 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { SealCheck } from "@phosphor-icons/react";
+import { SealCheck } from "phosphor-strokes-icons";
 
-import { ArmenifyIcon, squareButtonSizeToArmenifyIconSize } from "./icon";
-import { SquareButton } from "./square-button";
+import { ArmenifyIcon, squareButtonSizeToArmenifyIconSize } from "../../icon";
+import { SquareButton } from "../square-button";
 
 const meta = {
-  title: "UI/SquareButton",
+  title: "UI/Buttons/SquareButton",
   component: SquareButton,
   tags: ["!autodocs"],
   parameters: {

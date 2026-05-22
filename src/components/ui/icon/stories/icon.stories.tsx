@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { SealCheck } from "@phosphor-icons/react";
+import { SealCheck } from "phosphor-strokes-icons";
 
-import { ArmenifyIcon, armenifyIconSizes } from "./icon";
+import { ArmenifyIcon, armenifyIconSizes } from "..";
 
 const meta = {
   title: "UI/ArmenifyIcon",

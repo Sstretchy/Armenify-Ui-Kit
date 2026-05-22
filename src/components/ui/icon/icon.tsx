@@ -1,4 +1,4 @@
-import type { Icon as PhosphorIconComponent, IconProps } from "@phosphor-icons/react";
+import type { StrokeIcon, StrokeIconProps } from "phosphor-strokes-icons";
 
 import { cn } from "@/lib/utils";
 
@@ -20,7 +20,7 @@ export type ArmenifyIconSize = (typeof armenifyIconSizes)[number];
 
 export type ArmenifyIconStrokeWeight = "slim" | "bold";
 
-/** @deprecated Используйте rem через `ArmenifyIcon`; карта в px для совместимости (Phosphor `size` как number). */
+/** @deprecated Используйте rem через `ArmenifyIcon`; карта в px для совместимости. */
 export const SIZE_PX: Record<ArmenifyIconSize, number> = {
   "xxxx-small": 10,
   "xxx-small": 12,
@@ -35,7 +35,6 @@ export const SIZE_PX: Record<ArmenifyIconSize, number> = {
   "xxxx-large": 36,
 };
 
-/** Box size passed to Phosphor `size` (string rem, scales with root font-size). */
 const SIZE_REM: Record<ArmenifyIconSize, string> = {
   "xxxx-small": "0.625rem",
   "xxx-small": "0.75rem",
@@ -50,7 +49,39 @@ const SIZE_REM: Record<ArmenifyIconSize, string> = {
   "xxxx-large": "2.25rem",
 };
 
-const STROKE_SLIM: Record<ArmenifyIconSize, string> = {
+/** Толщина в px при `font-size: 16px` на `:root` — те же rem, что в `tokens/icons.css`. */
+const ROOT_PX = 16;
+
+const STROKE_SLIM_PX: Record<ArmenifyIconSize, number> = {
+  "xxxx-small": 0.05 * ROOT_PX,
+  "xxx-small": 0.06 * ROOT_PX,
+  "xx-small": 0.07 * ROOT_PX,
+  "x-small": 0.08 * ROOT_PX,
+  small: 0.09 * ROOT_PX,
+  base: 0.1 * ROOT_PX,
+  large: 0.11 * ROOT_PX,
+  "x-large": 0.12 * ROOT_PX,
+  "xx-large": 0.14 * ROOT_PX,
+  "xxx-large": 0.16 * ROOT_PX,
+  "xxxx-large": 0.18 * ROOT_PX,
+};
+
+const STROKE_BOLD_PX: Record<ArmenifyIconSize, number> = {
+  "xxxx-small": 0.067594 * ROOT_PX,
+  "xxx-small": 0.080719 * ROOT_PX,
+  "xx-small": 0.0945 * ROOT_PX,
+  "x-small": 0.107625 * ROOT_PX,
+  small: 0.12075 * ROOT_PX,
+  base: 0.134531 * ROOT_PX,
+  large: 0.147656 * ROOT_PX,
+  "x-large": 0.161438 * ROOT_PX,
+  "xx-large": 0.188344 * ROOT_PX,
+  "xxx-large": 0.191625 * ROOT_PX,
+  "xxxx-large": 0.21525 * ROOT_PX,
+};
+
+/** CSS `stroke-width` для произвольного токена (без пересчёта absoluteStroke). */
+export const STROKE_SLIM: Record<ArmenifyIconSize, string> = {
   "xxxx-small": "var(--slim-xxxx-sm-10)",
   "xxx-small": "var(--slim-xxx-sm-12)",
   "xx-small": "var(--slim-xx-sm-14)",
@@ -64,7 +95,7 @@ const STROKE_SLIM: Record<ArmenifyIconSize, string> = {
   "xxxx-large": "var(--slim-xxxx-lg-36)",
 };
 
-const STROKE_BOLD: Record<ArmenifyIconSize, string> = {
+export const STROKE_BOLD: Record<ArmenifyIconSize, string> = {
   "xxxx-small": "var(--bold-xxxx-sm-10)",
   "xxx-small": "var(--bold-xxx-sm-12)",
   "xx-small": "var(--bold-xx-sm-14)",
@@ -78,10 +109,14 @@ const STROKE_BOLD: Record<ArmenifyIconSize, string> = {
   "xxxx-large": "var(--bold-xxxx-lg-36)",
 };
 
-export type ArmenifyIconProps = Omit<IconProps, "size" | "weight"> & {
-  icon: PhosphorIconComponent;
+export type ArmenifyIconProps = Omit<StrokeIconProps, "size" | "strokeWidth" | "absoluteStrokeWidth"> & {
+  icon: StrokeIcon;
   size?: ArmenifyIconSize;
   strokeWeight?: ArmenifyIconStrokeWeight;
+  /** Произвольный CSS для `stroke-width` (например `var(--bold-caret-12)` из Figma в px). */
+  strokeWidthToken?: string;
+  /** Зарезервировано; stroke-иконки не используют веса Phosphor. */
+  phosphorWeight?: undefined;
 };
 
 /** Figma Button (type=base): icon box per size. */
@@ -119,25 +154,43 @@ export const ghostButtonSizeToArmenifyIconSize: Record<
 };
 
 function ArmenifyIcon({
-  icon: Glyph,
+  icon: Icon,
   size = "large",
   strokeWeight = "slim",
+  strokeWidthToken,
+  phosphorWeight: _phosphorWeight,
   className,
   style,
+  color = "currentColor",
   ...rest
 }: ArmenifyIconProps) {
+  const sizePx = SIZE_PX[size];
   const sizeRem = SIZE_REM[size];
-  const strokeVar = strokeWeight === "bold" ? STROKE_BOLD[size] : STROKE_SLIM[size];
+
+  if (strokeWidthToken !== undefined) {
+    return (
+      <Icon
+        size={sizeRem}
+        strokeWidth={strokeWidthToken}
+        color={color}
+        absoluteStrokeWidth={false}
+        className={cn("shrink-0", className)}
+        style={style}
+        {...rest}
+      />
+    );
+  }
+
+  const strokeWidthPx = strokeWeight === "bold" ? STROKE_BOLD_PX[size] : STROKE_SLIM_PX[size];
 
   return (
-    <Glyph
-      size={sizeRem}
-      weight={strokeWeight === "bold" ? "bold" : "regular"}
+    <Icon
+      size={sizePx}
+      strokeWidth={strokeWidthPx}
+      color={color}
+      absoluteStrokeWidth
       className={cn("shrink-0", className)}
-      style={{
-        strokeWidth: strokeVar,
-        ...style,
-      }}
+      style={style}
       {...rest}
     />
   );

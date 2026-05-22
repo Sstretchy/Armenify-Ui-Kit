@@ -1,4 +1,4 @@
-import { SealCheck } from "@phosphor-icons/react";
+import { SealCheck } from "phosphor-strokes-icons";
 
 import { Button } from "@/components/ui/button";
 import { ArmenifyIcon, buttonSizeToArmenifyIconSize } from "@/components/ui/icon";

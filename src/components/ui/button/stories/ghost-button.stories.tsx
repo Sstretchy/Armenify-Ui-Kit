@@ -1,12 +1,12 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { SealCheck } from "@phosphor-icons/react";
+import { SealCheck } from "phosphor-strokes-icons";
 
-import { ArmenifyIcon, ghostButtonSizeToArmenifyIconSize } from "./icon";
-import { GhostButton } from "./ghost-button";
+import { ArmenifyIcon, ghostButtonSizeToArmenifyIconSize } from "../../icon";
+import { GhostButton } from "../ghost-button";
 
 const meta = {
-  title: "UI/GhostButton",
+  title: "UI/Buttons/GhostButton",
   component: GhostButton,
   tags: ["!autodocs"],
   parameters: {

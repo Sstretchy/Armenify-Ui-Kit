@@ -1,12 +1,12 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { SealCheck } from "@phosphor-icons/react";
+import { SealCheck } from "phosphor-strokes-icons";
 
-import { Button } from "./button";
-import { ArmenifyIcon, buttonSizeToArmenifyIconSize } from "./icon";
+import { Button } from "../button";
+import { ArmenifyIcon, buttonSizeToArmenifyIconSize } from "../../icon";
 
 const meta = {
-  title: "UI/Button",
+  title: "UI/Buttons/Button",
   component: Button,
   tags: ["!autodocs"],
   parameters: {
@@ -67,6 +67,30 @@ const stateClassNames: Record<
 function iconFor() {
   return <ArmenifyIcon icon={SealCheck} size={buttonSizeToArmenifyIconSize.md} strokeWeight="bold" />;
 }
+
+export const AsAnchor: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4 p-4">
+      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
+        Ссылка: передан <code className="font-mono">href</code> — рендерится{" "}
+        <code className="font-mono">&lt;a&gt;</code> с теми же стилями. Для Next.js можно оборачивать{" "}
+        <code className="font-mono">Link</code> вокруг кнопки только если нужен prefetch, иначе —
+        нативный <code className="font-mono">href</code>.
+      </p>
+      <div className="flex flex-wrap items-center gap-3">
+        <Button href="https://example.com" variant="primary" rel="noopener noreferrer" target="_blank">
+          Внешняя
+        </Button>
+        <Button href="/tokens" variant="outlined">
+          Внутренний путь
+        </Button>
+        <Button href="#" variant="secondary" disabled>
+          Disabled link
+        </Button>
+      </div>
+    </div>
+  ),
+};
 
 export const Interactive: Story = {
   render: function InteractiveRender() {
