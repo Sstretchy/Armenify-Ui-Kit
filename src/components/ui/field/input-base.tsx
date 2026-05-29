@@ -43,6 +43,12 @@ const helperSizeByBase: Record<InputBaseSize, InputHelperTextSize> = {
   lg: "lg",
 };
 
+const helperSpacerBySize: Record<InputBaseSize, string> = {
+  sm: "min-h-4",
+  md: "min-h-[1.125rem]",
+  lg: "min-h-5",
+};
+
 const sideGapBySize: Record<InputBaseSize, string> = {
   sm: "gap-2",
   md: "gap-2.5",
@@ -91,7 +97,7 @@ function InputBase({
 
   const spacer =
     helperSpace && sideLabel ? (
-      <div className="min-h-[1rem] w-0 shrink-0" aria-hidden />
+      <div className={cn(helperSpacerBySize[size], "w-0 shrink-0")} aria-hidden />
     ) : null;
 
   if (sideLabel) {
