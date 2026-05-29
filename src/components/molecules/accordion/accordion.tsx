@@ -47,7 +47,7 @@ const accordionTriggerVariants = cva(
   cn(
     "group flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 border-0 border-b border-solid text-left font-sans font-medium outline-none",
     controlInteractiveTransitionClassName,
-    "focus-visible:relative focus-visible:z-[1] focus-visible:[box-shadow:var(--control-shadow-outer-focused)]",
+    "focus-visible:relative focus-visible:z-[1] focus-visible:shadow-control-shadow-outer-focused",
     "transition-[background-color,border-color,color] duration-200 ease-out",
   ),
   {

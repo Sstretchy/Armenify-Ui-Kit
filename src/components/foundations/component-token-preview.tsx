@@ -1,3 +1,5 @@
+import { Typography } from "@/components/ui/typography";
+
 const borderColor = "#e2e6ee";
 
 type TokenCard = {
@@ -179,7 +181,9 @@ function TokenCardView({ card }: { card: TokenCard }) {
         }}
       />
       <div className="w-[12.5rem] rounded-[0.75rem] p-2.5">
-        <p className="text-base leading-none font-medium text-black">{card.label}</p>
+        <Typography variant="base" weight="medium" className="text-black">
+          {card.label}
+        </Typography>
       </div>
     </div>
   );

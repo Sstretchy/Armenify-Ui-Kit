@@ -24,25 +24,23 @@ const progressFillVariants = cva(
     compoundVariants: [
       {
         variant: "primary",
-        class:
-          "bg-[image:var(--gradient-brand-primary)] shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-inner",
       },
       {
         variant: "secondary",
-        class:
-          "bg-components-controls-bg-secondary-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-components-controls-bg-secondary-default shadow-control-shadow-inner",
       },
       {
         variant: "success",
-        class: "bg-semantic-status-success-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-success-default shadow-control-shadow-inner",
       },
       {
         variant: "error",
-        class: "bg-semantic-status-error-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-error-default shadow-control-shadow-inner",
       },
       {
         variant: "warning",
-        class: "bg-semantic-status-warning-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-warning-default shadow-control-shadow-inner",
       },
     ],
     defaultVariants: { variant: "primary" },
@@ -133,13 +131,13 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progre
       aria-valuetext={pctLabel}
       data-slot="progress"
       data-progress-variant={variant}
-      className={cn("flex w-full min-w-0 items-center gap-1", className)}
+      className={cn("flex min-h-4 w-full min-w-0 items-center gap-2", className)}
       {...rest}
     >
-      <div className="relative min-h-[0.625rem] min-w-0 flex-1 py-[0.1875rem]">
-        <div className="relative h-1 w-full overflow-hidden rounded-[var(--border-xxs)]">
+      <div className="relative min-w-0 flex-1">
+        <div className="relative h-1.5 w-full overflow-hidden rounded-[var(--border-xxs)]">
           <div
-            className="pointer-events-none absolute inset-0 rounded-[var(--border-xxs)] bg-components-controls-bg-primary shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]"
+            className="pointer-events-none absolute inset-0 rounded-[var(--border-xxs)] bg-components-controls-bg-primary shadow-control-shadow-inner"
             aria-hidden
           />
           <div
@@ -165,9 +163,14 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progre
         </div>
       </div>
       {showLabel ? (
-        <div className="flex min-w-5 shrink-0 justify-end tabular-nums">
+        <div className="flex shrink-0 justify-end">
           {label ?? (
-            <Typography variant="xs" weight="bold" className={cn("m-0 w-full text-right", labelClass)}>
+            <Typography
+              variant="sm"
+              weight="medium"
+              align="end"
+              className={labelClass}
+            >
               {pctLabel}
             </Typography>
           )}

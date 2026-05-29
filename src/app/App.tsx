@@ -3,6 +3,7 @@ import { SealCheck } from "phosphor-strokes-icons";
 import { Button } from "@/components/ui/button";
 import { ArmenifyIcon, buttonSizeToArmenifyIconSize } from "@/components/ui/icon";
 import { TokenPreview } from "@/components/foundations/token-preview";
+import { Typography } from "@/components/ui/typography";
 
 export function App() {
   const mdIcon = (
@@ -15,9 +16,9 @@ export function App() {
         <section className="grid gap-5">
           <div className="grid gap-1">
             <h1 className="text-3xl font-medium">Armenify UI Kit</h1>
-            <p className="max-w-2xl text-sm text-semantic-text-ntrl-secondary">
+            <Typography variant="sm" tone="muted" className="max-w-2xl">
               React primitives backed by Armenify tokens and Tailwind v4.
-            </p>
+            </Typography>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">

@@ -2,6 +2,7 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Progress, type ProgressVariant } from "../progress";
+import { Typography } from "../../typography";
 
 const meta = {
   title: "UI/Progress",
@@ -20,21 +21,23 @@ const variants: ProgressVariant[] = ["primary", "secondary", "success", "error",
 export const Matrix: Story = {
   render: () => (
     <div className="flex max-w-md flex-col gap-8 p-4">
-      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-        Прогресс по{" "}
+      <Typography variant="sm" tone="muted">
+        Progress aligned to Figma node{" "}
         <a
           className="text-components-typography-brand-light-label underline"
           href="https://www.figma.com/design/btCKgn6RrWiteyBN0bViU1/Armenify?node-id=142-5997"
           rel="noreferrer"
           target="_blank"
         >
-          макету 142:5997
+          142:5997
         </a>
-        : варианты и 0% / 50%.
-      </p>
+        .
+      </Typography>
       {variants.map((variant) => (
         <div key={variant} className="flex flex-col gap-2">
-          <span className="text-font-size-xxs-input font-medium capitalize text-semantic-text-ntrl-primary">{variant}</span>
+          <Typography className="text-[0.6875rem] leading-[0.6875rem] capitalize text-semantic-text-ntrl-primary">
+            {variant}
+          </Typography>
           <Progress variant={variant} value={0} aria-label={`${variant} 0`} />
           <Progress variant={variant} value={50} aria-label={`${variant} 50`} />
         </div>
@@ -46,11 +49,17 @@ export const Matrix: Story = {
 export const MountAnimation: Story = {
   render: () => (
     <div className="flex max-w-md flex-col gap-6 p-4">
-      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-        `animateOnMount`: полоска один раз масштабируется от 0 до значения при маунте (двойной `requestAnimationFrame` + `useLayoutEffect`, см. react.dev).
-      </p>
-      <Progress variant="primary" value={72} animateOnMount aria-label="Primary 72 анимация" />
-      <Progress variant="secondary" value={40} animateOnMount mountAnimationDurationMs={900} aria-label="Secondary 40 медленнее" />
+      <Typography variant="sm" tone="muted">
+        `animateOnMount` scales the fill from zero once on initial mount.
+      </Typography>
+      <Progress variant="primary" value={72} animateOnMount aria-label="Primary 72 animation" />
+      <Progress
+        variant="secondary"
+        value={40}
+        animateOnMount
+        mountAnimationDurationMs={900}
+        aria-label="Secondary 40 slower"
+      />
     </div>
   ),
 };
@@ -58,14 +67,18 @@ export const MountAnimation: Story = {
 export const Controlled: Story = {
   render: function Controlled() {
     const [v, setV] = React.useState(25);
+
     React.useEffect(() => {
       const t = window.setInterval(() => setV((x) => (x >= 100 ? 0 : x + 5)), 1200);
       return () => clearInterval(t);
     }, []);
+
     return (
       <div className="flex max-w-md flex-col gap-3 p-4">
-        <Progress value={v} aria-label="Динамика" />
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">{v}%</p>
+        <Progress value={v} aria-label="Progress dynamics" />
+        <Typography variant="sm" tone="muted">
+          {v}%
+        </Typography>
       </div>
     );
   },
