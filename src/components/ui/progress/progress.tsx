@@ -137,7 +137,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progre
       {...rest}
     >
       <div className="relative min-h-[10px] min-w-0 flex-1 py-[3px]">
-        <div className="relative h-[var(--space-space-1)] w-full overflow-hidden rounded-[var(--border-xxs)]">
+        <div className="relative h-1.5 w-full overflow-hidden rounded-[var(--border-xxs)]">
           <div
             className="pointer-events-none absolute inset-0 rounded-[var(--border-xxs)] bg-components-controls-bg-primary shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]"
             aria-hidden
@@ -167,7 +167,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progre
       {showLabel ? (
         <div className="flex min-w-5 shrink-0 justify-end tabular-nums">
           {label ?? (
-            <Typography variant="xxxs" weight="bold" className={cn("m-0 w-full text-right leading-[var(--font-font-height-xxxs)]", labelClass)}>
+            <Typography variant="xs" weight="bold" className={cn("m-0 w-full text-right", labelClass)}>
               {pctLabel}
             </Typography>
           )}

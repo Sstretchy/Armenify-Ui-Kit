@@ -1,0 +1,5 @@
+mcp_oauth_callback_port = 5555
+mcp_oauth_callback_url = "http://127.0.0.1:5555/callback"
+
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
