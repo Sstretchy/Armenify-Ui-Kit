@@ -97,20 +97,23 @@ export type SquareButtonProps = SquareButtonBase &
     | { icon?: undefined; children?: React.ReactNode }
   );
 
-function SquareButton({
-  className,
-  variant,
-  size,
-  shape,
-  asChild = false,
-  type = "button",
-  unchecked = false,
-  pressed,
-  disabled,
-  icon,
-  children,
-  ...props
-}: SquareButtonProps) {
+const SquareButton = React.forwardRef<HTMLButtonElement, SquareButtonProps>(function SquareButton(
+  {
+    className,
+    variant,
+    size,
+    shape,
+    asChild = false,
+    type = "button",
+    unchecked = false,
+    pressed,
+    disabled,
+    icon,
+    children,
+    ...props
+  },
+  ref,
+) {
   const Comp = asChild ? Slot : "button";
   const dataVariant = variant ?? "primary";
   const dataShape = shape ?? "square";
@@ -130,14 +133,14 @@ function SquareButton({
 
   if (asChild) {
     return (
-      <Comp {...shared}>
+      <Comp ref={ref} {...shared}>
         {children}
       </Comp>
     );
   }
 
   return (
-    <Comp {...shared} type={type}>
+    <Comp ref={ref} {...shared} type={type}>
       {icon != null ? (
         <span className="inline-flex shrink-0 items-center justify-center">{icon}</span>
       ) : children != null && children !== false ? (
@@ -145,6 +148,6 @@ function SquareButton({
       ) : null}
     </Comp>
   );
-}
+});
 
 export { SquareButton, squareButtonVariants };
