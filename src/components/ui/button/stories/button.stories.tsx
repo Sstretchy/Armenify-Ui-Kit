@@ -2,8 +2,9 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { SealCheck } from "phosphor-strokes-icons";
 
-import { Button } from "../button";
 import { ArmenifyIcon, buttonSizeToArmenifyIconSize } from "../../icon";
+import { Typography } from "../../typography";
+import { Button } from "../button";
 
 const meta = {
   title: "UI/Buttons/Button",
@@ -71,18 +72,17 @@ function iconFor() {
 export const AsAnchor: Story = {
   render: () => (
     <div className="flex flex-col gap-4 p-4">
-      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-        Ссылка: передан <code className="font-mono">href</code> — рендерится{" "}
-        <code className="font-mono">&lt;a&gt;</code> с теми же стилями. Для Next.js можно оборачивать{" "}
-        <code className="font-mono">Link</code> вокруг кнопки только если нужен prefetch, иначе —
-        нативный <code className="font-mono">href</code>.
-      </p>
+      <Typography variant="sm" tone="muted">
+        Passing <code className="font-mono">href</code> renders the component as <code className="font-mono">&lt;a&gt;</code>{" "}
+        with the same visual styles. In Next.js, wrap it with <code className="font-mono">Link</code> only when you need
+        route-prefetch behavior.
+      </Typography>
       <div className="flex flex-wrap items-center gap-3">
         <Button href="https://example.com" variant="primary" rel="noopener noreferrer" target="_blank">
-          Внешняя
+          External
         </Button>
         <Button href="/tokens" variant="outlined">
-          Внутренний путь
+          Internal path
         </Button>
         <Button href="#" variant="secondary" disabled>
           Disabled link
@@ -95,28 +95,29 @@ export const AsAnchor: Story = {
 export const Interactive: Story = {
   render: function InteractiveRender() {
     const [pressed, setPressed] = React.useState<Partial<Record<(typeof variants)[number], boolean>>>({});
-    const flip = (v: (typeof variants)[number]) => {
-      setPressed((m) => ({ ...m, [v]: !m[v] }));
+    const flip = (variant: (typeof variants)[number]) => {
+      setPressed((map) => ({ ...map, [variant]: !map[variant] }));
     };
+
     return (
       <div className="flex flex-col gap-4 p-4">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-          Клик — вкл/выкл pressed. Зажми кнопку — увидишь :active.
-        </p>
+        <Typography variant="sm" tone="muted">
+          Click toggles the `pressed` state. Hold the mouse button to inspect the native `:active` state separately.
+        </Typography>
         <div className="flex flex-wrap items-center gap-3">
-          {variants.map((v) => (
+          {variants.map((variant) => (
             <Button
-              key={v}
-              variant={v}
+              key={variant}
+              variant={variant}
               size="md"
               type="button"
-              pressed={pressed[v] ? true : undefined}
+              pressed={pressed[variant] ? true : undefined}
               onClick={() => {
-                flip(v);
+                flip(variant);
               }}
               iconLeft={iconFor()}
             >
-              {v}
+              {variant}
             </Button>
           ))}
         </div>
@@ -129,22 +130,27 @@ export const States: Story = {
   render: () => (
     <div className="flex flex-col gap-8 p-4">
       <div className="flex flex-col gap-4">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">States (md)</p>
+        <Typography variant="sm" tone="muted">
+          States (md)
+        </Typography>
         <div className="grid grid-cols-[6rem_repeat(7,max-content)] items-center gap-x-3 gap-y-3">
           <div />
           {states.map((state) => (
-            <span
+            <Typography
               key={state}
-              className="text-font-size-sm text-semantic-text-ntrl-secondary text-center capitalize"
+              variant="sm"
+              tone="muted"
+              align="center"
+              className="capitalize"
             >
               {state}
-            </span>
+            </Typography>
           ))}
           {variants.map((variant) => (
             <React.Fragment key={variant}>
-              <span className="text-font-size-sm text-semantic-text-ntrl-secondary capitalize">
+              <Typography variant="sm" tone="muted" className="capitalize">
                 {variant}
-              </span>
+              </Typography>
               {states.map((state) => (
                 <Button
                   key={`${variant}-${state}`}
@@ -166,9 +172,9 @@ export const States: Story = {
       </div>
 
       <div className="flex flex-col gap-3">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-          zeroCorner + unchecked (по одной на каждый вариант)
-        </p>
+        <Typography variant="sm" tone="muted">
+          `zeroCorner` + `unchecked` examples for each variant
+        </Typography>
         <div className="flex flex-wrap items-center gap-3">
           {variants.map((variant) => (
             <Button
