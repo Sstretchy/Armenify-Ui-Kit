@@ -89,7 +89,7 @@ const buttonPressedClassName: Record<ButtonVariant, string> = {
 };
 
 type SharedButtonLayoutProps = VariantProps<typeof buttonVariants> & {
-  /** Выкл. визуал (прозрачность от дефолта), напр. toggle unchecked */
+  /** Visual unchecked state, for example for toggle-like controls. */
   unchecked?: boolean;
   pressed?: boolean;
   disabled?: boolean;

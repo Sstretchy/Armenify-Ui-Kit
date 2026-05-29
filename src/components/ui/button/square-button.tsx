@@ -29,7 +29,7 @@ const squareButtonVariants = cva(
           controlFocusedBaseClassName,
           controlFocusedPrimaryClassName,
           "hover:shadow-control-shadow-hover active:shadow-control-shadow-active",
-          "disabled:border-[0.09375rem] disabled:border-components-controls-bg-disabled disabled:bg-[image:none] disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
+          "disabled:border-2 disabled:border-components-controls-border-disabled disabled:bg-[image:none] disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
         ],
         secondary: [
           "border-0 bg-components-controls-bg-secondary-default text-components-controls-text-secondary shadow-control-shadow-outer",
@@ -37,7 +37,7 @@ const squareButtonVariants = cva(
           controlFocusedSecondaryClassName,
           "hover:bg-components-controls-bg-secondary-hover hover:shadow-control-shadow-hover",
           "active:bg-components-controls-bg-secondary-active active:shadow-control-shadow-active",
-          "disabled:border-[0.09375rem] disabled:border-components-controls-bg-disabled disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
+          "disabled:border-2 disabled:border-components-controls-border-disabled disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
         ],
         tertiary: [
           "border-0 bg-components-controls-bg-tertiary text-components-controls-text-tertiary shadow-control-shadow-outer",
