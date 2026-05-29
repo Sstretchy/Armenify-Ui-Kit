@@ -24,12 +24,12 @@ const selectMenuRootVariants = cva(
       },
     },
     compoundVariants: [
-      { color: "ntrl", size: "sm", class: "rounded-border-sm p-[var(--space-space-2-5)]" },
-      { color: "ntrl", size: "md", class: "rounded-border-md p-[var(--space-space-3)]" },
-      { color: "ntrl", size: "lg", class: "rounded-border-lg p-[var(--space-space-3-5)]" },
-      { color: "brand", size: "sm", class: "rounded-border-sm p-[var(--space-space-2-5)]" },
-      { color: "brand", size: "md", class: "rounded-border-sm p-[var(--space-space-2-5)]" },
-      { color: "brand", size: "lg", class: "rounded-border-lg p-[var(--space-space-3-5)]" },
+      { color: "ntrl", size: "sm", class: "rounded-border-sm p-2.5" },
+      { color: "ntrl", size: "md", class: "rounded-border-md p-3" },
+      { color: "ntrl", size: "lg", class: "rounded-border-lg p-3.5" },
+      { color: "brand", size: "sm", class: "rounded-border-sm p-2.5" },
+      { color: "brand", size: "md", class: "rounded-border-sm p-2.5" },
+      { color: "brand", size: "lg", class: "rounded-border-lg p-3.5" },
     ],
     defaultVariants: { color: "ntrl", size: "sm" },
   },
@@ -52,7 +52,7 @@ function SelectMenuDivider({ tone = "ntrl", className, ...rest }: SelectMenuDivi
       role="separator"
       aria-orientation="horizontal"
       data-slot="select-menu-divider"
-      className={cn("h-px w-full shrink-0", selectMenuDividerToneClass[tone], className)}
+      className={cn("h-[0.0625rem] w-full shrink-0", selectMenuDividerToneClass[tone], className)}
       {...rest}
     />
   );
@@ -98,7 +98,7 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(function Se
       className={cn(selectMenuRootVariants({ color, size }), className)}
       {...rest}
     >
-      <div className="flex w-full min-w-0 flex-col gap-[var(--space-space-0-5)]">{children ?? defaultSlot}</div>
+      <div className="flex w-full min-w-0 flex-col gap-0.5">{children ?? defaultSlot}</div>
     </div>
   );
 });

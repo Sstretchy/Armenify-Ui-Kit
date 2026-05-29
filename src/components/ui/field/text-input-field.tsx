@@ -10,9 +10,9 @@ const textInputFieldRootVariants = cva(
   {
     variants: {
       size: {
-        sm: "rounded-border-sm px-[var(--space-space-2-5)] py-[var(--space-space-2)]",
-        md: "rounded-border-md px-[var(--space-space-3)] py-[var(--space-space-2-5)]",
-        lg: "rounded-border-lg px-[var(--space-space-3-5)] py-[var(--space-space-3)]",
+        sm: "rounded-border-sm px-2.5 py-2",
+        md: "rounded-border-md px-3 py-2.5",
+        lg: "rounded-border-lg px-3.5 py-3",
       },
     },
     defaultVariants: { size: "md" },

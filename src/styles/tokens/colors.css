@@ -146,7 +146,8 @@
   --semantic-border-brand-default-focused: #9eb6ff;
   --semantic-border-brand-default-inverse-focused: #6772f4;
   --semantic-border-brand-default-inverse-hover: #6d60f6;
-  --semantic-border-brand-default-inversed: #4c4abe;
+  --semantic-border-brand-default-inverse: #4c4abe;
+  --semantic-border-brand-default-inversed: var(--semantic-border-brand-default-inverse);
   --semantic-border-brand-delicate-inverse: #2a3486;
   --semantic-bg-ntrl-tertiary-inverse-hover: #4d5368;
   --semantic-bg-ntrl-tertiary-inverse: #30374e;

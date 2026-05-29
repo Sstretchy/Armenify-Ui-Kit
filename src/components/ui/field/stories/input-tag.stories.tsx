@@ -56,7 +56,7 @@ export const InInputRow: Story = {
         <div
           className={cn(
             textInputRootVariants({ size: "md" }),
-            "min-h-10 flex-wrap rounded-border-md border border-semantic-border-ntrl-default px-[var(--space-space-2)] py-[var(--space-space-1)]",
+            "min-h-10 flex-wrap rounded-border-md border border-semantic-border-ntrl-default px-2 py-1",
           )}
         >
           {tags.map((t) => (

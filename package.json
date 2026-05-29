@@ -36,7 +36,7 @@
     "build": "npm run clean && tsc -p tsconfig.build.json && vite build",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview --host 0.0.0.0",
-    "storybook": "storybook dev -p 6006 --host 0.0.0.0",
+    "storybook": "storybook dev -p 6006 --host localhost",
     "build-storybook": "storybook build"
   },
   "peerDependencies": {

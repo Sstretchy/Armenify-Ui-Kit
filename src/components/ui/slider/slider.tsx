@@ -25,8 +25,8 @@ const sliderTrackVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-[var(--space-space-1)]",
-        md: "h-[var(--space-space-1-5)]",
+        sm: "h-1",
+        md: "h-1.5",
       },
       disabled: {
         true: "bg-components-controls-bg-disabled",
@@ -85,7 +85,7 @@ const sliderFillVariants = cva(
 
 const sliderThumbVariants = cva(
   cn(
-    "z-[1] box-border block rounded-full border-[1.5px] border-solid shadow-control-shadow-outer",
+    "z-[1] box-border block rounded-full border-[0.09375rem] border-solid shadow-control-shadow-outer",
     controlInteractiveTransitionClassName,
     "transition-[background-color,border-color,box-shadow] duration-[var(--control-transition-duration,250ms)] ease-[var(--control-transition-timing,cubic-bezier(0.4,0,0.2,1))]",
     "touch-none outline-none focus-visible:outline-none",
@@ -93,8 +93,8 @@ const sliderThumbVariants = cva(
   {
     variants: {
       size: {
-        sm: "h-[var(--space-space-3-5)] w-[var(--space-space-3-5)] min-h-[var(--space-space-3-5)] min-w-[var(--space-space-3-5)]",
-        md: "h-[var(--space-space-4)] w-[var(--space-space-4)] min-h-[var(--space-space-4)] min-w-[var(--space-space-4)]",
+        sm: "h-3.5 w-3.5 min-h-3.5 min-w-3.5",
+        md: "h-4 w-4 min-h-4 min-w-4",
       },
       variant: {
         primary: "",
@@ -202,7 +202,7 @@ const Slider = React.forwardRef<React.ElementRef<typeof SliderPrimitive.Root>, S
       data-slot="slider-root"
       className={cn(
         "relative flex w-full min-w-[8rem] touch-none select-none items-center",
-        size === "sm" ? "min-h-[1.125rem] py-px" : "min-h-5 py-px",
+        size === "sm" ? "min-h-[1.125rem] py-[0.0625rem]" : "min-h-5 py-[0.0625rem]",
         className,
       )}
       min={minV}

@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const textInputRootVariants = cva(
-  "flex min-w-0 items-center gap-[var(--space-space-1)] font-sans antialiased",
+  "flex min-w-0 items-center gap-1 font-sans antialiased",
   {
     variants: {
       size: {

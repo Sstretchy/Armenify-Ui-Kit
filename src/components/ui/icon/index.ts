@@ -4,7 +4,7 @@ export {
   buttonSizeToArmenifyIconSize,
   ghostButtonSizeToArmenifyIconSize,
   squareButtonSizeToArmenifyIconSize,
-  SIZE_PX,
+  SIZE_REM,
   type ArmenifyIconProps,
   type ArmenifyIconSize,
   type ArmenifyIconStrokeWeight,

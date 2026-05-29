@@ -25,24 +25,24 @@ const progressFillVariants = cva(
       {
         variant: "primary",
         class:
-          "bg-[image:var(--gradient-brand-primary)] shadow-[inset_1px_1px_4px_0_var(--components-controls-shadows-default-inner)]",
+          "bg-[image:var(--gradient-brand-primary)] shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
       },
       {
         variant: "secondary",
         class:
-          "bg-components-controls-bg-secondary-default shadow-[inset_1px_1px_4px_0_var(--components-controls-shadows-default-inner)]",
+          "bg-components-controls-bg-secondary-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
       },
       {
         variant: "success",
-        class: "bg-semantic-status-success-default shadow-[inset_1px_1px_4px_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-success-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
       },
       {
         variant: "error",
-        class: "bg-semantic-status-error-default shadow-[inset_1px_1px_4px_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-error-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
       },
       {
         variant: "warning",
-        class: "bg-semantic-status-warning-default shadow-[inset_1px_1px_4px_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-warning-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
       },
     ],
     defaultVariants: { variant: "primary" },
@@ -133,11 +133,11 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progre
       aria-valuetext={pctLabel}
       data-slot="progress"
       data-progress-variant={variant}
-      className={cn("flex w-full min-w-0 items-center gap-[var(--space-space-1)]", className)}
+      className={cn("flex w-full min-w-0 items-center gap-1", className)}
       {...rest}
     >
-      <div className="relative min-h-[10px] min-w-0 flex-1 py-[3px]">
-        <div className="relative h-1.5 w-full overflow-hidden rounded-[var(--border-xxs)]">
+      <div className="relative min-h-[0.625rem] min-w-0 flex-1 py-[0.1875rem]">
+        <div className="relative h-1 w-full overflow-hidden rounded-[var(--border-xxs)]">
           <div
             className="pointer-events-none absolute inset-0 rounded-[var(--border-xxs)] bg-components-controls-bg-primary shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]"
             aria-hidden

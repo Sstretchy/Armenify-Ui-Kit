@@ -19,9 +19,9 @@ const checkboxBoxVariants = cva(
   {
     variants: {
       size: {
-        xs: "h-[var(--space-space-4-5)] w-[var(--space-space-4-5)] rounded-border-xxs",
-        sm: "h-[var(--space-space-5)] w-[var(--space-space-5)] rounded-border-xxs",
-        md: "h-[var(--space-space-6)] w-[var(--space-space-6)] rounded-border-xs",
+        xs: "h-4.5 w-4.5 rounded-border-xxs",
+        sm: "h-5 w-5 rounded-border-xxs",
+        md: "h-6 w-6 rounded-border-xs",
       },
       variant: {
         primary: "",
@@ -46,19 +46,19 @@ const checkboxBoxVariants = cva(
         variant: "primary",
         boxState: "checked",
         class:
-          "border-transparent bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-outer group-hover:shadow-[0px_1px_1px_0_var(--components-controls-shadows-default),inset_4px_4px_4px_0_var(--components-controls-shadows-hover)] group-active:shadow-[0px_1px_2px_0_var(--components-controls-shadows-default),inset_4px_4px_4px_0_var(--components-controls-shadows-active)]",
+          "border-transparent bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-outer group-hover:shadow-[0_0.0625rem_0.0625rem_0_var(--components-controls-shadows-default),inset_0.25rem_0.25rem_0.25rem_0_var(--components-controls-shadows-hover)] group-active:shadow-[0_0.0625rem_0.125rem_0_var(--components-controls-shadows-default),inset_0.25rem_0.25rem_0.25rem_0_var(--components-controls-shadows-active)]",
       },
       {
         variant: "primary",
         boxState: "indeterminate",
         class:
-          "border-transparent bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-outer group-hover:shadow-[0px_1px_1px_0_var(--components-controls-shadows-default),inset_4px_4px_4px_0_var(--components-controls-shadows-hover)] group-active:shadow-[0px_1px_2px_0_var(--components-controls-shadows-default),inset_4px_4px_4px_0_var(--components-controls-shadows-active)]",
+          "border-transparent bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-outer group-hover:shadow-[0_0.0625rem_0.0625rem_0_var(--components-controls-shadows-default),inset_0.25rem_0.25rem_0.25rem_0_var(--components-controls-shadows-hover)] group-active:shadow-[0_0.0625rem_0.125rem_0_var(--components-controls-shadows-default),inset_0.25rem_0.25rem_0.25rem_0_var(--components-controls-shadows-active)]",
       },
       {
         variant: "primary",
         boxState: "disabled",
         class:
-          "border-[1.5px] border-semantic-border-ntrl-disabled bg-components-controls-bg-disabled shadow-control-shadow-outer",
+          "border-[0.09375rem] border-semantic-border-ntrl-disabled bg-components-controls-bg-disabled shadow-control-shadow-outer",
       },
 
       {
@@ -83,7 +83,7 @@ const checkboxBoxVariants = cva(
         variant: "secondary",
         boxState: "disabled",
         class:
-          "border-[1.5px] border-semantic-border-ntrl-disabled bg-components-controls-bg-disabled shadow-control-shadow-outer",
+          "border-[0.09375rem] border-semantic-border-ntrl-disabled bg-components-controls-bg-disabled shadow-control-shadow-outer",
       },
 
       {
@@ -200,7 +200,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(function Chec
       data-checkbox-variant={variant}
       data-checkbox-size={sz}
       className={cn(
-        "group inline-flex cursor-pointer select-none items-center gap-[var(--space-space-2)] has-[:disabled]:cursor-not-allowed",
+        "group inline-flex cursor-pointer select-none items-center gap-2 has-[:disabled]:cursor-not-allowed",
         className,
       )}
     >
@@ -218,7 +218,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(function Chec
         {showCheck ? (
           <ArmenifyIcon icon={CheckFat} size={iconSizeByCheckbox[sz]} strokeWeight="bold" className={iconClass} />
         ) : null}
-        {showIndeterminate ? <span className={cn("block h-2.5 w-2.5 shrink-0 rounded-[3px]", indeterminateClass)} /> : null}
+        {showIndeterminate ? <span className={cn("block h-2.5 w-2.5 shrink-0 rounded-[0.1875rem]", indeterminateClass)} /> : null}
       </span>
     </label>
   );

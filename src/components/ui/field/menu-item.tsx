@@ -15,15 +15,15 @@ export type MenuItemVisualState = "default" | "hover" | "disabled" | "selected";
 
 const menuItemRootVariants = cva(
   cn(
-    "box-border flex w-full min-w-0 cursor-pointer items-center justify-between gap-[var(--space-space-2-5)] rounded-border-xxs border-0 font-sans outline-none",
+    "box-border flex w-full min-w-0 cursor-pointer items-center justify-between gap-2.5 rounded-border-xxs border-0 font-sans outline-none",
     controlInteractiveTransitionClassName,
   ),
   {
     variants: {
       size: {
-        sm: "p-[var(--space-space-1-5)]",
-        md: "px-[var(--space-space-2)] py-[var(--space-space-1-5)]",
-        lg: "px-[var(--space-space-2-5)] py-[var(--space-space-2)]",
+        sm: "p-1.5",
+        md: "px-2 py-1.5",
+        lg: "px-2.5 py-2",
       },
     },
     defaultVariants: { size: "md" },
@@ -116,7 +116,7 @@ const MenuItem = React.forwardRef<HTMLButtonElement, MenuItemProps>(function Men
   const bg = menuItemBackground(color, { disabled: isDisabled, selected, visualState });
   const rowTypography = menuItemTextSizeClass(size);
   const leftClusterClass = cn(
-    "flex min-w-0 flex-1 items-center gap-[var(--space-space-2-5)]",
+    "flex min-w-0 flex-1 items-center gap-2.5",
     rowTypography,
   );
   const prefixClass = "shrink-0 select-none text-components-typography-ntrl-light-sub-label";
@@ -161,7 +161,7 @@ const MenuItem = React.forwardRef<HTMLButtonElement, MenuItemProps>(function Men
         {showIcons ? (
           <InputFieldIcon icon={ShootingStar} size={size} color={iconColor} weight="bold" aria-hidden />
         ) : null}
-        <span className="flex min-w-0 flex-1 items-center gap-[var(--space-space-2-5)] whitespace-nowrap">
+        <span className="flex min-w-0 flex-1 items-center gap-2.5 whitespace-nowrap">
           {prefixText ? (
             <span className={prefixClass} aria-hidden>
               {prefixText}

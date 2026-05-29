@@ -13,9 +13,9 @@ import { TextInputChrome, type TextInputFieldVisualState } from "../../ui/field/
 import { textInputRootVariants, type TextInputColor, type TextInputSize, type TextInputTone } from "../../ui/field/text-input";
 
 const selectStackGapClass: Record<TextInputSize, string> = {
-  sm: "gap-[var(--space-space-1)]",
-  md: "gap-[var(--space-space-1-5)]",
-  lg: "gap-[var(--space-space-2)]",
+  sm: "gap-1",
+  md: "gap-1.5",
+  lg: "gap-2",
 };
 
 function SelectCaret({ color, disabled, open }: { color: TextInputColor; disabled: boolean; open: boolean }) {
@@ -197,7 +197,7 @@ const CommaMultiSelectField = React.forwardRef<HTMLDivElement, CommaMultiSelectF
             aria-haspopup="listbox"
             className={cn(
               textInputRootVariants({ size: sz }),
-              "flex w-full min-w-0 cursor-pointer items-center justify-between gap-[var(--space-space-1)] border-0 bg-transparent p-0 text-left outline-none",
+              "flex w-full min-w-0 cursor-pointer items-center justify-between gap-1 border-0 bg-transparent p-0 text-left outline-none",
               "focus-visible:outline-none disabled:cursor-not-allowed",
             )}
             onClick={() => !disabled && setOpen(!open)}

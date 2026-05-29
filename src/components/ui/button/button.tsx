@@ -38,11 +38,11 @@ const buttonVariants = cva(
         ],
       },
       size: {
-        xs: "min-h-9 gap-[var(--space-space-1-5)] rounded-border-md px-[var(--space-space-4-5)] py-[var(--space-space-2-5)] text-font-size-sm leading-[var(--font-font-height-sm)]",
-        sm: "min-h-10.5 gap-[var(--space-space-2)] rounded-border-md px-[var(--space-space-6)] py-[var(--space-space-2-5)] text-font-size-base leading-[var(--font-font-height-base)]",
-        md: "min-h-[2.875rem] gap-[var(--space-space-3)] rounded-border-lg px-[var(--space-space-10)] py-[var(--space-space-3)] text-font-size-lg leading-[var(--font-font-height-lg)]",
-        lg: "min-h-12 gap-[var(--space-space-2-5)] rounded-border-md px-[var(--space-space-8)] py-[var(--space-space-3)] text-font-size-xl leading-[var(--font-font-height-xl)]",
-        xl: "min-h-[3.25rem] gap-[var(--space-space-3-5)] rounded-border-x-lg px-[var(--space-space-12)] py-[var(--space-space-3-5)] text-font-size-xl leading-[var(--font-font-height-xl)]",
+        xs: "min-h-9 gap-1.5 rounded-border-md px-4.5 py-2.5 text-font-size-sm leading-[var(--font-font-height-sm)]",
+        sm: "min-h-10.5 gap-2 rounded-border-md px-6 py-2.5 text-font-size-base leading-[var(--font-font-height-base)]",
+        md: "min-h-[2.875rem] gap-3 rounded-border-lg px-10 py-3 text-font-size-lg leading-[var(--font-font-height-lg)]",
+        lg: "min-h-12 gap-2.5 rounded-border-md px-8 py-3 text-font-size-xl leading-[var(--font-font-height-xl)]",
+        xl: "min-h-[3.25rem] gap-3.5 rounded-border-x-lg px-12 py-3.5 text-font-size-xl leading-[var(--font-font-height-xl)]",
       },
       bainsley: {
         true: "font-serif",

@@ -4,6 +4,15 @@
 
 :root {
   /* Typography scale */
+  --font-family-sans: "Roboto", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-family-serif: "Bainsley", ui-serif, Georgia, serif;
+
+  /* Compatibility aliases used by the current UI kit exports and theme mapping. */
+  --font-primary: var(--font-family-sans);
+  --font-secondary: var(--font-family-serif);
+
+  /* Legacy raw-family aliases kept for downstream compatibility. */
   --font-primary-font: "Roboto";
   --font-secondary-font: "Bainsley";
 

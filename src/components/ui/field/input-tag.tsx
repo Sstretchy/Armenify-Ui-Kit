@@ -25,9 +25,9 @@ const inputTagVariants = cva(
         false: "border-0",
       },
       size: {
-        xs: "h-4 gap-[var(--space-space-1-5)] rounded-border-xxs px-[var(--space-space-1-5)] text-font-size-xxs-input leading-[var(--font-font-height-xxs-input)]",
-        sm: "h-5 gap-[var(--space-space-2)] rounded-border-xs px-[var(--space-space-2)] text-font-size-xs-input leading-[var(--font-font-height-xs-input)]",
-        lg: "h-6 gap-[var(--space-space-2-5)] rounded-border-sm px-[var(--space-space-2)] text-font-size-sm leading-[var(--font-font-height-sm)]",
+        xs: "h-4 gap-1.5 rounded-border-xxs px-1.5 text-font-size-xxs-input leading-[var(--font-font-height-xxs-input)]",
+        sm: "h-5 gap-2 rounded-border-xs px-2 text-font-size-xs-input leading-[var(--font-font-height-xs-input)]",
+        lg: "h-6 gap-2.5 rounded-border-sm px-2 text-font-size-sm leading-[var(--font-font-height-sm)]",
       },
     },
     compoundVariants: [

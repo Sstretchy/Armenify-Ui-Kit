@@ -6,7 +6,7 @@ import { ArmenifyIcon } from "../icon";
 import { cn } from "@/lib/utils";
 
 const inputHelperTextRootVariants = cva(
-  "flex min-w-0 items-center gap-[var(--space-space-1)] font-sans font-medium antialiased",
+  "flex min-w-0 items-center gap-1 font-sans font-medium antialiased",
   {
     variants: {
       size: {

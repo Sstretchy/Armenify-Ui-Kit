@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { ArmenifyIcon, type ArmenifyIconStrokeWeight, type ArmenifyIconSize } from "../icon";
 import type { TextInputSize } from "./text-input";
 
-/** Размеры бокса иконки в поле ввода (Figma «иконка в инпуте»): 16 / 20 / 22 px → токены ArmenifyIcon. */
+/** Input icon box sizes are mapped to ArmenifyIcon rem-based tokens. */
 export const textInputFieldIconSizeToArmenifyIconSize: Record<TextInputSize, ArmenifyIconSize> = {
   sm: "x-small",
   md: "base",
