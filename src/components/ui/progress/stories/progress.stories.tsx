@@ -2,6 +2,7 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Progress, type ProgressVariant } from "../progress";
+import { Typography } from "../../typography";
 
 const meta = {
   title: "UI/Progress",
@@ -20,7 +21,7 @@ const variants: ProgressVariant[] = ["primary", "secondary", "success", "error",
 export const Matrix: Story = {
   render: () => (
     <div className="flex max-w-md flex-col gap-8 p-4">
-      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
+      <Typography variant="sm" tone="muted">
         Progress aligned to Figma node{" "}
         <a
           className="text-components-typography-brand-light-label underline"
@@ -31,12 +32,12 @@ export const Matrix: Story = {
           142:5997
         </a>
         .
-      </p>
+      </Typography>
       {variants.map((variant) => (
         <div key={variant} className="flex flex-col gap-2">
-          <span className="text-font-size-xxs-input font-medium capitalize text-semantic-text-ntrl-primary">
+          <Typography className="text-[0.6875rem] leading-[0.6875rem] capitalize text-semantic-text-ntrl-primary">
             {variant}
-          </span>
+          </Typography>
           <Progress variant={variant} value={0} aria-label={`${variant} 0`} />
           <Progress variant={variant} value={50} aria-label={`${variant} 50`} />
         </div>
@@ -48,9 +49,9 @@ export const Matrix: Story = {
 export const MountAnimation: Story = {
   render: () => (
     <div className="flex max-w-md flex-col gap-6 p-4">
-      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
+      <Typography variant="sm" tone="muted">
         `animateOnMount` scales the fill from zero once on initial mount.
-      </p>
+      </Typography>
       <Progress variant="primary" value={72} animateOnMount aria-label="Primary 72 animation" />
       <Progress
         variant="secondary"
@@ -75,7 +76,9 @@ export const Controlled: Story = {
     return (
       <div className="flex max-w-md flex-col gap-3 p-4">
         <Progress value={v} aria-label="Progress dynamics" />
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">{v}%</p>
+        <Typography variant="sm" tone="muted">
+          {v}%
+        </Typography>
       </div>
     );
   },

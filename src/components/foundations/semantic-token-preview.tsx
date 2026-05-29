@@ -1,3 +1,5 @@
+import { Typography } from "@/components/ui/typography";
+
 const borderColor = "#e2e6ee";
 
 type SwatchItem = {
@@ -233,8 +235,12 @@ function Swatch({ item }: { item: SwatchItem }) {
         }}
       />
       <div className="w-[12.5rem] rounded-[0.75rem] p-2.5">
-        <p className="text-base leading-none font-medium text-black">{item.label}</p>
-        {item.hint ? <p className="mt-2.5 text-[0.6875rem] leading-none text-black">{item.hint}</p> : null}
+        <Typography variant="base" weight="medium" className="text-black">
+          {item.label}
+        </Typography>
+        {item.hint ? (
+          <Typography className="mt-2.5 text-[0.6875rem] leading-none text-black">{item.hint}</Typography>
+        ) : null}
       </div>
     </div>
   );

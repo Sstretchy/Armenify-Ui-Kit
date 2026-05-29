@@ -1,3 +1,5 @@
+import { Typography } from "@/components/ui/typography";
+
 const borderColor = "#e2e6ee";
 
 type TokenSection = {
@@ -119,7 +121,9 @@ function Swatch({
         }}
       />
       <div className="rounded-[0.75rem] p-2.5">
-        <p className="text-base leading-none font-medium text-black">{label}</p>
+        <Typography variant="base" weight="medium" className="text-black">
+          {label}
+        </Typography>
       </div>
     </div>
   );

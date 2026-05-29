@@ -168,7 +168,8 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progre
             <Typography
               variant="sm"
               weight="medium"
-              className={cn("m-0 text-right leading-[var(--font-font-height-sm)]", labelClass)}
+              align="end"
+              className={labelClass}
             >
               {pctLabel}
             </Typography>
