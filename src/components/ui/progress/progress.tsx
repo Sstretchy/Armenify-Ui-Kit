@@ -24,28 +24,23 @@ const progressFillVariants = cva(
     compoundVariants: [
       {
         variant: "primary",
-        class:
-          "bg-[image:var(--gradient-brand-primary)] shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-inner",
       },
       {
         variant: "secondary",
-        class:
-          "bg-components-controls-bg-secondary-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-components-controls-bg-secondary-default shadow-control-shadow-inner",
       },
       {
         variant: "success",
-        class:
-          "bg-semantic-status-success-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-success-default shadow-control-shadow-inner",
       },
       {
         variant: "error",
-        class:
-          "bg-semantic-status-error-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-error-default shadow-control-shadow-inner",
       },
       {
         variant: "warning",
-        class:
-          "bg-semantic-status-warning-default shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]",
+        class: "bg-semantic-status-warning-default shadow-control-shadow-inner",
       },
     ],
     defaultVariants: { variant: "primary" },
@@ -142,7 +137,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progre
       <div className="relative min-w-0 flex-1">
         <div className="relative h-1.5 w-full overflow-hidden rounded-[var(--border-xxs)]">
           <div
-            className="pointer-events-none absolute inset-0 rounded-[var(--border-xxs)] bg-components-controls-bg-primary shadow-[inset_0.0625rem_0.0625rem_0.25rem_0_var(--components-controls-shadows-default-inner)]"
+            className="pointer-events-none absolute inset-0 rounded-[var(--border-xxs)] bg-components-controls-bg-primary shadow-control-shadow-inner"
             aria-hidden
           />
           <div

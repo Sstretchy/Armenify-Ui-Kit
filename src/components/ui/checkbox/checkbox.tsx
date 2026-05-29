@@ -46,13 +46,13 @@ const checkboxBoxVariants = cva(
         variant: "primary",
         boxState: "checked",
         class:
-          "border-transparent bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-outer group-hover:shadow-[0_0.0625rem_0.0625rem_0_var(--components-controls-shadows-default),inset_0.25rem_0.25rem_0.25rem_0_var(--components-controls-shadows-hover)] group-active:shadow-[0_0.0625rem_0.125rem_0_var(--components-controls-shadows-default),inset_0.25rem_0.25rem_0.25rem_0_var(--components-controls-shadows-active)]",
+          "border-transparent bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-outer group-hover:shadow-control-shadow-hover group-active:shadow-control-shadow-active",
       },
       {
         variant: "primary",
         boxState: "indeterminate",
         class:
-          "border-transparent bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-outer group-hover:shadow-[0_0.0625rem_0.0625rem_0_var(--components-controls-shadows-default),inset_0.25rem_0.25rem_0.25rem_0_var(--components-controls-shadows-hover)] group-active:shadow-[0_0.0625rem_0.125rem_0_var(--components-controls-shadows-default),inset_0.25rem_0.25rem_0.25rem_0_var(--components-controls-shadows-active)]",
+          "border-transparent bg-[image:var(--gradient-brand-primary)] shadow-control-shadow-outer group-hover:shadow-control-shadow-hover group-active:shadow-control-shadow-active",
       },
       {
         variant: "primary",

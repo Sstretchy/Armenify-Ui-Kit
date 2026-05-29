@@ -145,7 +145,7 @@ const ModalContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Co
           data-slot="modal-content-panel"
           className={cn(
             "pointer-events-auto flex max-h-[min(90vh,40rem)] w-[min(100vw-2rem,35.25rem)] flex-col overflow-hidden rounded-border-x-lg outline-none",
-            "focus-visible:outline-none focus-visible:[box-shadow:var(--control-shadow-outer-focused)]",
+            "focus-visible:outline-none focus-visible:shadow-control-shadow-outer-focused",
             panelShellClassName[color],
             className,
           )}
