@@ -427,7 +427,7 @@ const TagMultiSelectField = React.forwardRef<HTMLInputElement, TagMultiSelectFie
     </>
   );
 
-  const growChrome = cn("h-auto min-h-0", fieldClassName);
+  const growChrome = cn("h-auto min-h-0 max-h-none", fieldClassName);
 
   return (
     <InputBase className={className} {...baseRest} size={sz} color={color} tone={tone} disabled={disabled}>

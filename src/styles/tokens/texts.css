@@ -42,8 +42,4 @@
   --font-font-height-7xl: 4rem;
   --font-font-size-2xl: 1.375rem;
   --font-font-height-2xl: 1.625rem;
-  --font-font-size-xxs-input: 0.6875rem;
-  --font-font-size-xs-input: 0.8125rem;
-  --font-font-height-xxs-input: var(--font-font-size-xxs-input);
-  --font-font-height-xs-input: var(--font-font-size-xs-input);
 }

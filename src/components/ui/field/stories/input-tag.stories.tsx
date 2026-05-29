@@ -25,7 +25,7 @@ export const Matrix: Story = {
       <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
         Теги по макету (узел 182:435) — позже слот внутри инпута; сейчас отдельный компонент.
       </p>
-      {(["xs", "sm", "lg"] as const).map((size) => (
+      {(["sm", "lg"] as const).map((size) => (
         <section key={size} className="flex flex-col gap-3">
           <p className="text-font-size-xs font-medium text-semantic-text-ntrl-secondary">size: {size}</p>
           <div className="flex flex-col gap-2">

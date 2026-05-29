@@ -496,10 +496,6 @@
   --text-font-size-7xl--line-height: var(--font-font-height-7xl);
   --text-font-size-2xl: var(--font-font-size-2xl);
   --text-font-size-2xl--line-height: var(--font-font-height-2xl);
-  --text-font-size-xxs-input: var(--font-font-size-xxs-input);
-  --text-font-size-xxs-input--line-height: var(--font-font-height-xxs-input);
-  --text-font-size-xs-input: var(--font-font-size-xs-input);
-  --text-font-size-xs-input--line-height: var(--font-font-height-xs-input);
 
   /* Figma effect utilities: control shadow outer -> shadow-control-shadow-outer */
   --shadow-control-shadow-outer: var(--control-shadow-outer);

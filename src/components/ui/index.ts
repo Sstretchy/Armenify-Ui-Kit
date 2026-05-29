@@ -58,6 +58,7 @@ export {
   type InputFieldIconProps,
 } from "./field/input-field-icon";
 export { InputTag, inputTagVariants, inputTagSizeForTextInputField, type InputTagProps, type InputTagSize } from "./field/input-tag";
+export { Tag, tagVariants, type TagColor, type TagProps, type TagSize } from "./tag";
 export { InputBase, type InputBaseColor, type InputBaseProps, type InputBaseSize } from "./field/input-base";
 export {
   InputHelperText,
