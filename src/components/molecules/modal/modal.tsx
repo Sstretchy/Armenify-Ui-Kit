@@ -25,15 +25,15 @@ function useModalContext(): ModalContextValue {
 }
 
 const overlayToneClassName: Record<ModalOverlayTone, string> = {
-  dark: "bg-black/25 backdrop-blur-[12px]",
-  light: "bg-white/25 backdrop-blur-[8px]",
+  dark: "bg-black/25 backdrop-blur-[0.75rem]",
+  light: "bg-white/25 backdrop-blur-[0.5rem]",
 };
 
 const panelShellClassName: Record<ModalColor, string> = {
   brand:
     "border border-solid border-semantic-border-brand-default bg-semantic-bg-brand-primary shadow-input-shadow-outer",
   "brand-dark":
-    "border border-solid border-semantic-border-brand-default-inversed bg-semantic-bg-brand-primary-inverse shadow-input-shadow-outer",
+    "border border-solid border-semantic-border-brand-default-inverse bg-semantic-bg-brand-primary-inverse shadow-input-shadow-outer",
   ntrl: "border border-solid border-semantic-border-ntrl-default bg-semantic-bg-ntrl-secondary shadow-input-shadow-outer",
   "ntrl-dark":
     "border border-solid border-semantic-border-ntrl-default-inverse bg-semantic-bg-ntrl-secondary-inverse shadow-input-shadow-outer",
@@ -87,7 +87,7 @@ const footerBorderClassName: Record<ModalColor, string> = {
 
 export type ModalRootProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root> & {
   color?: ModalColor;
-  /** По умолчанию: для светлых панелей — затемнение + blur 12px, для тёмных — светлая вуаль + blur 8px (Figma 250:12534). */
+  /** Default overlays use rem-based blur values so modal scaling follows the root font size. */
   overlayTone?: ModalOverlayTone;
 };
 
@@ -168,7 +168,7 @@ const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(function 
       ref={ref}
       data-slot="modal-header"
       className={cn(
-        "flex min-h-[4.25rem] min-w-0 items-center justify-between gap-[var(--space-space-10)] px-[var(--space-space-5)] py-[var(--space-space-3)]",
+        "flex min-h-[4.25rem] min-w-0 items-center justify-between gap-10 px-5 py-3",
         headerStripClassName[color],
         className,
       )}
@@ -209,7 +209,7 @@ const ModalDescription = React.forwardRef<
       ref={ref}
       data-slot="modal-description"
       className={cn(
-        "mt-[var(--space-space-1)] font-medium text-font-size-sm leading-[var(--font-font-height-sm)] tracking-normal",
+        "mt-1 font-medium text-font-size-sm leading-[var(--font-font-height-sm)] tracking-normal",
         descriptionClassName[color],
         className,
       )}
@@ -230,7 +230,7 @@ const ModalBody = React.forwardRef<HTMLDivElement, ModalBodyProps>(function Moda
       ref={ref}
       data-slot="modal-body"
       className={cn(
-        "min-h-0 min-w-0 flex-1 overflow-y-auto p-[var(--space-space-5)] font-normal text-font-size-lg leading-[var(--font-font-height-lg)] tracking-normal",
+        "min-h-0 min-w-0 flex-1 overflow-y-auto p-5 font-normal text-font-size-lg leading-[var(--font-font-height-lg)] tracking-normal",
         bodyTextClassName[color],
         bodySurfaceClassName[color],
         className,
@@ -252,7 +252,7 @@ const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(function 
       ref={ref}
       data-slot="modal-footer"
       className={cn(
-        "flex min-w-0 flex-wrap items-center justify-between gap-[var(--space-space-3)] px-[var(--space-space-5)] py-[var(--space-space-4)]",
+        "flex min-w-0 flex-wrap items-center justify-between gap-3 px-5 py-4",
         footerBorderClassName[color],
         className,
       )}

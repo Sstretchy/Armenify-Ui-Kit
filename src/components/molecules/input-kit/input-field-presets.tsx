@@ -296,7 +296,7 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
       >
         <div ref={rootRef} className="relative w-full min-w-0">
           <TextInputChrome size={size} color={fc} tone={fieldTone} disabled={disabled} visualState={shell.visualState} fieldClassName={shell.fieldClassName}>
-            <div className="flex w-full min-w-0 items-center gap-[var(--space-space-2)]">
+            <div className="flex w-full min-w-0 items-center gap-2">
               <InputFieldIcon icon={leftIcon} size={size} color={ic} weight={fc === "brand" && !disabled ? "bold" : "slim"} />
               <TextInput
                 ref={ref}
@@ -321,7 +321,7 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
                   aria-haspopup="listbox"
                   aria-controls={channelMenuOpen ? channelListId : undefined}
                   className={cn(
-                    "relative w-full min-w-[5.5rem] max-w-full cursor-pointer truncate border-0 bg-transparent py-0 pl-0 pr-[var(--space-space-5)] text-left font-sans outline-none",
+                    "relative w-full min-w-[5.5rem] max-w-full cursor-pointer truncate border-0 bg-transparent py-0 pl-0 pr-5 text-left font-sans outline-none",
                     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-semantic-border-ntrl-default-focused",
                     textInputFieldTextClassName(fc, disabled ? "disabled" : "default", false),
                   )}
@@ -347,7 +347,7 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
             </div>
           </TextInputChrome>
           {channelMenuOpen && !disabled ? (
-            <div id={channelListId} className="absolute right-0 top-full z-10 mt-[var(--space-space-1)] min-w-0">
+            <div id={channelListId} className="absolute right-0 top-full z-10 mt-1 min-w-0">
               <SelectMenu size={size} color={menuColor} className="min-w-[9rem] w-max max-w-[12rem]">
                 {(["telegram", "whatsapp"] as const).map((ch) => (
                   <MenuItem

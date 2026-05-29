@@ -44,9 +44,9 @@ const helperSizeByBase: Record<InputBaseSize, InputHelperTextSize> = {
 };
 
 const sideGapBySize: Record<InputBaseSize, string> = {
-  sm: "gap-[var(--space-space-2)]",
-  md: "gap-[var(--space-space-2-5)]",
-  lg: "gap-[var(--space-space-3)]",
+  sm: "gap-2",
+  md: "gap-2.5",
+  lg: "gap-3",
 };
 
 function InputBase({
@@ -104,11 +104,11 @@ function InputBase({
         className={cn("flex min-w-0 items-start", sideGapBySize[size], className)}
         {...rest}
       >
-        <div className="flex min-w-0 shrink-0 flex-col justify-center gap-[var(--space-space-1)] self-stretch">
+        <div className="flex min-w-0 shrink-0 flex-col justify-center gap-1 self-stretch">
           {labelEl}
           {spacer}
         </div>
-        <div className="flex min-w-0 flex-1 flex-col gap-[var(--space-space-1)]">
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
           {children}
           {helperBelowField}
         </div>
@@ -122,7 +122,7 @@ function InputBase({
       data-input-base-layout="stack"
       data-input-base-size={size}
       data-input-base-color={color}
-      className={cn("flex min-w-0 flex-col gap-[var(--space-space-1)]", className)}
+      className={cn("flex min-w-0 flex-col gap-1", className)}
       {...rest}
     >
       {labelEl}

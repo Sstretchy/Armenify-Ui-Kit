@@ -7,7 +7,7 @@ import { controlInteractiveTransitionClassName } from "../control-transition";
 
 const switchTrackVariants = cva(
   cn(
-    "relative box-border shrink-0 overflow-hidden rounded-full border-[1.5px] border-solid shadow-control-shadow-outer",
+    "relative box-border shrink-0 overflow-hidden rounded-full border-[0.09375rem] border-solid shadow-control-shadow-outer",
     controlInteractiveTransitionClassName,
     "transition-[background-color,background-image,border-color,opacity,box-shadow] duration-[var(--control-transition-duration,250ms)] ease-[var(--control-transition-timing,cubic-bezier(0.4,0,0.2,1))]",
     "peer-focus-visible:outline-none peer-focus-visible:shadow-control-shadow-outer-focused",
@@ -15,8 +15,8 @@ const switchTrackVariants = cva(
   {
     variants: {
       size: {
-        md: "h-[18px] w-[var(--space-space-10)]",
-        lg: "h-[var(--space-space-5)] w-[var(--space-space-11)]",
+        md: "h-[1.125rem] w-10",
+        lg: "h-5 w-11",
       },
       variant: {
         primary: "",
@@ -99,14 +99,14 @@ const switchTrackVariants = cva(
 
 const switchThumbVariants = cva(
   cn(
-    "pointer-events-none absolute top-1/2 z-[1] box-border -translate-y-1/2 rounded-full border-[1.5px] border-solid shadow-control-shadow-outer",
+    "pointer-events-none absolute top-1/2 z-[1] box-border -translate-y-1/2 rounded-full border-[0.09375rem] border-solid shadow-control-shadow-outer",
     "transition-[left,background-color,border-color,box-shadow] duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
   ),
   {
     variants: {
       size: {
-        md: "h-[18px] w-[var(--space-space-4-5)]",
-        lg: "h-[var(--space-space-5)] w-[var(--space-space-5)]",
+        md: "h-[1.125rem] w-4.5",
+        lg: "h-5 w-5",
       },
       variant: {
         primary: "",
@@ -123,9 +123,9 @@ const switchThumbVariants = cva(
     },
     compoundVariants: [
       { size: "md", on: false, class: "left-0" },
-      { size: "md", on: true, class: "left-[calc(100%-var(--space-space-4-5))]" },
+      { size: "md", on: true, class: "left-[calc(100%-theme(spacing.4.5))]" },
       { size: "lg", on: false, class: "left-0" },
-      { size: "lg", on: true, class: "left-[calc(100%-var(--space-space-5))]" },
+      { size: "lg", on: true, class: "left-[calc(100%-theme(spacing.5))]" },
 
       {
         variant: "primary",

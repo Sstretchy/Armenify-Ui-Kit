@@ -10,9 +10,9 @@ import { textInputFieldChrome, textInputFieldRootVariants, type TextInputFieldVi
 import { textInputFieldTextClassName, textInputRootVariants, type TextInputColor, type TextInputSize, type TextInputTone } from "./text-input";
 
 const selectStackGapClass: Record<TextInputSize, string> = {
-  sm: "gap-[var(--space-space-1)]",
-  md: "gap-[var(--space-space-1-5)]",
-  lg: "gap-[var(--space-space-2)]",
+  sm: "gap-1",
+  md: "gap-1.5",
+  lg: "gap-2",
 };
 
 function SelectCaret({ color, disabled, open }: { color: TextInputColor; disabled: boolean; open: boolean }) {
@@ -163,7 +163,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(function Select(
             aria-haspopup="listbox"
             className={cn(
               textInputRootVariants({ size }),
-              "flex w-full min-w-0 cursor-pointer items-center justify-between gap-[var(--space-space-1)] border-0 bg-transparent p-0 text-left outline-none",
+              "flex w-full min-w-0 cursor-pointer items-center justify-between gap-1 border-0 bg-transparent p-0 text-left outline-none",
               "focus-visible:outline-none disabled:cursor-not-allowed",
             )}
             onClick={() => !disabled && setOpen(!open)}

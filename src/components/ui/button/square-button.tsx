@@ -19,13 +19,13 @@ const squareButtonVariants = cva(
         primary: [
           "border-0 bg-[image:var(--gradient-brand-primary)] text-components-controls-text-primary shadow-control-shadow-outer",
           "hover:shadow-control-shadow-hover active:shadow-control-shadow-active",
-          "disabled:border-[1.5px] disabled:border-components-controls-bg-disabled disabled:bg-[image:none] disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
+          "disabled:border-[0.09375rem] disabled:border-components-controls-bg-disabled disabled:bg-[image:none] disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
         ],
         secondary: [
           "border-0 bg-components-controls-bg-secondary-default text-components-controls-text-secondary shadow-control-shadow-outer",
           "hover:bg-components-controls-bg-secondary-hover hover:shadow-control-shadow-hover",
           "active:bg-components-controls-bg-secondary-active active:shadow-control-shadow-active",
-          "disabled:border-[1.5px] disabled:border-components-controls-bg-disabled disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
+          "disabled:border-[0.09375rem] disabled:border-components-controls-bg-disabled disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
         ],
         tertiary: [
           "border-0 bg-components-controls-bg-tertiary text-components-controls-text-tertiary shadow-control-shadow-outer",
@@ -39,10 +39,10 @@ const squareButtonVariants = cva(
         ],
       },
       size: {
-        xs: "size-[var(--space-space-9)] text-font-size-base leading-[var(--font-font-height-base)]",
-        sm: "size-[var(--space-space-10)] text-font-size-lg leading-[var(--font-font-height-lg)]",
-        md: "size-[var(--space-space-11)] text-font-size-xl leading-[var(--font-font-height-xl)]",
-        lg: "size-[var(--space-space-12)] text-font-size-2xl leading-[var(--font-font-height-2xl)]",
+        xs: "size-9 text-font-size-base leading-[var(--font-font-height-base)]",
+        sm: "size-10 text-font-size-lg leading-[var(--font-font-height-lg)]",
+        md: "size-11 text-font-size-xl leading-[var(--font-font-height-xl)]",
+        lg: "size-12 text-font-size-2xl leading-[var(--font-font-height-2xl)]",
       },
       shape: {
         square: "rounded-border-md",

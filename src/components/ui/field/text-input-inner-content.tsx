@@ -79,7 +79,7 @@ function PrefixAndValue({
   return (
     <div
       className={cn(
-        "flex min-w-0 items-center gap-[var(--space-space-2-5)] text-font-size-sm leading-[var(--font-font-height-sm)]",
+        "flex min-w-0 items-center gap-2.5 text-font-size-sm leading-[var(--font-font-height-sm)]",
         field ? "min-w-0 flex-1" : "whitespace-nowrap",
       )}
     >
@@ -202,8 +202,8 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
       case "iconBoth":
         body =
           color === "brand" && disabled ? (
-            <div className="flex min-w-0 flex-1 items-center justify-between gap-[var(--space-space-1)]">
-              <div className="flex min-w-0 items-center gap-[var(--space-space-1)]">
+            <div className="flex min-w-0 flex-1 items-center justify-between gap-1">
+              <div className="flex min-w-0 items-center gap-1">
                 <InputFieldIcon icon={ShootingStar} size={size} color="disable" weight="slim" />
                 {pv(showPrefix)}
               </div>
@@ -280,11 +280,11 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
       case "comboBox":
         body = (
           <>
-            <div className="flex min-w-0 flex-1 items-center gap-[var(--space-space-0-5)]">
+            <div className="flex min-w-0 flex-1 items-center gap-0.5">
               {rub}
               {pv(showPrefix)}
             </div>
-            <div className="flex shrink-0 items-center gap-[var(--space-space-1)]">
+            <div className="flex shrink-0 items-center gap-1">
               <PrefixAndValue
                 color={color}
                 disabled={disabled}
@@ -302,7 +302,7 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
       case "multiselect":
         body = (
           <>
-            <div className="flex min-w-0 flex-1 flex-wrap content-start items-start gap-[var(--space-space-1)]">
+            <div className="flex min-w-0 flex-1 flex-wrap content-start items-start gap-1">
               {tags ?? <DemoTags disabled={disabled} size={size} />}
             </div>
             {showCaret ? <CaretIcon color={color} disabled={disabled} /> : null}
@@ -323,11 +323,11 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
 
     const rootClass = cn(
       textInputRootVariants({ size }),
-      "min-w-0 items-center gap-[var(--space-space-1)]",
+      "min-w-0 items-center gap-1",
       justifyBetween && "justify-between",
-      layout === "comboBox" && "gap-[var(--space-space-2)]",
-      layout === "currency" && "gap-[var(--space-space-0-5)]",
-      layout === "iconLeft" && color === "brand" && "gap-[var(--space-space-1)]",
+      layout === "comboBox" && "gap-2",
+      layout === "currency" && "gap-0.5",
+      layout === "iconLeft" && color === "brand" && "gap-1",
       className,
     );
 

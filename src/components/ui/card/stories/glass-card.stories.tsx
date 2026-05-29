@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>;
 
 function SlotPreview() {
   return (
-    <div className="flex w-full flex-col gap-[var(--space-space-4)] text-center">
+    <div className="flex w-full flex-col gap-4 text-center">
       <p className="font-medium text-font-size-xl leading-[var(--font-font-height-xl)] text-components-typography-brand-dark-content">
         Слот контента
       </p>

@@ -44,7 +44,7 @@ const accordionItemVariants = cva(
 
 const accordionTriggerVariants = cva(
   cn(
-    "group flex w-full min-w-0 cursor-pointer items-center justify-between gap-[var(--space-space-2)] border-0 border-b border-solid text-left font-sans font-medium outline-none",
+    "group flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 border-0 border-b border-solid text-left font-sans font-medium outline-none",
     controlInteractiveTransitionClassName,
     "transition-[background-color,border-color,color] duration-200 ease-out",
   ),
@@ -61,8 +61,8 @@ const accordionTriggerVariants = cva(
           "items-start border-semantic-border-ntrl-delicate-inverse bg-semantic-bg-ntrl-tertiary-inverse text-components-typography-ntrl-dark-content-light hover:bg-semantic-bg-ntrl-tertiary-inverse-hover active:bg-semantic-bg-ntrl-tertiary-inverse-active data-[state=open]:bg-semantic-bg-ntrl-tertiary-inverse-active",
       },
       size: {
-        sm: "p-[var(--space-space-3)] text-font-size-sm leading-[var(--font-font-height-sm)]",
-        md: "p-[var(--space-space-4)] text-font-size-base leading-[var(--font-font-height-base)]",
+        sm: "p-3 text-font-size-sm leading-[var(--font-font-height-sm)]",
+        md: "p-4 text-font-size-base leading-[var(--font-font-height-base)]",
       },
     },
     defaultVariants: { color: "brand", size: "sm" },
@@ -70,8 +70,8 @@ const accordionTriggerVariants = cva(
 );
 
 const contentPadding: Record<AccordionSize, string> = {
-  sm: "p-[var(--space-space-3)] text-font-size-xs leading-[var(--font-font-height-xs)]",
-  md: "p-[var(--space-space-4)] text-font-size-sm leading-[var(--font-font-height-sm)]",
+  sm: "p-3 text-font-size-xs leading-[var(--font-font-height-xs)]",
+  md: "p-4 text-font-size-sm leading-[var(--font-font-height-sm)]",
 };
 
 const contentBg: Record<AccordionColor, string> = {
@@ -110,7 +110,7 @@ const AccordionRoot = React.forwardRef<HTMLDivElement, AccordionRootProps>(funct
         data-slot="accordion-root"
         data-accordion-color={color}
         data-accordion-size={size}
-        className={cn("flex w-full min-w-0 flex-col gap-px", className)}
+        className={cn("flex w-full min-w-0 flex-col gap-[0.0625rem]", className)}
         {...props}
       >
         {children}

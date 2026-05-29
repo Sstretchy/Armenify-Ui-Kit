@@ -6,13 +6,13 @@ import { cn } from "@/lib/utils";
 export type GlassCardSize = "sm" | "md" | "lg";
 
 const glassCardRootVariants = cva(
-  "relative flex w-full flex-col items-stretch justify-center overflow-hidden rounded-border-x-lg border border-solid border-semantic-border-brand-delicate bg-primitive-colors-brand-400/20 backdrop-blur-[12px]",
+  "relative flex w-full flex-col items-stretch justify-center overflow-hidden rounded-border-x-lg border border-solid border-semantic-border-brand-delicate bg-primitive-colors-brand-400/20 backdrop-blur-[0.75rem]",
   {
     variants: {
       size: {
-        sm: "max-w-[23.8125rem] px-[var(--space-space-6)] py-[var(--space-space-8)]",
-        md: "max-w-[28.375rem] px-[var(--space-space-7)] py-[var(--space-space-9)]",
-        lg: "max-w-[31.25rem] px-[var(--space-space-8)] py-[var(--space-space-10)]",
+        sm: "max-w-[23.8125rem] px-6 py-8",
+        md: "max-w-[28.375rem] px-7 py-9",
+        lg: "max-w-[31.25rem] px-8 py-10",
       },
     },
     defaultVariants: { size: "lg" },

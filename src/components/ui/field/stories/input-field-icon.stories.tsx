@@ -22,7 +22,7 @@ export const Matrix: Story = {
   render: () => (
     <div className="flex flex-col gap-8 p-4">
       <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-        Иконка для слота внутри поля (Figma 242:1244): размеры как у TextInput (16 / 20 / 22 px), цвета ntrl / brand /
+        Иконка для слота внутри поля (Figma 242:1244): rem-based размеры как у TextInput, цвета ntrl / brand /
         disable, обводка slim / bold.
       </p>
       {(["slim", "bold"] as const).map((weight) => (
@@ -61,7 +61,7 @@ export const InsideRow: Story = {
             </button>
           ))}
         </div>
-        <div className={cn(textInputRootVariants({ size }), "rounded-border-md border border-semantic-border-ntrl-default px-[var(--space-space-2)]")}>
+        <div className={cn(textInputRootVariants({ size }), "rounded-border-md border border-semantic-border-ntrl-default px-2")}>
           <InputFieldIcon icon={MagnifyingGlass} size={size} color="ntrl" />
           <input
             type="search"

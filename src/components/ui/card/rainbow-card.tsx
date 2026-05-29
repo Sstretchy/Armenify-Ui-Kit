@@ -17,13 +17,13 @@ const rainbowCardRootVariants = cva(
   {
     variants: {
       size: {
-        sm: "gap-0 px-[var(--space-space-4)] py-[var(--space-space-6)]",
-        md: "gap-0 px-[var(--space-space-5)] py-[var(--space-space-7)]",
-        lg: "gap-0 px-[var(--space-space-6)] py-[var(--space-space-8)]",
-        "x-lg": "gap-0 px-[var(--space-space-8)] py-[var(--space-space-10)]",
+        sm: "gap-0 px-4 py-6",
+        md: "gap-0 px-5 py-7",
+        lg: "gap-0 px-6 py-8",
+        "x-lg": "gap-0 px-8 py-10",
       },
       shadow: {
-        true: "shadow-[0px_0px_26.4px_6.6px_rgba(0,0,0,0.4)]",
+        true: "shadow-[0_0_1.65rem_0.4125rem_rgba(0,0,0,0.4)]",
         false: "",
       },
     },
@@ -33,11 +33,11 @@ const rainbowCardRootVariants = cva(
 
 const rainbowOverlayClassName: Record<RainbowCardType, string> = {
   rainbow1:
-    "pointer-events-none absolute inset-0 rounded-border-x-lg bg-gradient-to-b from-primitive-colors-brand-150/35 from-0% via-primitive-colors-brand-400/35 via-50% to-primitive-colors-brand-600/35 to-100% mix-blend-color-dodge backdrop-blur-[4.84px]",
+    "pointer-events-none absolute inset-0 rounded-border-x-lg bg-gradient-to-b from-primitive-colors-brand-150/35 from-0% via-primitive-colors-brand-400/35 via-50% to-primitive-colors-brand-600/35 to-100% mix-blend-color-dodge backdrop-blur-[0.3025rem]",
   rainbow2:
-    "pointer-events-none absolute inset-0 rounded-border-x-lg bg-gradient-to-b from-primitive-colors-brand-150/35 from-0% via-primitive-colors-brand-400/35 via-50% to-primitive-colors-brand-600/35 to-100% mix-blend-difference backdrop-blur-[4.84px]",
+    "pointer-events-none absolute inset-0 rounded-border-x-lg bg-gradient-to-b from-primitive-colors-brand-150/35 from-0% via-primitive-colors-brand-400/35 via-50% to-primitive-colors-brand-600/35 to-100% mix-blend-difference backdrop-blur-[0.3025rem]",
   rainbow3:
-    "pointer-events-none absolute inset-0 rounded-border-x-lg bg-gradient-to-b from-primitive-colors-brand-150/35 from-0% via-primitive-colors-brand-400/35 via-50% to-primitive-colors-brand-800/35 to-100% mix-blend-plus-lighter backdrop-blur-[4.84px]",
+    "pointer-events-none absolute inset-0 rounded-border-x-lg bg-gradient-to-b from-primitive-colors-brand-150/35 from-0% via-primitive-colors-brand-400/35 via-50% to-primitive-colors-brand-800/35 to-100% mix-blend-plus-lighter backdrop-blur-[0.3025rem]",
 };
 
 const titleClassName: Record<RainbowCardSize, string> = {
@@ -55,10 +55,10 @@ const descriptionClassName: Record<RainbowCardSize, string> = {
 };
 
 const bodyGapClassName: Record<RainbowCardSize, string> = {
-  sm: "gap-[var(--space-space-4)]",
-  md: "gap-[18px]",
-  lg: "gap-[18px]",
-  "x-lg": "gap-[18px]",
+  sm: "gap-4",
+  md: "gap-[1.125rem]",
+  lg: "gap-[1.125rem]",
+  "x-lg": "gap-[1.125rem]",
 };
 
 export type RainbowCardRootProps = React.ComponentPropsWithoutRef<"div"> & {
@@ -88,7 +88,7 @@ const RainbowCardRoot = React.forwardRef<HTMLDivElement, RainbowCardRootProps>(f
         <div className={rainbowOverlayClassName[type]} aria-hidden />
         <div
           className={cn(
-            "relative z-[1] flex w-full flex-col items-stretch text-center text-shadow-[2px_2px_2px_rgba(0,0,0,0.1)] text-components-typography-brand-dark-content",
+            "relative z-[1] flex w-full flex-col items-stretch text-center text-shadow-[0.125rem_0.125rem_0.125rem_rgba(0,0,0,0.1)] text-components-typography-brand-dark-content",
             bodyGapClassName[sz],
           )}
         >

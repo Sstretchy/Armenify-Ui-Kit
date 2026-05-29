@@ -22,7 +22,7 @@ function useAlertStyle(): AlertStyleContextValue {
 
 const alertRootVariants = cva(
   [
-    "flex w-full max-w-[25rem] items-start justify-center gap-[var(--space-space-2)] overflow-hidden rounded-border-x-lg border-[2.5px] border-dashed p-[var(--space-space-3)] backdrop-blur-[12px]",
+    "flex w-full max-w-[25rem] items-start justify-center gap-2 overflow-hidden rounded-border-x-lg border-[0.15625rem] border-dashed p-3 backdrop-blur-[0.75rem]",
     "font-sans antialiased",
   ],
   {
@@ -154,7 +154,7 @@ const AlertContent = React.forwardRef<HTMLDivElement, AlertContentProps>(functio
       ref={ref}
       data-slot="alert-content"
       className={cn(
-        "flex min-w-0 flex-1 flex-col justify-center self-stretch p-[10px] font-medium text-font-size-lg leading-[var(--font-font-height-lg)] tracking-normal",
+        "flex min-w-0 flex-1 flex-col justify-center self-stretch p-[0.625rem] font-medium text-font-size-lg leading-[var(--font-font-height-lg)] tracking-normal",
         alertMessageText[theme],
         className,
       )}

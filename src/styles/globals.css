@@ -2,6 +2,10 @@
 @import "./tokens.css";
 
 @layer utilities {
+  .rounded-full {
+    border-radius: 999rem;
+  }
+
   .border-3 {
     border-style: var(--tw-border-style);
     border-width: 0.1875rem;
@@ -76,6 +80,74 @@
     border-left-width: 0.375rem;
   }
 
+  .divide-x > :not(:last-child) {
+    border-inline-style: var(--tw-border-style);
+    border-inline-start-width: calc(0.0625rem * var(--tw-divide-x-reverse));
+    border-inline-end-width: calc(0.0625rem * calc(1 - var(--tw-divide-x-reverse)));
+  }
+  .divide-x-0 > :not(:last-child) {
+    border-inline-style: var(--tw-border-style);
+    border-inline-start-width: calc(0 * var(--tw-divide-x-reverse));
+    border-inline-end-width: calc(0 * calc(1 - var(--tw-divide-x-reverse)));
+  }
+  .divide-x-2 > :not(:last-child) {
+    border-inline-style: var(--tw-border-style);
+    border-inline-start-width: calc(0.125rem * var(--tw-divide-x-reverse));
+    border-inline-end-width: calc(0.125rem * calc(1 - var(--tw-divide-x-reverse)));
+  }
+  .divide-x-4 > :not(:last-child) {
+    border-inline-style: var(--tw-border-style);
+    border-inline-start-width: calc(0.25rem * var(--tw-divide-x-reverse));
+    border-inline-end-width: calc(0.25rem * calc(1 - var(--tw-divide-x-reverse)));
+  }
+  .divide-x-8 > :not(:last-child) {
+    border-inline-style: var(--tw-border-style);
+    border-inline-start-width: calc(0.5rem * var(--tw-divide-x-reverse));
+    border-inline-end-width: calc(0.5rem * calc(1 - var(--tw-divide-x-reverse)));
+  }
+
+  .divide-y > :not(:last-child) {
+    border-block-style: var(--tw-border-style);
+    border-top-width: calc(0.0625rem * var(--tw-divide-y-reverse));
+    border-bottom-width: calc(0.0625rem * calc(1 - var(--tw-divide-y-reverse)));
+  }
+  .divide-y-0 > :not(:last-child) {
+    border-block-style: var(--tw-border-style);
+    border-top-width: calc(0 * var(--tw-divide-y-reverse));
+    border-bottom-width: calc(0 * calc(1 - var(--tw-divide-y-reverse)));
+  }
+  .divide-y-2 > :not(:last-child) {
+    border-block-style: var(--tw-border-style);
+    border-top-width: calc(0.125rem * var(--tw-divide-y-reverse));
+    border-bottom-width: calc(0.125rem * calc(1 - var(--tw-divide-y-reverse)));
+  }
+  .divide-y-4 > :not(:last-child) {
+    border-block-style: var(--tw-border-style);
+    border-top-width: calc(0.25rem * var(--tw-divide-y-reverse));
+    border-bottom-width: calc(0.25rem * calc(1 - var(--tw-divide-y-reverse)));
+  }
+  .divide-y-8 > :not(:last-child) {
+    border-block-style: var(--tw-border-style);
+    border-top-width: calc(0.5rem * var(--tw-divide-y-reverse));
+    border-bottom-width: calc(0.5rem * calc(1 - var(--tw-divide-y-reverse)));
+  }
+
+  .ring-offset-0 {
+    --tw-ring-offset-width: 0rem;
+  }
+  .ring-offset-1 {
+    --tw-ring-offset-width: 0.0625rem;
+  }
+  .ring-offset-2 {
+    --tw-ring-offset-width: 0.125rem;
+  }
+  .ring-offset-4 {
+    --tw-ring-offset-width: 0.25rem;
+  }
+  .ring-offset-8 {
+    --tw-ring-offset-width: 0.5rem;
+  }
+
   .control-interactive-transition {
     transition-property: box-shadow, color, border-color, opacity, background-color, background-image,
       border-width, border-radius;
@@ -85,8 +157,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-primary);
-  --font-serif: var(--font-secondary);
+  --font-sans: var(--font-family-sans);
+  --font-serif: var(--font-family-serif);
 
   --radius-xxs: var(--border-xxs);
   --radius-xs: var(--border-xs);
@@ -96,7 +168,7 @@
   --radius-xl: var(--border-x-lg);
   --radius-2xl: var(--border-xx-lg);
 
-  /* Tailwind defaults use px; rem scales with root font-size */
+  /* Tailwind defaults are normalized to rem so they scale with root font-size */
   --default-border-width: 0.0625rem;
   --border-width-0: 0;
   --border-width-2: 0.125rem;
@@ -256,6 +328,7 @@
   --color-semantic-border-brand-default-focused: var(--semantic-border-brand-default-focused);
   --color-semantic-border-brand-default-inverse-focused: var(--semantic-border-brand-default-inverse-focused);
   --color-semantic-border-brand-default-inverse-hover: var(--semantic-border-brand-default-inverse-hover);
+  --color-semantic-border-brand-default-inverse: var(--semantic-border-brand-default-inverse);
   --color-semantic-border-brand-default-inversed: var(--semantic-border-brand-default-inversed);
   --color-semantic-border-brand-delicate-inverse: var(--semantic-border-brand-delicate-inverse);
   --color-semantic-bg-ntrl-tertiary-inverse-hover: var(--semantic-bg-ntrl-tertiary-inverse-hover);
@@ -429,13 +502,14 @@
   }
 
   html {
-    font-family: var(--font-primary);
+    font-family: var(--font-family-sans);
+    font-size: 16px;
   }
 
   body {
     background-color: var(--semantic-bg-ntrl-primary);
     color: var(--semantic-text-ntrl-primary);
-    font-family: var(--font-primary);
+    font-family: var(--font-family-sans);
     letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
