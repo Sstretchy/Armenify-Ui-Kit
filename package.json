@@ -32,8 +32,8 @@
   },
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "prebuild": "rm -rf dist",
-    "build": "tsc -p tsconfig.build.json && vite build",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.build.json && vite build",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview --host 0.0.0.0",
     "storybook": "storybook dev -p 6006 --host localhost",

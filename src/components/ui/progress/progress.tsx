@@ -167,7 +167,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progre
       {showLabel ? (
         <div className="flex min-w-5 shrink-0 justify-end tabular-nums">
           {label ?? (
-            <Typography variant="xxxs" weight="bold" className={cn("m-0 w-full text-right leading-[var(--font-font-height-xxxs)]", labelClass)}>
+            <Typography variant="xs" weight="bold" className={cn("m-0 w-full text-right", labelClass)}>
               {pctLabel}
             </Typography>
           )}
