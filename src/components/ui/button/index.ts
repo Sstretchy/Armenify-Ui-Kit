@@ -15,6 +15,14 @@ export {
   type GhostButtonVariant,
 } from "./ghost-button";
 export {
+  IconButton,
+  iconButtonVariants,
+  type IconButtonProps,
+  type IconButtonShape,
+  type IconButtonSize,
+  type IconButtonVariant,
+} from "./icon-button";
+export {
   SquareButton,
   squareButtonVariants,
   type SquareButtonProps,

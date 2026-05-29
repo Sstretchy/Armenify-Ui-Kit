@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { SealCheck } from "phosphor-strokes-icons";
 
 import { ArmenifyIcon, squareButtonSizeToArmenifyIconSize } from "../../icon";
+import { Typography } from "../../typography";
 import { SquareButton } from "../square-button";
 
 const meta = {
@@ -67,43 +68,47 @@ const stateClassNames: Record<
 export const Interactive: Story = {
   render: function InteractiveRender() {
     const [pressed, setPressed] = React.useState<Partial<Record<(typeof variants)[number], boolean>>>({});
-    const flip = (v: (typeof variants)[number]) => {
-      setPressed((m) => ({ ...m, [v]: !m[v] }));
+    const flip = (variant: (typeof variants)[number]) => {
+      setPressed((map) => ({ ...map, [variant]: !map[variant] }));
     };
+
     return (
       <div className="flex flex-col gap-6 p-4">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-          Клик — вкл/выкл pressed. Зажми кнопку — увидишь :active.
-        </p>
+        <Typography variant="sm" tone="muted">
+          Click toggles the `pressed` state. Hold the mouse button to inspect the native `:active` state separately.
+        </Typography>
         <div className="flex flex-wrap items-end gap-4">
-          {variants.map((v) => (
-            <div key={v} className="flex flex-col items-center gap-1">
+          {variants.map((variant) => (
+            <div key={variant} className="flex flex-col items-center gap-1">
               <SquareButton
-                variant={v}
+                variant={variant}
                 size="lg"
                 type="button"
-                pressed={pressed[v] ? true : undefined}
+                pressed={pressed[variant] ? true : undefined}
                 onClick={() => {
-                  flip(v);
+                  flip(variant);
                 }}
               >
-                {v.slice(0, 2)}
+                {variant.slice(0, 2)}
               </SquareButton>
-              <span className="text-font-size-xs text-semantic-text-ntrl-secondary">{v}</span>
+              <Typography variant="xs" tone="muted">
+                {variant}
+              </Typography>
             </div>
           ))}
         </div>
         <div className="flex flex-wrap items-end gap-4 rounded-border-md bg-semantic-bg-ntrl-primary p-4">
-          {variants.map((v) => (
+          {variants.map((variant) => (
             <SquareButton
-              key={`icon-${v}`}
-              variant={v}
+              key={`icon-${variant}`}
+              aria-label={`${variant} icon action`}
+              variant={variant}
               size="lg"
               shape="round"
               type="button"
-              pressed={pressed[v] ? true : undefined}
+              pressed={pressed[variant] ? true : undefined}
               onClick={() => {
-                flip(v);
+                flip(variant);
               }}
               icon={
                 <ArmenifyIcon icon={SealCheck} size={squareButtonSizeToArmenifyIconSize.lg} strokeWeight="bold" />
@@ -120,20 +125,21 @@ export const States: Story = {
   render: () => (
     <div className="flex flex-col gap-8 p-4">
       <div className="flex flex-col gap-4">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">States (lg)</p>
+        <Typography variant="sm" tone="muted">
+          States (lg)
+        </Typography>
         <div className="grid grid-cols-[6rem_repeat(7,max-content)] items-center gap-x-3 gap-y-3">
           <div />
           {states.map((state) => (
-            <span
-              key={state}
-              className="text-center text-font-size-sm capitalize text-semantic-text-ntrl-secondary"
-            >
+            <Typography key={state} variant="sm" tone="muted" align="center" className="capitalize">
               {state}
-            </span>
+            </Typography>
           ))}
           {variants.map((variant) => (
             <React.Fragment key={variant}>
-              <span className="text-font-size-sm capitalize text-semantic-text-ntrl-secondary">{variant}</span>
+              <Typography variant="sm" tone="muted" className="capitalize">
+                {variant}
+              </Typography>
               {states.map((state) => (
                 <SquareButton
                   key={`${variant}-${state}`}
@@ -154,11 +160,14 @@ export const States: Story = {
       </div>
 
       <div className="flex flex-col gap-3">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">Icon only (primary, lg)</p>
+        <Typography variant="sm" tone="muted">
+          Icon only (lg)
+        </Typography>
         <div className="flex flex-wrap items-center gap-3">
           {variants.map((variant) => (
             <SquareButton
-              key={`icon-${variant}`}
+              key={`icon-only-${variant}`}
+              aria-label={`${variant} icon action`}
               variant={variant}
               size="lg"
               icon={
@@ -170,12 +179,15 @@ export const States: Story = {
       </div>
 
       <div className="flex flex-col gap-3">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">Round (primary, lg)</p>
+        <Typography variant="sm" tone="muted">
+          Round (primary, lg)
+        </Typography>
         <div className="flex flex-wrap items-center gap-3">
           <SquareButton variant="primary" size="lg" shape="round">
             23
           </SquareButton>
           <SquareButton
+            aria-label="Primary round icon action"
             variant="primary"
             size="lg"
             shape="round"
@@ -187,14 +199,18 @@ export const States: Story = {
       </div>
 
       <div className="flex flex-col gap-3">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">Sizes (primary)</p>
+        <Typography variant="sm" tone="muted">
+          Sizes (primary)
+        </Typography>
         <div className="flex flex-wrap items-end gap-3">
           {(["xs", "sm", "md", "lg"] as const).map((size) => (
             <div key={size} className="flex flex-col items-center gap-1">
               <SquareButton variant="primary" size={size}>
                 23
               </SquareButton>
-              <span className="text-font-size-xs text-semantic-text-ntrl-secondary">{size}</span>
+              <Typography variant="xs" tone="muted">
+                {size}
+              </Typography>
             </div>
           ))}
         </div>
