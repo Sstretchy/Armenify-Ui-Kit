@@ -1,6 +1,6 @@
 # Armenify UI Kit
 
-React UI kit scaffolded for shadcn/ui components, Tailwind CSS v4, and a future microfrontend remote.
+React UI kit scaffolded for shadcn/ui components, Tailwind CSS v4, and a future embeddable remote.
 
 ## Structure
 
@@ -9,7 +9,8 @@ React UI kit scaffolded for shadcn/ui components, Tailwind CSS v4, and a future 
 - `src/styles/globals.css` imports the token groups and maps them into shadcn/ui and Tailwind v4 theme variables.
 - `src/components/ui` contains shadcn-style primitives.
 - `src/components/foundations` contains token and foundation previews for development.
-- `src/microfrontend` exposes a host-friendly `mount` API.
+- `src/embed.ts` exposes a host-friendly secondary entry for embedding.
+- `src/mount.tsx` contains the mount API used by the package root and embed entry.
 - `src/index.ts` is the package entry point for library consumers.
 
 ## Scripts

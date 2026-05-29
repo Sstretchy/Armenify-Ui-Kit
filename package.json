@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Armenify React UI kit with shadcn/ui-compatible tokens and a microfrontend-ready mount API.",
+  "description": "Armenify React UI kit with shadcn/ui-compatible tokens and an embeddable mount API.",
   "module": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
   "sideEffects": [
@@ -18,9 +18,13 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./embed": {
+      "types": "./dist/types/embed.d.ts",
+      "import": "./dist/embed.js"
+    },
     "./microfrontend": {
-      "types": "./dist/types/microfrontend/index.d.ts",
-      "import": "./dist/microfrontend.js"
+      "types": "./dist/types/embed.d.ts",
+      "import": "./dist/embed.js"
     },
     "./styles.css": "./dist/styles.css",
     "./globals.css": "./src/styles/globals.css",

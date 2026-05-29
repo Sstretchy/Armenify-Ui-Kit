@@ -5,6 +5,7 @@ import { X } from "phosphor-strokes-icons";
 import { cn } from "@/lib/utils";
 import { ArmenifyIcon, ghostButtonSizeToArmenifyIconSize } from "@/components/ui/icon";
 import { ghostButtonVariants } from "@/components/ui/button/ghost-button";
+import "./modal.css";
 
 export type ModalColor = "brand" | "brand-dark" | "ntrl" | "ntrl-dark";
 
@@ -118,7 +119,7 @@ const ModalOverlay = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Ov
         ref={ref}
         data-slot="modal-overlay"
         className={cn(
-          "fixed inset-0 z-50 data-[state=open]:pointer-events-auto data-[state=closed]:pointer-events-none",
+          "fixed inset-0 z-50 data-[state=open]:pointer-events-auto data-[state=closed]:pointer-events-none data-[state=open]:animate-[am-modal-overlay-in_220ms_ease-out_forwards]",
           overlayToneClassName[overlayTone],
           className,
         )}
@@ -137,7 +138,7 @@ const ModalContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Co
       <DialogPrimitive.Content
         ref={ref}
         data-slot="modal-content"
-        className="fixed inset-0 z-50 grid place-items-center overflow-y-auto p-4 font-sans antialiased outline-none pointer-events-none focus-visible:outline-none"
+        className="fixed inset-0 z-50 grid place-items-center overflow-y-auto p-4 font-sans antialiased outline-none pointer-events-none focus-visible:outline-none data-[state=open]:[&_[data-slot=modal-content-panel]]:animate-[am-modal-content-in_240ms_cubic-bezier(0.16,1,0.3,1)_forwards]"
         {...props}
       >
         <div

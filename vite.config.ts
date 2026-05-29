@@ -18,7 +18,7 @@ export default defineConfig({
     lib: {
       entry: {
         index: path.resolve(rootDir, "src/index.ts"),
-        microfrontend: path.resolve(rootDir, "src/microfrontend/index.ts"),
+        embed: path.resolve(rootDir, "src/embed.ts"),
         styles: path.resolve(rootDir, "src/styles-entry.ts"),
       },
       formats: ["es"],
