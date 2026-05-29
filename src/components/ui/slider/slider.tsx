@@ -5,6 +5,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 import { controlInteractiveTransitionClassName } from "../control-transition";
+import {
+  controlFocusedBaseClassName,
+  controlFocusedPrimaryClassName,
+  controlFocusedSecondaryClassName,
+} from "../control-focus";
 
 function clamp(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, n));
@@ -97,8 +102,8 @@ const sliderThumbVariants = cva(
         md: "h-4 w-4 min-h-4 min-w-4",
       },
       variant: {
-        primary: "",
-        secondary: "",
+        primary: cn(controlFocusedBaseClassName, controlFocusedPrimaryClassName),
+        secondary: cn(controlFocusedBaseClassName, controlFocusedSecondaryClassName),
       },
       disabled: {
         true: "",

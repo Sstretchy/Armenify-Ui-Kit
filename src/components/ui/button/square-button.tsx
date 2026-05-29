@@ -4,12 +4,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import { controlInteractiveTransitionClassName } from "../control-transition";
+import {
+  controlFocusedBaseClassName,
+  controlFocusedOutlinedClassName,
+  controlFocusedPrimaryClassName,
+  controlFocusedSecondaryClassName,
+  controlFocusedTertiaryClassName,
+} from "../control-focus";
 
 const squareButtonVariants = cva(
   [
     "relative inline-flex aspect-square shrink-0 cursor-pointer items-center justify-center overflow-hidden p-0 font-bold tracking-normal antialiased",
     controlInteractiveTransitionClassName,
     "focus-visible:outline-none",
+    "[&[data-square-button-unchecked]]:opacity-[0.45] [&[data-story-state=unchecked]]:opacity-[0.45]",
     "disabled:pointer-events-none disabled:cursor-default",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
   ],
@@ -18,22 +26,30 @@ const squareButtonVariants = cva(
       variant: {
         primary: [
           "border-0 bg-[image:var(--gradient-brand-primary)] text-components-controls-text-primary shadow-control-shadow-outer",
+          controlFocusedBaseClassName,
+          controlFocusedPrimaryClassName,
           "hover:shadow-control-shadow-hover active:shadow-control-shadow-active",
           "disabled:border-[0.09375rem] disabled:border-components-controls-bg-disabled disabled:bg-[image:none] disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
         ],
         secondary: [
           "border-0 bg-components-controls-bg-secondary-default text-components-controls-text-secondary shadow-control-shadow-outer",
+          controlFocusedBaseClassName,
+          controlFocusedSecondaryClassName,
           "hover:bg-components-controls-bg-secondary-hover hover:shadow-control-shadow-hover",
           "active:bg-components-controls-bg-secondary-active active:shadow-control-shadow-active",
           "disabled:border-[0.09375rem] disabled:border-components-controls-bg-disabled disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
         ],
         tertiary: [
           "border-0 bg-components-controls-bg-tertiary text-components-controls-text-tertiary shadow-control-shadow-outer",
+          controlFocusedBaseClassName,
+          controlFocusedTertiaryClassName,
           "hover:shadow-control-shadow-hover active:shadow-control-shadow-active",
           "disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-control-shadow-outer",
         ],
         outlined: [
           "border-2 border-solid border-components-controls-text-tertiary bg-components-controls-bg-outlined text-components-controls-text-outlined shadow-control-shadow-outer",
+          controlFocusedBaseClassName,
+          controlFocusedOutlinedClassName,
           "hover:shadow-control-shadow-hover active:shadow-control-shadow-active",
           "disabled:border-components-controls-border-disabled disabled:bg-components-controls-bg-disabled disabled:text-components-controls-text-disabled disabled:shadow-none",
         ],

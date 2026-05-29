@@ -9,7 +9,7 @@ const ghostButtonVariants = cva(
   [
     "relative isolate inline-flex aspect-square shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border-0 bg-transparent p-0 font-bold tracking-normal antialiased",
     controlInteractiveTransitionClassName,
-    "focus-visible:outline-none",
+    "focus-visible:outline-none [&[data-ghost-button-unchecked]]:opacity-[0.45] [&[data-story-state=unchecked]]:opacity-[0.45]",
     "disabled:pointer-events-none disabled:cursor-default",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:text-current",
   ],
@@ -17,19 +17,19 @@ const ghostButtonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "border-0 border-solid bg-transparent text-components-controls-text-ghost-primary-default shadow-none",
+          "border-0 border-solid bg-transparent text-components-controls-text-ghost-primary-default shadow-none focus-visible:border-3 focus-visible:border-primitive-colors-brand-600 focus-visible:bg-transparent focus-visible:bg-none focus-visible:shadow-[0_0.0625rem_0.125rem_0_rgba(42,52,134,0.35)] data-[story-state=focused]:border-3 data-[story-state=focused]:border-primitive-colors-brand-600 data-[story-state=focused]:bg-transparent data-[story-state=focused]:bg-none data-[story-state=focused]:shadow-[0_0.0625rem_0.125rem_0_rgba(42,52,134,0.35)]",
           "hover:text-components-controls-text-ghost-primary-hover",
           "active:text-components-controls-text-ghost-primary-active active:shadow-none",
           "disabled:border-0 disabled:bg-transparent disabled:text-components-controls-text-ghost-primary-disabled disabled:shadow-none",
         ],
         secondary: [
-          "border-0 border-solid bg-transparent text-components-controls-text-ghost-secondary-default shadow-none",
+          "border-0 border-solid bg-transparent text-components-controls-text-ghost-secondary-default shadow-none focus-visible:border-3 focus-visible:border-primitive-colors-brand-600 focus-visible:bg-transparent focus-visible:bg-none focus-visible:shadow-[0_0.0625rem_0.125rem_0_rgba(42,52,134,0.35)] data-[story-state=focused]:border-3 data-[story-state=focused]:border-primitive-colors-brand-600 data-[story-state=focused]:bg-transparent data-[story-state=focused]:bg-none data-[story-state=focused]:shadow-[0_0.0625rem_0.125rem_0_rgba(42,52,134,0.35)]",
           "hover:text-components-controls-text-ghost-secondary-hover",
           "active:text-components-controls-text-ghost-secondary-active active:shadow-none",
           "disabled:border-0 disabled:bg-transparent disabled:text-components-controls-text-ghost-secondary-disabled disabled:shadow-none",
         ],
         tertiary: [
-          "border-0 border-solid bg-transparent text-components-controls-text-ghost-tertiary-default shadow-none",
+          "border-0 border-solid bg-transparent text-components-controls-text-ghost-tertiary-default shadow-none focus-visible:border-3 focus-visible:border-primitive-colors-brand-600 focus-visible:bg-transparent focus-visible:bg-none focus-visible:shadow-[0_0.0625rem_0.125rem_0_rgba(42,52,134,0.35)] data-[story-state=focused]:border-3 data-[story-state=focused]:border-primitive-colors-brand-600 data-[story-state=focused]:bg-transparent data-[story-state=focused]:bg-none data-[story-state=focused]:shadow-[0_0.0625rem_0.125rem_0_rgba(42,52,134,0.35)]",
           "hover:text-components-controls-text-ghost-tertiary-hover",
           "active:text-components-controls-text-ghost-tertiary-active active:shadow-none",
           "disabled:bg-transparent disabled:text-components-controls-text-ghost-tertiary-disabled disabled:shadow-none",

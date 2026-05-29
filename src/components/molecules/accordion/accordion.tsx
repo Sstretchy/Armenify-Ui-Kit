@@ -10,6 +10,7 @@ import { CaretDown } from "phosphor-strokes-icons";
 import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import "./accordion.css";
 
 import { ArmenifyIcon, type ArmenifyIconSize } from "@/components/ui/icon";
 
@@ -46,6 +47,7 @@ const accordionTriggerVariants = cva(
   cn(
     "group flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 border-0 border-b border-solid text-left font-sans font-medium outline-none",
     controlInteractiveTransitionClassName,
+    "focus-visible:relative focus-visible:z-[1] focus-visible:[box-shadow:var(--control-shadow-outer-focused)]",
     "transition-[background-color,border-color,color] duration-200 ease-out",
   ),
   {
@@ -175,8 +177,25 @@ const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>
 ) {
   const { color, size } = useAccordionStyle();
   return (
-    <AccordionContentPrimitive ref={ref} data-slot="accordion-content" className={cn("min-w-0 overflow-hidden", className)} {...props}>
-      <div className={cn("font-medium antialiased", contentPadding[size], contentBg[color], contentText[color])}>{children}</div>
+    <AccordionContentPrimitive
+      ref={ref}
+      data-slot="accordion-content"
+      className={cn(
+        "min-w-0 overflow-hidden data-[state=open]:animate-[accordion-down_280ms_cubic-bezier(0.22,1,0.36,1)] data-[state=closed]:animate-[accordion-up_220ms_cubic-bezier(0.22,1,0.36,1)]",
+        className,
+      )}
+      {...props}
+    >
+      <div
+        className={cn(
+          "font-medium antialiased",
+          contentPadding[size],
+          contentBg[color],
+          contentText[color],
+        )}
+      >
+        {children}
+      </div>
     </AccordionContentPrimitive>
   );
 });

@@ -1,3 +1,1 @@
-export * from "./components";
-export { cn } from "./lib/utils";
 export { mount, type ArmenifyMountHandle, type MountOptions, type ArmenifyMicrofrontendHandle } from "./mount";

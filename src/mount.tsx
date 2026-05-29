@@ -1,7 +1,7 @@
 import { Fragment, StrictMode, type ReactNode } from "react";
 import { createRoot, type Root, type RootOptions } from "react-dom/client";
 
-import { MicrofrontendApp } from "./App";
+import { App } from "@/app/App";
 
 export type MountOptions = Partial<
   Pick<RootOptions, "identifierPrefix" | "onCaughtError" | "onRecoverableError" | "onUncaughtError">
@@ -10,10 +10,12 @@ export type MountOptions = Partial<
   strictMode?: boolean;
 };
 
-export type ArmenifyMicrofrontendHandle = {
+export type ArmenifyMountHandle = {
   unmount: () => void;
   rerender: (next: ReactNode) => void;
 };
+
+export type ArmenifyMicrofrontendHandle = ArmenifyMountHandle;
 
 function wrap(node: ReactNode, strictMode: boolean) {
   if (strictMode) {
@@ -43,10 +45,10 @@ function pickRootOptions(options: MountOptions | undefined): RootOptions {
   return rootOptions;
 }
 
-export function mount(container: HTMLElement, options?: MountOptions): ArmenifyMicrofrontendHandle {
+export function mount(container: HTMLElement, options?: MountOptions): ArmenifyMountHandle {
   const { strictMode = true, children } = options ?? {};
   const root: Root = createRoot(container, pickRootOptions(options));
-  const initial = children ?? <MicrofrontendApp />;
+  const initial = children ?? <App />;
 
   const render = (node: ReactNode) => {
     root.render(wrap(node, strictMode));
