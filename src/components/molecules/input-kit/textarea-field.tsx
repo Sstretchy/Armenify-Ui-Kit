@@ -75,7 +75,14 @@ const TextAreaField = React.forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
       sideLabel={sideLabel}
       helperSpace={helperSpace}
     >
-      <TextInputChrome size={sz} color={fc} tone={it} disabled={disabled} visualState={visualState} fieldClassName={fieldClassName}>
+      <TextInputChrome
+        size={sz}
+        color={fc}
+        tone={it}
+        disabled={disabled}
+        visualState={visualState}
+        fieldClassName={cn("h-auto max-h-none", fieldClassName)}
+      >
         <div className={cn(textInputRootVariants({ size: sz }), "w-full min-w-0")}>
           <textarea
             ref={ref}
