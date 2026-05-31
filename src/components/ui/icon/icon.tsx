@@ -67,17 +67,17 @@ export const STROKE_SLIM: Record<ArmenifyIconSize, number> = {
 };
 
 export const STROKE_BOLD: Record<ArmenifyIconSize, number> = {
-  "xxxx-small": 1.081504,
-  "xxx-small": 1.291504,
-  "xx-small": 1.512,
-  "x-small": 1.722,
-  small: 1.932,
-  base: 2.152496,
-  large: 2.362496,
-  "x-large": 2.583008,
-  "xx-large": 3.013504,
-  "xxx-large": 3.066,
-  "xxxx-large": 3.444,
+  "xxxx-small": 1.02375,
+  "xxx-small": 1.2285,
+  "xx-small": 1.43325,
+  "x-small": 1.638,
+  small: 1.84275,
+  base: 2.0475,
+  large: 2.25225,
+  "x-large": 2.457,
+  "xx-large": 2.8665,
+  "xxx-large": 3.276,
+  "xxxx-large": 3.6855,
 };
 
 export type ArmenifyIconProps = Omit<StrokeIconProps, "size" | "strokeWidth" | "absoluteStrokeWidth"> & {

@@ -57,9 +57,16 @@ function defaultShowPrefix(layout: TextInputInnerLayout, color: TextInputColor, 
   return !(layout === "default" && color === "ntrl" && !disabled);
 }
 
+const textInputInlineTextSizeClass: Record<TextInputSize, string> = {
+  sm: "text-font-size-sm leading-[var(--font-font-height-sm)]",
+  md: "text-font-size-base leading-[var(--font-font-height-base)]",
+  lg: "text-font-size-lg leading-[var(--font-font-height-lg)]",
+};
+
 function PrefixAndValue({
   color,
   disabled,
+  size,
   showPrefix,
   prefixContent,
   valueText,
@@ -68,6 +75,7 @@ function PrefixAndValue({
 }: {
   color: TextInputColor;
   disabled: boolean;
+  size: TextInputSize;
   showPrefix: boolean;
   prefixContent: React.ReactNode;
   valueText: string;
@@ -79,7 +87,8 @@ function PrefixAndValue({
   return (
     <div
       className={cn(
-        "flex min-w-0 items-center gap-2.5 text-font-size-sm leading-[var(--font-font-height-sm)]",
+        "flex min-w-0 items-center",
+        textInputInlineTextSizeClass[size],
         field ? "min-w-0 flex-1" : "whitespace-nowrap",
       )}
     >
@@ -158,6 +167,7 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
       <PrefixAndValue
         color={color}
         disabled={disabled}
+        size={size}
         showPrefix={show}
         prefixContent={prefixContent}
         valueText={valueText}
@@ -200,22 +210,15 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
         );
         break;
       case "iconBoth":
-        body =
-          color === "brand" && disabled ? (
-            <div className="flex min-w-0 flex-1 items-center justify-between gap-1">
-              <div className="flex min-w-0 items-center gap-1">
-                <InputFieldIcon icon={ShootingStar} size={size} color="disable" weight="slim" />
-                {pv(showPrefix)}
-              </div>
-              <InputFieldIcon icon={ShootingStar} size={size} color="disable" weight="slim" />
-            </div>
-          ) : (
-            <>
+        body = (
+          <>
+            <div className="flex min-w-0 flex-1 items-center gap-1">
               {star(false)}
               {pv(showPrefix)}
-              {star(true)}
-            </>
-          );
+            </div>
+            {star(true)}
+          </>
+        );
         break;
       case "currency":
         body = (
@@ -288,6 +291,7 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
               <PrefixAndValue
                 color={color}
                 disabled={disabled}
+                size={size}
                 showPrefix={color === "brand"}
                 prefixContent={prefixContent}
                 valueText={valueText}
@@ -302,7 +306,7 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
       case "multiselect":
         body = (
           <>
-            <div className="flex min-w-0 flex-1 flex-wrap content-start items-start gap-1">
+            <div className="flex min-w-0 flex-1 flex-wrap content-start items-center gap-1">
               {tags ?? <DemoTags disabled={disabled} size={size} />}
             </div>
             {showCaret ? <CaretIcon color={color} disabled={disabled} /> : null}
@@ -319,7 +323,7 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
       layout === "search" ||
       layout === "clear" ||
       (layout === "iconRight" && color === "brand") ||
-      (layout === "iconBoth" && color === "brand");
+      layout === "iconBoth";
 
     const rootClass = cn(
       textInputRootVariants({ size }),
