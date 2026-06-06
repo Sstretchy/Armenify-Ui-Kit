@@ -193,7 +193,9 @@ function TokenSectionView({ section }: { section: TokenSection }) {
   return (
     <div className="flex w-full flex-col items-start gap-2.5">
       <div className="flex flex-col items-start overflow-hidden p-2.5">
-        <h2 className="text-[2rem] leading-none font-normal text-black">{section.title}</h2>
+        <Typography as="h2" weight="regular" className="text-[2rem] leading-none text-black">
+          {section.title}
+        </Typography>
       </div>
       <div className="flex w-full flex-wrap items-center gap-2.5">
         {section.cards.map((card, index) => (
@@ -208,7 +210,9 @@ export function ComponentTokenPreview() {
   return (
     <section className="flex min-h-dvh w-full flex-col items-start gap-6 bg-white p-6">
       <div className="flex flex-col items-start overflow-hidden p-2.5">
-        <h1 className="text-[2.5rem] leading-none font-normal text-black">Component tokens</h1>
+        <Typography as="h1" weight="regular" className="text-[2.5rem] leading-none text-black">
+          Component tokens
+        </Typography>
       </div>
 
       {typographySections.map((section) => (
@@ -219,7 +223,9 @@ export function ComponentTokenPreview() {
 
       <div className="flex w-full flex-col items-start gap-2.5 rounded-[1.25rem] bg-[#f8f9fd] p-5">
         <div className="flex flex-col items-start overflow-hidden p-2.5">
-          <h2 className="text-[2.5rem] leading-none font-normal text-black">Controls</h2>
+          <Typography as="h2" weight="regular" className="text-[2.5rem] leading-none text-black">
+            Controls
+          </Typography>
         </div>
         {controlSections.map((section) => (
           <TokenSectionView key={section.title} section={section} />
@@ -227,12 +233,16 @@ export function ComponentTokenPreview() {
       </div>
 
       <div className="flex flex-col items-start overflow-hidden p-2.5">
-        <h1 className="text-[2.5rem] leading-none font-normal text-black">Card</h1>
+        <Typography as="h1" weight="regular" className="text-[2.5rem] leading-none text-black">
+          Card
+        </Typography>
       </div>
 
       <div className="flex w-full max-w-[95.625rem] flex-col items-start gap-2.5">
         <div className="flex flex-col items-start overflow-hidden p-2.5">
-          <h2 className="text-[2rem] leading-none font-normal text-black">Gradient</h2>
+          <Typography as="h2" weight="regular" className="text-[2rem] leading-none text-black">
+            Gradient
+          </Typography>
         </div>
         <div className="flex w-full flex-wrap items-center gap-2.5 rounded-[1.25rem] bg-[#6b6b6b] p-5">
           {cardSection.cards.map((card, index) => (

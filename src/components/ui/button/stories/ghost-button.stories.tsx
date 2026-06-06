@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { SealCheck } from "phosphor-strokes-icons";
 
 import { ArmenifyIcon, ghostButtonSizeToArmenifyIconSize } from "../../icon";
+import { Typography } from "../../typography";
 import { GhostButton } from "../ghost-button";
 
 const meta = {
@@ -55,33 +56,36 @@ const stateClassNames: Record<
   },
 };
 
+function GhostButtonIcon({ size }: { size: keyof typeof ghostButtonSizeToArmenifyIconSize }) {
+  return <ArmenifyIcon icon={SealCheck} size={ghostButtonSizeToArmenifyIconSize[size]} strokeWeight="bold" />;
+}
+
 export const Interactive: Story = {
   render: function InteractiveRender() {
     const [pressed, setPressed] = React.useState<Partial<Record<(typeof variants)[number], boolean>>>({});
     const flip = (v: (typeof variants)[number]) => {
       setPressed((m) => ({ ...m, [v]: !m[v] }));
     };
+
     return (
       <div className="flex flex-col gap-6 p-4">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-          Клик — вкл/выкл pressed. Зажми кнопку — увидишь :active.
-        </p>
+        <Typography variant="sm" tone="muted">
+          Click toggles the `pressed` state. Hold the mouse button to inspect the native `:active` state separately.
+        </Typography>
         <div className="flex flex-wrap items-end gap-4 rounded-border-md bg-semantic-bg-ntrl-primary p-4">
-          {(["primary", "secondary"] as const).map((v) => (
-            <div key={v} className="flex flex-col items-center gap-1">
+          {(["primary", "secondary"] as const).map((variant) => (
+            <div key={variant} className="flex flex-col items-center gap-1">
               <GhostButton
-                variant={v}
+                variant={variant}
                 size="lg"
                 type="button"
-                pressed={pressed[v] ? true : undefined}
-                onClick={() => {
-                  flip(v);
-                }}
-                icon={
-                  <ArmenifyIcon icon={SealCheck} size={ghostButtonSizeToArmenifyIconSize.lg} strokeWeight="bold" />
-                }
+                pressed={pressed[variant] ? true : undefined}
+                onClick={() => flip(variant)}
+                icon={<GhostButtonIcon size="lg" />}
               />
-              <span className="text-font-size-xs text-semantic-text-ntrl-secondary">{v}</span>
+              <Typography variant="xs" tone="muted">
+                {variant}
+              </Typography>
             </div>
           ))}
         </div>
@@ -92,14 +96,12 @@ export const Interactive: Story = {
               size="lg"
               type="button"
               pressed={pressed.tertiary ? true : undefined}
-              onClick={() => {
-                flip("tertiary");
-              }}
-              icon={
-                <ArmenifyIcon icon={SealCheck} size={ghostButtonSizeToArmenifyIconSize.lg} strokeWeight="bold" />
-              }
+              onClick={() => flip("tertiary")}
+              icon={<GhostButtonIcon size="lg" />}
             />
-            <span className="text-font-size-xs text-components-controls-text-secondary">tertiary</span>
+            <Typography variant="xs" className="text-components-controls-text-secondary">
+              tertiary
+            </Typography>
           </div>
         </div>
       </div>
@@ -111,20 +113,21 @@ export const States: Story = {
   render: () => (
     <div className="flex flex-col gap-10 p-4">
       <div className="flex flex-col gap-4">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">Primary / secondary (светлый фон)</p>
+        <Typography variant="sm" tone="muted">
+          Primary and secondary on a light surface
+        </Typography>
         <div className="grid grid-cols-[6rem_repeat(7,max-content)] items-center gap-x-3 gap-y-3 rounded-border-md bg-semantic-bg-ntrl-primary p-4">
           <div />
           {states.map((state) => (
-            <span
-              key={state}
-              className="text-center text-font-size-sm capitalize text-semantic-text-ntrl-secondary"
-            >
+            <Typography key={state} variant="sm" tone="muted" align="center" className="capitalize">
               {state}
-            </span>
+            </Typography>
           ))}
           {(["primary", "secondary"] as const).map((variant) => (
             <React.Fragment key={variant}>
-              <span className="text-font-size-sm capitalize text-semantic-text-ntrl-secondary">{variant}</span>
+              <Typography variant="sm" tone="muted" className="capitalize">
+                {variant}
+              </Typography>
               {states.map((state) => (
                 <GhostButton
                   key={`${variant}-${state}`}
@@ -135,9 +138,7 @@ export const States: Story = {
                   pressed={state === "pressed" ? true : undefined}
                   data-story-state={state}
                   className={stateClassNames[variant][state]}
-                  icon={
-                    <ArmenifyIcon icon={SealCheck} size={ghostButtonSizeToArmenifyIconSize.lg} strokeWeight="bold" />
-                  }
+                  icon={<GhostButtonIcon size="lg" />}
                 />
               ))}
             </React.Fragment>
@@ -146,18 +147,24 @@ export const States: Story = {
       </div>
 
       <div className="flex flex-col gap-4">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">Tertiary (тёмный фон)</p>
+        <Typography variant="sm" className="text-components-controls-text-secondary">
+          Tertiary on a dark surface
+        </Typography>
         <div className="grid grid-cols-[6rem_repeat(7,max-content)] items-center gap-x-3 gap-y-3 rounded-border-md bg-components-controls-bg-secondary-default p-4">
           <div />
           {states.map((state) => (
-            <span
+            <Typography
               key={state}
-              className="text-center text-font-size-sm capitalize text-semantic-text-ntrl-secondary text-components-controls-text-secondary"
+              variant="sm"
+              align="center"
+              className="capitalize text-components-controls-text-secondary"
             >
               {state}
-            </span>
+            </Typography>
           ))}
-          <span className="text-font-size-sm capitalize text-components-controls-text-secondary">tertiary</span>
+          <Typography variant="sm" className="capitalize text-components-controls-text-secondary">
+            tertiary
+          </Typography>
           {states.map((state) => (
             <GhostButton
               key={`tertiary-${state}`}
@@ -168,29 +175,25 @@ export const States: Story = {
               pressed={state === "pressed" ? true : undefined}
               data-story-state={state}
               className={stateClassNames.tertiary[state]}
-              icon={
-                <ArmenifyIcon icon={SealCheck} size={ghostButtonSizeToArmenifyIconSize.lg} strokeWeight="bold" />
-              }
+              icon={<GhostButtonIcon size="lg" />}
             />
           ))}
         </div>
       </div>
 
       <div className="flex flex-col gap-3">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">Размеры (primary / secondary, светлый фон)</p>
+        <Typography variant="sm" tone="muted">
+          Sizes for primary and secondary on a light surface
+        </Typography>
         <div className="flex flex-col gap-4 rounded-border-md bg-semantic-bg-ntrl-primary p-4">
           {(["primary", "secondary"] as const).map((variant) => (
             <div key={variant} className="flex flex-wrap items-end gap-3">
               {(["info", "xxxs", "xxs", "xs", "sm", "md", "lg"] as const).map((size) => (
                 <div key={`${variant}-${size}`} className="flex flex-col items-center gap-1">
-                  <GhostButton
-                    variant={variant}
-                    size={size}
-                    icon={
-                      <ArmenifyIcon icon={SealCheck} size={ghostButtonSizeToArmenifyIconSize[size]} strokeWeight="bold" />
-                    }
-                  />
-                  <span className="text-font-size-xs text-semantic-text-ntrl-secondary">{variant} {size}</span>
+                  <GhostButton variant={variant} size={size} icon={<GhostButtonIcon size={size} />} />
+                  <Typography variant="xs" tone="muted">
+                    {variant} {size}
+                  </Typography>
                 </div>
               ))}
             </div>
@@ -199,25 +202,25 @@ export const States: Story = {
       </div>
 
       <div className="flex flex-col gap-3">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">Размеры (tertiary, на тёмном)</p>
+        <Typography variant="sm" className="text-components-controls-text-secondary">
+          Sizes for tertiary on a dark surface
+        </Typography>
         <div className="flex flex-wrap items-end gap-3 rounded-border-md bg-components-controls-bg-secondary-default p-4">
           {(["info", "xxxs", "xxs", "xs", "sm", "md", "lg"] as const).map((size) => (
             <div key={size} className="flex flex-col items-center gap-1">
-              <GhostButton
-                variant="tertiary"
-                size={size}
-                icon={
-                  <ArmenifyIcon icon={SealCheck} size={ghostButtonSizeToArmenifyIconSize[size]} strokeWeight="bold" />
-                }
-              />
-              <span className="text-font-size-xs text-components-controls-text-secondary">{size}</span>
+              <GhostButton variant="tertiary" size={size} icon={<GhostButtonIcon size={size} />} />
+              <Typography variant="xs" className="text-components-controls-text-secondary">
+                {size}
+              </Typography>
             </div>
           ))}
         </div>
       </div>
 
       <div className="flex flex-col gap-3">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">Только текст (primary)</p>
+        <Typography variant="sm" tone="muted">
+          Text-only ghost button
+        </Typography>
         <div className="rounded-border-md bg-semantic-bg-ntrl-primary p-4">
           <GhostButton variant="primary" size="lg">
             23

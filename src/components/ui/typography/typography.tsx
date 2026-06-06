@@ -40,7 +40,6 @@ const typographyVariants = cva("m-0 tracking-normal antialiased", {
     weight: {
       regular: "font-normal",
       medium: "font-medium",
-      bold: "font-bold",
     },
     font: {
       sans: "font-sans",

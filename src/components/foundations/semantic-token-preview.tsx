@@ -250,7 +250,9 @@ function Section({ section }: { section: SwatchSection }) {
   return (
     <div className="flex w-full flex-col items-start gap-2.5">
       <div className="flex flex-col items-start overflow-hidden p-2.5">
-        <h2 className="text-[2rem] leading-none font-normal text-black">{section.title}</h2>
+        <Typography as="h2" weight="regular" className="text-[2rem] leading-none text-black">
+          {section.title}
+        </Typography>
       </div>
       <div className="flex w-full flex-wrap items-center gap-2.5">
         {section.items.map((item) => (
@@ -265,7 +267,9 @@ export function SemanticTokenPreview() {
   return (
     <section className="flex min-h-dvh w-full flex-col items-start gap-6 bg-white p-6">
       <div className="flex w-full flex-col items-start overflow-hidden p-2.5">
-        <h1 className="text-[2.5rem] leading-none font-normal text-black">Semantic tokens</h1>
+        <Typography as="h1" weight="regular" className="text-[2.5rem] leading-none text-black">
+          Semantic tokens
+        </Typography>
       </div>
 
       <Section section={neutralTextSection} />
@@ -277,7 +281,9 @@ export function SemanticTokenPreview() {
 
       <div className="flex w-full flex-col items-start gap-6">
         <div className="flex flex-col items-start overflow-hidden p-2.5">
-          <h2 className="text-[2.5rem] leading-none font-normal text-black">Status</h2>
+          <Typography as="h2" weight="regular" className="text-[2.5rem] leading-none text-black">
+            Status
+          </Typography>
         </div>
         {statusSections.map((section) => (
           <Section key={section.title} section={section} />

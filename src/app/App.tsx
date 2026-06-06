@@ -15,7 +15,9 @@ export function App() {
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-8">
         <section className="grid gap-5">
           <div className="grid gap-1">
-            <h1 className="text-3xl font-medium">Armenify UI Kit</h1>
+            <Typography as="h1" variant="4xl" weight="medium">
+              Armenify UI Kit
+            </Typography>
             <Typography variant="sm" tone="muted" className="max-w-2xl">
               React primitives backed by Armenify tokens and Tailwind v4.
             </Typography>
