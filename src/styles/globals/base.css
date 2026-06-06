@@ -1,0 +1,19 @@
+@layer base {
+  * {
+    border-color: var(--semantic-border-ntrl-default);
+  }
+
+  html {
+    font-family: var(--font-family-sans);
+    font-size: 16px;
+  }
+
+  body {
+    background-color: var(--semantic-bg-ntrl-primary);
+    color: var(--semantic-text-ntrl-primary);
+    font-family: var(--font-family-sans);
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
