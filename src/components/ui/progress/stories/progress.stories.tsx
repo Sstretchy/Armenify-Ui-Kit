@@ -35,7 +35,7 @@ export const Matrix: Story = {
       </Typography>
       {variants.map((variant) => (
         <div key={variant} className="flex flex-col gap-2">
-          <Typography className="text-[0.6875rem] leading-[0.6875rem] capitalize text-semantic-text-ntrl-primary">
+          <Typography weight="medium" className="text-[0.6875rem] leading-[0.6875rem] capitalize text-semantic-text-ntrl-primary">
             {variant}
           </Typography>
           <Progress variant={variant} value={0} aria-label={`${variant} 0`} />

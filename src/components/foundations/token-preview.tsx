@@ -133,13 +133,17 @@ export function TokenPreview() {
   return (
     <section className="flex min-h-dvh w-full flex-col items-start gap-6 bg-white p-6 text-black">
       <div className="flex flex-col items-start overflow-hidden p-2.5">
-        <h1 className="text-[2.5rem] leading-none font-normal">Primitive tokens</h1>
+        <Typography as="h1" weight="regular" className="text-[2.5rem] leading-none">
+          Primitive tokens
+        </Typography>
       </div>
 
       {sections.map((section) => (
         <div key={section.title} className="flex w-full flex-col items-start gap-2.5">
           <div className="flex flex-col items-start overflow-hidden p-2.5">
-            <h2 className="text-[2rem] leading-none font-normal">{section.title}</h2>
+            <Typography as="h2" weight="regular" className="text-[2rem] leading-none">
+              {section.title}
+            </Typography>
           </div>
 
           <div className="flex w-full flex-wrap items-center gap-2.5">

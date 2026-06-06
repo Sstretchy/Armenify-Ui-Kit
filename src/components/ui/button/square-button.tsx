@@ -14,7 +14,7 @@ import {
 
 const squareButtonVariants = cva(
   [
-    "relative inline-flex aspect-square shrink-0 cursor-pointer items-center justify-center overflow-hidden p-0 font-bold tracking-normal antialiased",
+    "relative inline-flex aspect-square shrink-0 cursor-pointer items-center justify-center overflow-hidden p-0 font-medium tracking-normal antialiased",
     controlInteractiveTransitionClassName,
     "focus-visible:outline-none",
     "[&[data-square-button-unchecked]]:opacity-[0.45] [&[data-story-state=unchecked]]:opacity-[0.45]",

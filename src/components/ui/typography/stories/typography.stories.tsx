@@ -29,8 +29,7 @@ export const RobotoScale: Story = {
   render: () => (
     <div className="text-semantic-text-ntrl-primary flex max-w-3xl flex-col gap-1">
       {typographyVariantsList.map((v) => {
-        const robotoEmphasisWeight =
-          v === "xxxs" || v === "xxs" ? ("bold" as const) : ("medium" as const);
+        const robotoEmphasisWeight = "medium" as const;
         return (
           <div key={v} className="flex gap-8 py-1">
             <Typography variant="xs" tone="muted" className="w-14 shrink-0 text-right font-sans">
@@ -63,7 +62,7 @@ export const BainsleyArmenian: Story = {
             <Typography variant={v} weight="regular" font="display">
               Անհամբեր սպասում եմ մեր հաջորդ հանդիպմանը
             </Typography>
-            <Typography variant={v} weight="bold" font="display">
+            <Typography variant={v} weight="medium" font="display">
               Անհամբեր սպասում եմ մեր հաջորդ հանդիպմանը
             </Typography>
           </div>

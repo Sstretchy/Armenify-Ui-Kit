@@ -7,7 +7,7 @@ import { controlInteractiveTransitionClassName } from "../control-transition";
 
 const ghostButtonVariants = cva(
   [
-    "relative isolate inline-flex aspect-square shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border-0 bg-transparent p-0 font-bold tracking-normal antialiased",
+    "relative isolate inline-flex aspect-square shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full border-0 bg-transparent p-0 font-medium tracking-normal antialiased",
     controlInteractiveTransitionClassName,
     "focus-visible:outline-none [&[data-ghost-button-unchecked]]:opacity-[0.45] [&[data-story-state=unchecked]]:opacity-[0.45]",
     "disabled:pointer-events-none disabled:cursor-default",

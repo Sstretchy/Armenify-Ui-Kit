@@ -15,17 +15,17 @@
   --slim-x-lg-24: 0.12rem;
   --slim-xxx-lg-32: 0.16rem;
   --slim-xxxx-lg-36: 0.18rem;
-  --bold-xxxx-sm-10: 0.067594rem;
-  --bold-xxx-sm-12: 0.080719rem;
-  --bold-xx-sm-14: 0.0945rem;
-  --bold-x-sm-16: 0.107625rem;
-  --bold-sm-18: 0.12075rem;
-  --bold-base-20: 0.134531rem;
-  --bold-lg-22: 0.147656rem;
-  --bold-x-lg-24: 0.161438rem;
-  --bold-xx-lg-28: 0.188344rem;
-  --bold-xxx-lg-32: 0.191625rem;
-  --bold-xxxx-lg-36: 0.21525rem;
+  --bold-xxxx-sm-10: 0.063984375rem;
+  --bold-xxx-sm-12: 0.07678125rem;
+  --bold-xx-sm-14: 0.089578125rem;
+  --bold-x-sm-16: 0.102375rem;
+  --bold-sm-18: 0.115171875rem;
+  --bold-base-20: 0.12796875rem;
+  --bold-lg-22: 0.140765625rem;
+  --bold-x-lg-24: 0.1535625rem;
+  --bold-xx-lg-28: 0.17915625rem;
+  --bold-xxx-lg-32: 0.20475rem;
+  --bold-xxxx-lg-36: 0.23034375rem;
   /* Figma Local variables / bold / caret-12, normalized to rem. */
   --bold-caret-12: 0.2rem;
 }

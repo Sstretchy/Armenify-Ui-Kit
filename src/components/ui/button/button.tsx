@@ -13,7 +13,7 @@ import {
 
 const buttonVariants = cva(
   [
-    "relative inline-flex shrink-0 cursor-pointer items-center justify-center font-bold tracking-normal antialiased",
+    "relative inline-flex shrink-0 cursor-pointer items-center justify-center font-medium tracking-normal antialiased",
     controlInteractiveTransitionClassName,
     "focus-visible:outline-none",
     "[&[data-button-unchecked]]:opacity-[0.45] [&[data-story-state=unchecked]]:opacity-[0.45]",
