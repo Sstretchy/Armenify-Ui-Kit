@@ -322,7 +322,7 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
       layout === "select" ||
       layout === "search" ||
       layout === "clear" ||
-      (layout === "iconRight" && color === "brand") ||
+      layout === "iconRight" ||
       layout === "iconBoth";
 
     const rootClass = cn(

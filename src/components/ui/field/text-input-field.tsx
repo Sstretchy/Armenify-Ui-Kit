@@ -6,13 +6,13 @@ import { cn } from "@/lib/utils";
 import { TextInput, type TextInputProps } from "./text-input";
 
 const textInputFieldRootVariants = cva(
-  "box-border flex w-full min-w-0 flex-col justify-center overflow-hidden border-[0.09375rem] border-solid font-sans antialiased transition-[border-color,box-shadow] duration-200 ease-out",
+  "box-border flex w-full min-w-0 items-center overflow-hidden font-sans antialiased transition-[background-color,box-shadow] duration-200 ease-out [box-shadow:inset_0_0_0_0.09375rem_var(--input-border-color),var(--input-outer-shadow)]",
   {
     variants: {
       size: {
-        sm: "max-h-[2.25rem] rounded-border-sm px-2.5 py-2",
-        md: "max-h-[2.5rem] rounded-border-md px-3 py-2.5",
-        lg: "max-h-[2.875rem] rounded-border-lg px-3.5 py-3",
+        sm: "rounded-border-sm px-2.5 py-2.5",
+        md: "rounded-border-md px-3 py-2.5",
+        lg: "rounded-border-lg px-3.5 py-3",
       },
     },
     defaultVariants: { size: "md" },
@@ -34,58 +34,58 @@ export function textInputFieldChrome(
   if (vs === "interactive") {
     if (tone === "error") {
       return color === "brand"
-        ? "border-semantic-status-error-bright bg-semantic-bg-brand-primary shadow-input-error-shadow-outer"
-        : "border-semantic-status-error-dark bg-semantic-bg-ntrl-secondary shadow-input-error-shadow-outer";
+        ? "[--input-border-color:var(--semantic-status-error-bright)] [--input-outer-shadow:var(--input-error-shadow-outer)] bg-semantic-bg-brand-primary"
+        : "[--input-border-color:var(--semantic-status-error-dark)] [--input-outer-shadow:var(--input-error-shadow-outer)] bg-semantic-bg-ntrl-secondary";
     }
     if (tone === "success") {
       return color === "brand"
-        ? "border-semantic-status-success-bright bg-semantic-bg-brand-primary shadow-input-success-shadow-outer"
-        : "border-semantic-status-success-dark bg-semantic-bg-ntrl-secondary shadow-input-success-shadow-outer";
+        ? "[--input-border-color:var(--semantic-status-success-bright)] [--input-outer-shadow:var(--input-success-shadow-outer)] bg-semantic-bg-brand-primary"
+        : "[--input-border-color:var(--semantic-status-success-dark)] [--input-outer-shadow:var(--input-success-shadow-outer)] bg-semantic-bg-ntrl-secondary";
     }
     if (color === "brand") {
       return cn(
-        "border-semantic-border-brand-default bg-semantic-bg-brand-primary shadow-input-shadow-outer",
-        "hover:border-semantic-border-brand-default-hover",
-        "focus-within:border-primitive-colors-brand-150",
+        "[--input-border-color:var(--semantic-border-brand-default)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-brand-primary",
+        "hover:[--input-border-color:var(--semantic-border-brand-default-hover)]",
+        "focus-within:[--input-border-color:var(--primitive-colors-brand-150)]",
       );
     }
     return cn(
-      "border-semantic-border-ntrl-default bg-semantic-bg-ntrl-secondary shadow-input-shadow-outer",
-      "hover:border-semantic-border-ntrl-default-hover",
-      "focus-within:border-semantic-border-ntrl-default-focused",
+      "[--input-border-color:var(--semantic-border-ntrl-default)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-ntrl-secondary",
+      "hover:[--input-border-color:var(--semantic-border-ntrl-default-hover)]",
+      "focus-within:[--input-border-color:var(--semantic-border-ntrl-default-focused)]",
     );
   }
 
   if (color === "brand") {
     switch (vs) {
       case "disabled":
-        return "border-semantic-border-brand-default bg-semantic-bg-brand-primary shadow-input-shadow-outer";
+        return "[--input-border-color:var(--semantic-border-brand-default)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-brand-primary";
       case "success":
-        return "border-semantic-status-success-bright bg-semantic-bg-brand-primary shadow-input-success-shadow-outer";
+        return "[--input-border-color:var(--semantic-status-success-bright)] [--input-outer-shadow:var(--input-success-shadow-outer)] bg-semantic-bg-brand-primary";
       case "error":
-        return "border-semantic-status-error-bright bg-semantic-bg-brand-primary shadow-input-error-shadow-outer";
+        return "[--input-border-color:var(--semantic-status-error-bright)] [--input-outer-shadow:var(--input-error-shadow-outer)] bg-semantic-bg-brand-primary";
       case "focus":
-        return "border-primitive-colors-brand-150 bg-semantic-bg-brand-primary shadow-input-shadow-outer";
+        return "[--input-border-color:var(--primitive-colors-brand-150)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-brand-primary";
       case "hover":
-        return "border-semantic-border-brand-default-hover bg-semantic-bg-brand-primary shadow-input-shadow-outer";
+        return "[--input-border-color:var(--semantic-border-brand-default-hover)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-brand-primary";
       default:
-        return "border-semantic-border-brand-default bg-semantic-bg-brand-primary shadow-input-shadow-outer";
+        return "[--input-border-color:var(--semantic-border-brand-default)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-brand-primary";
     }
   }
 
   switch (vs) {
     case "disabled":
-      return "border-semantic-border-ntrl-disabled bg-semantic-bg-ntrl-secondary";
+      return "[--input-border-color:var(--semantic-border-ntrl-disabled)] [--input-outer-shadow:0_0_#0000] bg-semantic-bg-ntrl-secondary";
     case "success":
-      return "border-semantic-status-success-dark bg-semantic-bg-ntrl-secondary shadow-input-success-shadow-outer";
+      return "[--input-border-color:var(--semantic-status-success-dark)] [--input-outer-shadow:var(--input-success-shadow-outer)] bg-semantic-bg-ntrl-secondary";
     case "error":
-      return "border-semantic-status-error-dark bg-semantic-bg-ntrl-secondary shadow-input-error-shadow-outer";
+      return "[--input-border-color:var(--semantic-status-error-dark)] [--input-outer-shadow:var(--input-error-shadow-outer)] bg-semantic-bg-ntrl-secondary";
     case "focus":
-      return "border-semantic-border-ntrl-default-focused bg-semantic-bg-ntrl-secondary shadow-input-shadow-outer";
+      return "[--input-border-color:var(--semantic-border-ntrl-default-focused)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-ntrl-secondary";
     case "hover":
-      return "border-semantic-border-ntrl-default-hover bg-semantic-bg-ntrl-secondary shadow-input-shadow-outer";
+      return "[--input-border-color:var(--semantic-border-ntrl-default-hover)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-ntrl-secondary";
     default:
-      return "border-semantic-border-ntrl-default bg-semantic-bg-ntrl-secondary shadow-input-shadow-outer";
+      return "[--input-border-color:var(--semantic-border-ntrl-default)] [--input-outer-shadow:var(--input-shadow-outer)] bg-semantic-bg-ntrl-secondary";
   }
 }
 

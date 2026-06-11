@@ -312,7 +312,7 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
               <label className="sr-only" htmlFor={channelTriggerId}>
                 Тип связи
               </label>
-              <div className="relative max-w-[42%] min-w-0 shrink-0">
+              <div className="relative min-w-0 max-w-[42%] shrink-0">
                 <button
                   id={channelTriggerId}
                   type="button"
@@ -321,7 +321,7 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
                   aria-haspopup="listbox"
                   aria-controls={channelMenuOpen ? channelListId : undefined}
                   className={cn(
-                    "relative w-full min-w-[5.5rem] max-w-full cursor-pointer truncate border-0 bg-transparent py-0 pl-0 pr-5 text-left font-sans outline-none",
+                    "relative w-full min-w-22 max-w-full cursor-pointer truncate border-0 bg-transparent py-0 pl-0 pr-5 text-left font-sans outline-none",
                     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-semantic-border-ntrl-default-focused",
                     textInputFieldTextClassName(fc, disabled ? "disabled" : "default", false),
                   )}
@@ -348,7 +348,7 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
           </TextInputChrome>
           {channelMenuOpen && !disabled ? (
             <div id={channelListId} className="absolute right-0 top-full z-10 mt-1 min-w-0">
-              <SelectMenu size={size} color={menuColor} className="min-w-[9rem] w-max max-w-[12rem]">
+              <SelectMenu size={size} color={menuColor} className="min-w-36 w-max max-w-48">
                 {(["telegram", "whatsapp"] as const).map((ch) => (
                   <MenuItem
                     key={ch}
@@ -419,7 +419,7 @@ const TagMultiSelectField = React.forwardRef<HTMLInputElement, TagMultiSelectFie
           color={fc}
           tone={it}
           pretext={false}
-          className="min-w-[6rem] flex-[1_1_6rem]"
+          className="min-w-24 flex-1 basis-24"
           disabled={disabled}
           {...filterInputProps}
         />
@@ -427,11 +427,9 @@ const TagMultiSelectField = React.forwardRef<HTMLInputElement, TagMultiSelectFie
     </>
   );
 
-  const growChrome = cn("h-auto min-h-0 max-h-none", fieldClassName);
-
   return (
     <InputBase className={className} {...baseRest} size={sz} color={color} tone={tone} disabled={disabled}>
-      <TextInputChrome size={sz} color={fc} tone={it} disabled={disabled} visualState={visualState} fieldClassName={growChrome}>
+      <TextInputChrome size={sz} color={fc} tone={it} disabled={disabled} visualState={visualState} fieldClassName={fieldClassName}>
         <TextInputInnerContent layout="multiselect" color={fc} disabled={disabled} size={sz} tags={tagsNode} showCaret={false} />
       </TextInputChrome>
     </InputBase>

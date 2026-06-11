@@ -31,10 +31,16 @@ export type InputBaseProps = Omit<React.ComponentPropsWithoutRef<"div">, "childr
   children: React.ReactNode;
 };
 
-const labelSizeByBase: Record<InputBaseSize, InputLabelSize> = {
+const stackLabelSizeByBase: Record<InputBaseSize, InputLabelSize> = {
   sm: "sm",
   md: "md",
   lg: "lg",
+};
+
+const sideLabelSizeByBase: Record<InputBaseSize, InputLabelSize> = {
+  sm: "md",
+  md: "lg",
+  lg: "x-lg",
 };
 
 const helperSizeByBase: Record<InputBaseSize, InputHelperTextSize> = {
@@ -45,7 +51,7 @@ const helperSizeByBase: Record<InputBaseSize, InputHelperTextSize> = {
 
 const helperSpacerBySize: Record<InputBaseSize, string> = {
   sm: "min-h-4",
-  md: "min-h-[1.125rem]",
+  md: "min-h-4.5",
   lg: "min-h-5",
 };
 
@@ -71,7 +77,7 @@ function InputBase({
   children,
   ...rest
 }: InputBaseProps) {
-  const labelSize = labelSizeByBase[size];
+  const labelSize = sideLabel ? sideLabelSizeByBase[size] : stackLabelSizeByBase[size];
   const helperSize = helperSizeByBase[size];
   const labelColor = color as InputLabelColor;
   const helperColor = color as InputHelperTextColor;

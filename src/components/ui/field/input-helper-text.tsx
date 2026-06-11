@@ -6,13 +6,13 @@ import { ArmenifyIcon } from "../icon";
 import { cn } from "@/lib/utils";
 
 const inputHelperTextRootVariants = cva(
-  "flex min-w-0 items-center gap-1 pb-1 font-sans font-medium antialiased",
+  "flex min-w-0 items-center gap-1 font-sans font-medium antialiased",
   {
     variants: {
       size: {
-        sm: "text-font-size-xs leading-[var(--font-font-size-xs)]",
-        md: "text-font-size-xs-input leading-[var(--font-font-size-xs-input)]",
-        lg: "text-font-size-sm leading-[var(--font-font-size-sm)]",
+        sm: "pb-0.5 text-font-size-xs leading-[var(--font-font-size-xs)]",
+        md: "pb-1 text-font-size-xs-input leading-[var(--font-font-size-xs-input)]",
+        lg: "pb-1.5 text-font-size-sm leading-[var(--font-font-size-sm)]",
       },
     },
     defaultVariants: { size: "sm" },
@@ -22,6 +22,10 @@ const inputHelperTextRootVariants = cva(
 export type InputHelperTextSize = NonNullable<VariantProps<typeof inputHelperTextRootVariants>["size"]>;
 export type InputHelperTextColor = "ntrl" | "brand" | "ntrl-inverse" | "brand-inverse";
 export type InputHelperTextTone = "default" | "success" | "error" | "disabled";
+
+function helperTextShowsIcon(size: InputHelperTextSize, color: InputHelperTextColor, tone: InputHelperTextTone): boolean {
+  return !(tone === "default" && size === "sm" && color === "brand");
+}
 
 function helperTextColorClass(color: InputHelperTextColor, tone: InputHelperTextTone): string {
   if (tone === "error") {
@@ -74,7 +78,7 @@ const InputHelperText = React.forwardRef<HTMLDivElement, InputHelperTextProps>(f
     className,
     size = "sm",
     show = true,
-    showIcon = true,
+    showIcon,
     color = "ntrl",
     tone = "default",
     children,
@@ -87,9 +91,11 @@ const InputHelperText = React.forwardRef<HTMLDivElement, InputHelperTextProps>(f
     return null;
   }
 
+  const resolvedSize: InputHelperTextSize = size ?? "sm";
   const Glyph = helperIcon(tone);
   const colorClass = helperTextColorClass(color, tone);
   const resolvedRole = role ?? (tone === "error" ? "alert" : "status");
+  const resolvedShowIcon = showIcon ?? helperTextShowsIcon(resolvedSize, color, tone);
 
   return (
     <div
@@ -98,11 +104,18 @@ const InputHelperText = React.forwardRef<HTMLDivElement, InputHelperTextProps>(f
       data-slot="input-helper-text"
       data-helper-tone={tone}
       data-helper-color={color}
+      data-helper-size={resolvedSize}
       role={resolvedRole}
-      className={cn(inputHelperTextRootVariants({ size }), colorClass, className)}
+      className={cn(inputHelperTextRootVariants({ size: resolvedSize }), colorClass, className)}
     >
-      {showIcon ? (
-        <ArmenifyIcon icon={Glyph} size="xx-small" strokeWeight="bold" className="shrink-0" aria-hidden />
+      {resolvedShowIcon ? (
+        <ArmenifyIcon
+          icon={Glyph}
+          size="xx-small"
+          strokeWeight="bold"
+          className="shrink-0"
+          aria-hidden
+        />
       ) : null}
       <span className="min-w-0">{children}</span>
     </div>

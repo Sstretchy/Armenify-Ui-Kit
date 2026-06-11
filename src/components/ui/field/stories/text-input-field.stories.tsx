@@ -1,98 +1,96 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { ShootingStar } from "phosphor-strokes-icons";
 
-import { TextInputField, type TextInputFieldVisualState } from "../text-input-field";
-import type { TextInputColor, TextInputSize } from "../text-input";
+import { cn } from "@/lib/utils";
+
+import { ArmenifyIcon } from "../../icon";
+import { TextInputInnerContent } from "../text-input-inner-content";
+import { textInputFieldTextClassName, textInputRootVariants, type TextInputColor, type TextInputSize } from "../text-input";
+import { TextInputChrome, TextInputField, type TextInputFieldVisualState } from "../text-input-field";
 
 const meta = {
   title: "UI/Field/TextInputField",
   component: TextInputField,
   tags: ["!autodocs"],
-  parameters: { layout: "padded", controls: { disable: true } },
-  args: {
-    defaultValue: "There is no one who",
-    "aria-label": "Demo",
-  },
+  parameters: { layout: "centered", controls: { disable: true } },
 } satisfies Meta<typeof TextInputField>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const sizes: TextInputSize[] = ["sm", "md", "lg"];
-const colors: TextInputColor[] = ["ntrl", "brand"];
-const staticStates: TextInputFieldVisualState[] = ["default", "hover", "focus", "error", "success", "disabled"];
+type TextInputFieldSpecimen = {
+  color: TextInputColor;
+  size: TextInputSize;
+  visualState: TextInputFieldVisualState;
+};
 
-export const Matrix: Story = {
-  render: () => (
-    <div className="flex max-w-lg flex-col gap-10 p-4">
-      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-        Оболочка инпута по{" "}
-        <a
-          className="text-components-typography-brand-light-label underline"
-          href="https://www.figma.com/design/btCKgn6RrWiteyBN0bViU1/Armenify?node-id=182-1981"
-          rel="noreferrer"
-          target="_blank"
-        >
-          макету 182:1981
-        </a>
-        : размеры sm / md / lg, состояния рамки и фона, ntrl / brand.
-      </p>
-      {colors.map((color) => (
-        <section key={color} className="flex flex-col gap-4">
-          <h3 className="text-font-size-xs font-medium uppercase tracking-wide text-semantic-text-ntrl-secondary">
-            {color}
-          </h3>
-          {sizes.map((size) => (
-            <div key={`${color}-${size}`} className="flex flex-col gap-2">
-              <p className="text-font-size-xs text-semantic-text-ntrl-tertiary">size: {size}</p>
-              <div className="flex flex-col gap-2">
-                {staticStates.map((visualState) => (
-                  <TextInputField
-                    key={visualState}
-                    size={size}
-                    color={color}
-                    tone="default"
-                    visualState={visualState}
-                    disabled={visualState === "disabled"}
-                    defaultValue="There is no one who"
-                    aria-label={`${color} ${size} ${visualState}`}
-                  />
-                ))}
-                <div>
-                  <p className="mb-1 text-font-size-xxs text-semantic-text-ntrl-tertiary">interactive (hover / focus)</p>
-                  <TextInputField
-                    size={size}
-                    color={color}
-                    tone="default"
-                    defaultValue="There is no one who"
-                    aria-label={`${color} ${size} interactive`}
-                  />
-                </div>
-                <div>
-                  <p className="mb-1 text-font-size-xxs text-semantic-text-ntrl-tertiary">tone error (live)</p>
-                  <TextInputField
-                    size={size}
-                    color={color}
-                    tone="error"
-                    defaultValue="There is no one who"
-                    aria-label={`${color} ${size} error`}
-                  />
-                </div>
-                <div>
-                  <p className="mb-1 text-font-size-xxs text-semantic-text-ntrl-tertiary">tone success (live)</p>
-                  <TextInputField
-                    size={size}
-                    color={color}
-                    tone="success"
-                    defaultValue="There is no one who"
-                    aria-label={`${color} ${size} success`}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-        </section>
-      ))}
-    </div>
+const colors: TextInputColor[] = ["ntrl", "brand"];
+const visualStates: TextInputFieldVisualState[] = ["default", "hover", "focus", "error", "success", "disabled"];
+const sizes: TextInputSize[] = ["sm", "md", "lg"];
+
+const specimenOrder: TextInputFieldSpecimen[] = colors.flatMap((color) =>
+  visualStates.flatMap((visualState) =>
+    sizes.map((size) => ({
+      color,
+      size,
+      visualState,
+    })),
   ),
+);
+
+const figmaCompareBorderColor = "#8b5cf6";
+const comparisonFrameStyle = { width: "19.875rem", borderColor: figmaCompareBorderColor } as const;
+
+const textSizeClassName: Record<TextInputSize, string> = {
+  sm: "text-font-size-sm leading-[var(--font-font-height-sm)]",
+  md: "text-font-size-base leading-[var(--font-font-height-base)]",
+  lg: "text-font-size-lg leading-[var(--font-font-height-lg)]",
+};
+
+function NeutralDisabledWithIcon({ size }: { size: TextInputSize }) {
+  return (
+    <TextInputChrome size={size} color="ntrl" tone="default" disabled visualState="disabled">
+      <div className={cn(textInputRootVariants({ size }), "w-full min-w-0 items-center gap-1")}>
+        <ArmenifyIcon icon={ShootingStar} size="x-small" strokeWeight="slim" className="text-semantic-text-ntrl-disabled" aria-hidden />
+        <span className={cn("truncate", textSizeClassName[size], textInputFieldTextClassName("ntrl", "disabled", false))}>There is no one who</span>
+      </div>
+    </TextInputChrome>
+  );
+}
+
+function TextInputFieldSpecimenRow({ color, size, visualState }: TextInputFieldSpecimen) {
+  if (color === "ntrl" && visualState === "disabled") {
+    return <NeutralDisabledWithIcon size={size} />;
+  }
+
+  return (
+    <TextInputChrome size={size} color={color} tone="default" disabled={visualState === "disabled"} visualState={visualState}>
+      <TextInputInnerContent
+        layout="default"
+        color={color}
+        disabled={visualState === "disabled"}
+        size={size}
+        pretext={false}
+        valueText="There is no one who"
+      />
+    </TextInputChrome>
+  );
+}
+
+function ComparisonFrame() {
+  return (
+    <div className="rounded border border-dashed bg-white p-1.5" style={comparisonFrameStyle}>
+      <div className="flex flex-col gap-1">
+        {specimenOrder.map(({ color, size, visualState }) => {
+          const key = `${color}-${visualState}-${size}`;
+          return <TextInputFieldSpecimenRow key={key} color={color} size={size} visualState={visualState} />;
+        })}
+      </div>
+    </div>
+  );
+}
+
+export const Comparison: Story = {
+  render: () => <ComparisonFrame />,
 };

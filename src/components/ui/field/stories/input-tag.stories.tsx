@@ -67,7 +67,7 @@ export const InInputRow: Story = {
           <input
             type="text"
             placeholder="Добавить…"
-            className="min-w-[6rem] flex-1 border-0 bg-transparent p-0 text-font-size-base text-components-typography-ntrl-light-inp-text outline-none placeholder:text-components-typography-ntrl-light-placeholder"
+            className="min-w-24 flex-1 border-0 bg-transparent p-0 text-font-size-base text-components-typography-ntrl-light-inp-text outline-none placeholder:text-components-typography-ntrl-light-placeholder"
             aria-label="Новый тег"
           />
         </div>

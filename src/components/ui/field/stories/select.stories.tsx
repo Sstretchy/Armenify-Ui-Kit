@@ -38,7 +38,7 @@ export const Matrix: Story = {
             <p className="text-font-size-xs font-medium capitalize text-semantic-text-ntrl-secondary">{color}</p>
             <div className="flex flex-wrap items-start gap-8">
               {(["sm", "md", "lg"] as const).map((size) => (
-                <div key={size} className="flex w-[min(24rem,100%)] min-w-[11rem] flex-col gap-1">
+                <div key={size} className="flex w-full min-w-44 max-w-96 flex-col gap-1">
                   <span className="text-font-size-xs text-semantic-text-ntrl-tertiary">{size}</span>
                   <Select size={size} color={color} defaultMenuOpen menuDefaultSelectedIndex={1} />
                 </div>

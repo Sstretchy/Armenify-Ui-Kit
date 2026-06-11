@@ -16,6 +16,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const visualStates: MenuItemVisualState[] = ["default", "hover", "disabled", "selected"];
+const menuItemColumnClassName = "min-w-56 max-w-64";
 
 function MatrixRow({
   size,
@@ -38,7 +39,7 @@ function MatrixRow({
           selected={visualState === "selected"}
           disabled={visualState === "disabled"}
           prefixText="Https://"
-          className="min-w-[14rem] max-w-[16rem]"
+          className={menuItemColumnClassName}
         >
           Armenify.am
         </MenuItem>
@@ -55,8 +56,9 @@ export const Matrix: Story = {
         selected).
       </p>
       <div className="flex flex-wrap gap-2 text-font-size-xs text-semantic-text-ntrl-tertiary">
+        <span className="w-14 shrink-0" aria-hidden />
         {visualStates.map((s) => (
-          <span key={s} className="min-w-[14rem] max-w-[16rem] pl-[calc(3.5rem+0.5rem)] capitalize">
+          <span key={s} className={`${menuItemColumnClassName} capitalize`}>
             {s}
           </span>
         ))}

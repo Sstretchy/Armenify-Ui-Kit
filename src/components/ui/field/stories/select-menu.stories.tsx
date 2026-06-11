@@ -16,6 +16,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const figmaSelectMenuWidthStyle = { width: "11.3125rem" } as const;
+
 export const AllSizes: Story = {
   render: () => (
     <div className="flex flex-col gap-10 p-4">
@@ -39,7 +41,7 @@ export const AllSizes: Story = {
               {(["sm", "md", "lg"] as const).map((size) => (
                 <div key={size} className="flex flex-col gap-1">
                   <span className="text-font-size-xs text-semantic-text-ntrl-tertiary">{size}</span>
-                  <SelectMenu size={size} color={color} className="w-[11.3125rem]" />
+                  <SelectMenu size={size} color={color} style={figmaSelectMenuWidthStyle} />
                 </div>
               ))}
             </div>

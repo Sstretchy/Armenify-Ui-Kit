@@ -296,8 +296,12 @@
   --text-font-size-xxxs--line-height: var(--font-font-height-xxxs);
   --text-font-size-xxs: var(--font-font-size-xxs);
   --text-font-size-xxs--line-height: var(--font-font-height-xxs);
+  --text-font-size-xxs-input: var(--font-font-size-xxs-input);
+  --text-font-size-xxs-input--line-height: var(--font-font-height-xxs-input);
   --text-font-size-xs: var(--font-font-size-xs);
   --text-font-size-xs--line-height: var(--font-font-height-xs);
+  --text-font-size-xs-input: var(--font-font-size-xs-input);
+  --text-font-size-xs-input--line-height: var(--font-font-height-xs-input);
   --text-font-size-sm: var(--font-font-size-sm);
   --text-font-size-sm--line-height: var(--font-font-height-sm);
   --text-font-size-base: var(--font-font-size-base);
