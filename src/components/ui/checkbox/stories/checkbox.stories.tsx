@@ -1,66 +1,170 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Checkbox, type CheckboxVariant } from "../checkbox";
+import { Typography } from "../../typography";
+import { Checkbox, type CheckboxSize, type CheckboxStoryState, type CheckboxVariant } from "../checkbox";
 
 const meta = {
   title: "UI/Checkbox",
   component: Checkbox,
   tags: ["!autodocs"],
-  parameters: { layout: "padded", controls: { disable: true } },
+  parameters: {
+    layout: "centered",
+    controls: { disable: true },
+  },
 } satisfies Meta<typeof Checkbox>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const variants: CheckboxVariant[] = ["primary", "secondary", "tertiary"];
-const sizes = ["xs", "sm", "md"] as const;
+const specimenStates = ["default", "hover", "active", "focused", "disabled"] as const;
+type SpecimenState = (typeof specimenStates)[number];
 
-export const Matrix: Story = {
-  render: () => (
-    <div className="flex flex-col gap-10 p-4">
-      <p className="max-w-xl text-font-size-sm text-semantic-text-ntrl-secondary">
-        Чекбоксы по{" "}
-        <a
-          className="text-components-typography-brand-light-label underline"
-          href="https://www.figma.com/design/btCKgn6RrWiteyBN0bViU1/Armenify?node-id=112-1294"
-          rel="noreferrer"
-          target="_blank"
-        >
-          макету 112:1294
-        </a>
-        : primary / secondary / tertiary, размеры xs / sm / md, checked / indeterminate / disabled.
-      </p>
-      {variants.map((variant) => (
-        <div key={variant} className="flex flex-col gap-3">
-          <p className="text-font-size-sm font-medium capitalize text-semantic-text-ntrl-primary">{variant}</p>
-          <div className="flex flex-wrap items-end gap-8">
-            {sizes.map((size) => (
-              <div key={size} className="flex flex-col items-center gap-2">
-                <span className="text-font-size-xxs-input text-components-typography-ntrl-light-sub-label">{size}</span>
-                <div className="flex gap-3">
-                  <Checkbox variant={variant} size={size} defaultChecked aria-label="Вкл" />
-                  <Checkbox variant={variant} size={size} aria-label="Выкл" />
-                  <Checkbox variant={variant} size={size} indeterminate aria-label="Смешанное" />
-                  <Checkbox variant={variant} size={size} defaultChecked disabled aria-label="Вкл disabled" />
-                  <Checkbox variant={variant} size={size} disabled aria-label="Выкл disabled" />
-                </div>
-              </div>
-            ))}
-          </div>
+function noop() {}
+
+function resolveStoryState(state: SpecimenState): CheckboxStoryState | undefined {
+  return state === "default" || state === "disabled" ? undefined : state;
+}
+
+function StaticCheckbox({
+  checked,
+  size,
+  state,
+  variant,
+}: {
+  checked: boolean;
+  size: CheckboxSize;
+  state: SpecimenState;
+  variant: CheckboxVariant;
+}) {
+  return (
+    <Checkbox
+      checked={checked}
+      disabled={state === "disabled"}
+      size={size}
+      variant={variant}
+      storyState={resolveStoryState(state)}
+      onChange={noop}
+      tabIndex={-1}
+      aria-label={`${variant} ${checked ? "checked" : "unchecked"} ${size} ${state}`}
+      className="pointer-events-none"
+    />
+  );
+}
+
+const specimenRows = [
+  { variant: "primary" as const, size: "xs" as const },
+  { variant: "secondary" as const, size: "xs" as const },
+  { variant: "tertiary" as const, size: "xs" as const },
+  { variant: "primary" as const, size: "sm" as const },
+  { variant: "secondary" as const, size: "sm" as const },
+  { variant: "tertiary" as const, size: "sm" as const },
+  { variant: "primary" as const, size: "md" as const },
+  { variant: "secondary" as const, size: "md" as const },
+  { variant: "tertiary" as const, size: "md" as const },
+] satisfies ReadonlyArray<{ variant: CheckboxVariant; size: CheckboxSize }>;
+
+function CheckboxSpecimen({ checked }: { checked: boolean }) {
+  return (
+    <div className="relative flex h-[28.125rem] w-[15.3125rem] flex-col gap-5 p-5 before:pointer-events-none before:absolute before:inset-0 before:rounded-[0.3125rem] before:border-[0.0625rem] before:border-dashed before:border-[#9747FF] before:content-['']">
+      {specimenRows.map(({ variant, size }) => (
+        <div key={`${variant}-${size}`} className="flex items-center gap-5">
+          {specimenStates.map((state) => (
+            <StaticCheckbox
+              key={`${checked ? "checked" : "unchecked"}-${variant}-${size}-${state}`}
+              checked={checked}
+              size={size}
+              state={state}
+              variant={variant}
+            />
+          ))}
         </div>
       ))}
     </div>
-  ),
+  );
+}
+
+function BehaviorRow({
+  checkbox,
+  title,
+  note,
+}: {
+  checkbox: React.ReactNode;
+  title: string;
+  note: string;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <div className="pt-[0.0625rem]">{checkbox}</div>
+      <div className="flex flex-col gap-1">
+        <Typography variant="sm" weight="medium">
+          {title}
+        </Typography>
+        <Typography variant="xs" tone="muted">
+          {note}
+        </Typography>
+      </div>
+    </div>
+  );
+}
+
+export const FigmaSpecimen: Story = {
+  render: () => <CheckboxSpecimen checked />,
 };
 
-export const Controlled: Story = {
-  render: function Controlled() {
-    const [on, setOn] = React.useState(true);
+export const Behavior: Story = {
+  parameters: {
+    layout: "padded",
+  },
+  render: function BehaviorRender() {
+    const [controlled, setControlled] = React.useState(true);
+    const [mixedChecked, setMixedChecked] = React.useState(false);
+    const [mixed, setMixed] = React.useState(true);
+
     return (
-      <div className="flex flex-col gap-4 p-4">
-        <Checkbox checked={on} onChange={(e) => setOn(e.target.checked)} aria-label="Уведомления" />
+      <div className="flex max-w-xl flex-col gap-4 p-4">
+        <BehaviorRow
+          title="Controlled"
+          note="Uses `checked` plus `onChange`, while preserving the native checkbox input for keyboard and screen readers."
+          checkbox={
+            <Checkbox
+              aria-label="Controlled checkbox"
+              checked={controlled}
+              onChange={(e) => {
+                setControlled(e.target.checked);
+              }}
+            />
+          }
+        />
+
+        <BehaviorRow
+          title="Uncontrolled"
+          note="Uses `defaultChecked`; the component tracks the native state and keeps the visual box in sync."
+          checkbox={<Checkbox defaultChecked aria-label="Uncontrolled checkbox" />}
+        />
+
+        <BehaviorRow
+          title="Indeterminate"
+          note="The mixed state is set through the native `indeterminate` property and clears after the first toggle."
+          checkbox={
+            <Checkbox
+              aria-label="Indeterminate checkbox"
+              checked={mixedChecked}
+              indeterminate={mixed}
+              onChange={(e) => {
+                setMixed(false);
+                setMixedChecked(e.target.checked);
+              }}
+            />
+          }
+        />
+
+        <BehaviorRow
+          title="Disabled"
+          note="Disabled checkboxes stay non-interactive and do not expose hover or focus visuals."
+          checkbox={<Checkbox checked disabled onChange={noop} aria-label="Disabled checkbox" />}
+        />
       </div>
     );
   },

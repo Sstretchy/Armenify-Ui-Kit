@@ -1,43 +1,84 @@
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
-import { Button, type ButtonAsButtonProps, type ButtonSize } from "../button";
+import { Button, type ButtonAsButtonProps, type ButtonSize } from '../button';
+import { controlInteractiveTransitionClassName } from '../control-transition';
 
-export type ToggleGroupSize = "xs" | "sm" | "md" | "lg" | "x-lg";
+export type ToggleGroupSize = 'xs' | 'sm' | 'md' | 'lg' | 'x-lg';
 
 function toggleGroupSizeToButtonSize(size: ToggleGroupSize): ButtonSize {
-  return size === "x-lg" ? "xl" : size;
+  return size === 'x-lg' ? 'xl' : size;
+}
+
+type ToggleGroupItemSnapshot = {
+  enabledValues: string[];
+};
+
+function areStringArraysEqual(left: string[], right: string[]): boolean {
+  return (
+    left.length === right.length &&
+    left.every((value, index) => value === right[index])
+  );
+}
+
+function getToggleGroupButtons(
+  root: HTMLDivElement | null,
+  selector = 'button[data-toggle-group-item]',
+): HTMLButtonElement[] {
+  if (root == null) return [];
+  return [...root.querySelectorAll<HTMLButtonElement>(selector)];
+}
+
+function getToggleGroupItemValue(button: HTMLButtonElement): string | null {
+  const value = button.dataset.toggleGroupValue;
+  return value != null && value.length > 0 ? value : null;
+}
+
+function getToggleGroupItemSnapshot(
+  root: HTMLDivElement | null,
+): ToggleGroupItemSnapshot {
+  const buttons = getToggleGroupButtons(root);
+  const enabledValues = buttons
+    .filter((button) => !button.disabled)
+    .map(getToggleGroupItemValue)
+    .filter((value): value is string => value != null);
+
+  return { enabledValues };
 }
 
 const toggleGroupRootVariants = cva(
-  "flex w-full min-w-0 items-stretch overflow-hidden inner-border inner-border-1_5 [--inner-border-color:var(--semantic-border-brand-default)] shadow-control-shadow-outer outline-none",
+  cn(
+    'flex w-full min-w-0 items-stretch shadow-control-shadow-outer outline-none inner-border inner-border-1 [--inner-border-color:var(--semantic-border-brand-default)]',
+    controlInteractiveTransitionClassName,
+    'hover:[--inner-border-color:var(--semantic-border-brand-default-hover)] has-[:focus-visible]:[--inner-border-color:var(--semantic-border-brand-default-focused)] data-[story-state=focused]:[--inner-border-color:var(--semantic-border-brand-default-focused)]',
+  ),
   {
     variants: {
       size: {
-        xs: "rounded-border-md",
-        sm: "rounded-border-md",
-        md: "rounded-border-lg",
-        lg: "rounded-border-x-lg",
-        "x-lg": "rounded-border-x-lg",
+        xs: 'rounded-border-md',
+        sm: 'rounded-border-md',
+        md: 'rounded-border-lg',
+        lg: 'rounded-border-x-lg',
+        'x-lg': 'rounded-border-x-lg',
       },
     },
-    defaultVariants: { size: "md" },
+    defaultVariants: { size: 'md' },
   },
 );
 
 type ToggleGroupContextValue = {
   value: string;
-  setValue: (next: string) => void;
+  selectValue: (next: string) => void;
   disabled: boolean;
   buttonSize: ButtonSize;
-  orderedValues: string[];
-  registerItem: (itemValue: string) => void;
-  unregisterItem: (itemValue: string) => void;
+  tabStopValue: string | null;
 };
 
-const ToggleGroupContext = React.createContext<ToggleGroupContextValue | null>(null);
+const ToggleGroupContext = React.createContext<ToggleGroupContextValue | null>(
+  null,
+);
 
 function useToggleGroupContext(consumer: string): ToggleGroupContextValue {
   const ctx = React.useContext(ToggleGroupContext);
@@ -47,7 +88,10 @@ function useToggleGroupContext(consumer: string): ToggleGroupContextValue {
   return ctx;
 }
 
-export type ToggleGroupRootProps = Omit<React.ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange"> & {
+export type ToggleGroupRootProps = Omit<
+  React.ComponentPropsWithoutRef<'div'>,
+  'defaultValue' | 'onChange'
+> & {
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
@@ -55,205 +99,285 @@ export type ToggleGroupRootProps = Omit<React.ComponentPropsWithoutRef<"div">, "
   disabled?: boolean;
 };
 
-const ToggleGroupRoot = React.forwardRef<HTMLDivElement, ToggleGroupRootProps>(function ToggleGroupRoot(
-  {
-    className,
-    size = "md",
-    disabled = false,
-    value: valueProp,
-    defaultValue = "",
-    onValueChange,
-    children,
-    onKeyDown,
-    ...props
+const ToggleGroupRoot = React.forwardRef<HTMLDivElement, ToggleGroupRootProps>(
+  function ToggleGroupRoot(
+    {
+      className,
+      size = 'md',
+      disabled = false,
+      value: valueProp,
+      defaultValue = '',
+      onValueChange,
+      children,
+      onKeyDown,
+      ...props
+    },
+    ref,
+  ) {
+    const isControlled = valueProp !== undefined;
+    const [uncontrolledValue, setUncontrolledValue] =
+      React.useState(defaultValue);
+    const value = isControlled ? (valueProp ?? '') : uncontrolledValue;
+    const [itemSnapshot, setItemSnapshot] =
+      React.useState<ToggleGroupItemSnapshot>({
+        enabledValues: [],
+      });
+
+    const selectValue = React.useCallback(
+      (next: string) => {
+        if (next === '' || next === value) return;
+        if (!isControlled) {
+          setUncontrolledValue(next);
+        }
+        onValueChange?.(next);
+      },
+      [isControlled, onValueChange, value],
+    );
+
+    const buttonSize = React.useMemo(
+      () => toggleGroupSizeToButtonSize(size),
+      [size],
+    );
+
+    const rootRef = React.useRef<HTMLDivElement | null>(null);
+
+    const setRootRef = React.useCallback(
+      (node: HTMLDivElement | null) => {
+        rootRef.current = node;
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref != null) {
+          (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+        }
+      },
+      [ref],
+    );
+
+    React.useLayoutEffect(() => {
+      const nextSnapshot = getToggleGroupItemSnapshot(rootRef.current);
+      setItemSnapshot((prev) =>
+        areStringArraysEqual(prev.enabledValues, nextSnapshot.enabledValues)
+          ? prev
+          : nextSnapshot,
+      );
+    });
+
+    const { enabledValues } = itemSnapshot;
+
+    const tabStopValue = React.useMemo(() => {
+      if (enabledValues.includes(value)) {
+        return value;
+      }
+      return enabledValues[0] ?? null;
+    }, [enabledValues, value]);
+
+    const getActiveSegmentIndex = React.useCallback((): number => {
+      const buttons = getToggleGroupButtons(
+        rootRef.current,
+        'button[data-toggle-group-item]:not(:disabled)',
+      );
+      if (buttons.length === 0) return -1;
+
+      const active = document.activeElement;
+      if (active instanceof HTMLButtonElement) {
+        const activeIndex = buttons.indexOf(active);
+        if (activeIndex >= 0) {
+          return activeIndex;
+        }
+      }
+
+      if (tabStopValue != null) {
+        const tabStopIndex = buttons.findIndex(
+          (button) => getToggleGroupItemValue(button) === tabStopValue,
+        );
+        if (tabStopIndex >= 0) {
+          return tabStopIndex;
+        }
+      }
+
+      return 0;
+    }, [tabStopValue]);
+
+    const focusItemByIndex = React.useCallback((index: number) => {
+      const buttons = getToggleGroupButtons(
+        rootRef.current,
+        'button[data-toggle-group-item]:not(:disabled)',
+      );
+      const btn = buttons[index];
+      if (btn instanceof HTMLElement) {
+        btn.focus();
+      }
+    }, []);
+
+    const handleKeyDown = React.useCallback(
+      (event: React.KeyboardEvent<HTMLDivElement>) => {
+        onKeyDown?.(event);
+        if (event.defaultPrevented || disabled || enabledValues.length === 0)
+          return;
+
+        const idx = getActiveSegmentIndex();
+        if (idx < 0) return;
+
+        const len = enabledValues.length;
+        const isRtl =
+          rootRef.current != null &&
+          getComputedStyle(rootRef.current).direction === 'rtl';
+        const nextHorizontalKey = isRtl ? 'ArrowLeft' : 'ArrowRight';
+        const previousHorizontalKey = isRtl ? 'ArrowRight' : 'ArrowLeft';
+
+        const move = (delta: number) => {
+          event.preventDefault();
+          const nextIdx = (idx + delta + len) % len;
+          const next = enabledValues[nextIdx];
+          if (next == null) return;
+          selectValue(next);
+          queueMicrotask(() => {
+            focusItemByIndex(nextIdx);
+          });
+        };
+
+        switch (event.key) {
+          case nextHorizontalKey:
+          case 'ArrowDown':
+            move(1);
+            break;
+          case previousHorizontalKey:
+          case 'ArrowUp':
+            move(-1);
+            break;
+          case 'Home': {
+            event.preventDefault();
+            const first = enabledValues[0];
+            if (first == null) return;
+            selectValue(first);
+            queueMicrotask(() => focusItemByIndex(0));
+            break;
+          }
+          case 'End': {
+            event.preventDefault();
+            const last = enabledValues[enabledValues.length - 1];
+            if (last == null) return;
+            selectValue(last);
+            queueMicrotask(() => focusItemByIndex(len - 1));
+            break;
+          }
+          default:
+            break;
+        }
+      },
+      [
+        disabled,
+        enabledValues,
+        focusItemByIndex,
+        getActiveSegmentIndex,
+        onKeyDown,
+        selectValue,
+      ],
+    );
+
+    const ctx = React.useMemo(
+      () => ({
+        value,
+        selectValue,
+        disabled,
+        buttonSize,
+        tabStopValue,
+      }),
+      [value, selectValue, disabled, buttonSize, tabStopValue],
+    );
+
+    return (
+      <ToggleGroupContext.Provider value={ctx}>
+        <div
+          ref={setRootRef}
+          role='radiogroup'
+          aria-disabled={disabled || undefined}
+          aria-orientation='horizontal'
+          data-slot='toggle-group'
+          data-toggle-group-size={size}
+          data-disabled={disabled ? '' : undefined}
+          className={cn(toggleGroupRootVariants({ size }), className)}
+          onKeyDown={handleKeyDown}
+          {...props}
+        >
+          {children}
+        </div>
+      </ToggleGroupContext.Provider>
+    );
   },
-  ref,
-) {
-  const isControlled = valueProp !== undefined;
-  const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue);
-  const value = isControlled ? valueProp! : uncontrolledValue;
-
-  const [orderedValues, setOrderedValues] = React.useState<string[]>([]);
-
-  const registerItem = React.useCallback((itemValue: string) => {
-    setOrderedValues((prev) => (prev.includes(itemValue) ? prev : [...prev, itemValue]));
-  }, []);
-
-  const unregisterItem = React.useCallback((itemValue: string) => {
-    setOrderedValues((prev) => prev.filter((v) => v !== itemValue));
-  }, []);
-
-  const setValue = React.useCallback(
-    (next: string) => {
-      if (next === "") return;
-      if (!isControlled) {
-        setUncontrolledValue(next);
-      }
-      onValueChange?.(next);
-    },
-    [isControlled, onValueChange],
-  );
-
-  const buttonSize = React.useMemo(() => toggleGroupSizeToButtonSize(size), [size]);
-
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
-
-  const setRootRef = React.useCallback(
-    (node: HTMLDivElement | null) => {
-      rootRef.current = node;
-      if (typeof ref === "function") {
-        ref(node);
-      } else if (ref != null) {
-        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
-      }
-    },
-    [ref],
-  );
-
-  const getActiveSegmentIndex = React.useCallback((): number => {
-    const root = rootRef.current;
-    if (root == null) return 0;
-    const active = document.activeElement;
-    if (active instanceof HTMLButtonElement && root.contains(active)) {
-      const buttons = [...root.querySelectorAll("button[data-toggle-group-item]")] as HTMLButtonElement[];
-      const i = buttons.indexOf(active);
-      if (i >= 0) return i;
-    }
-    const fromValue = orderedValues.indexOf(value);
-    return fromValue >= 0 ? fromValue : 0;
-  }, [orderedValues, value]);
-
-  const focusItemByIndex = React.useCallback((index: number) => {
-    const root = rootRef.current;
-    if (root == null) return;
-    const buttons = root.querySelectorAll("button[data-toggle-group-item]");
-    const btn = buttons.item(index);
-    if (btn instanceof HTMLElement) {
-      btn.focus();
-    }
-  }, []);
-
-  const handleKeyDown = React.useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
-      onKeyDown?.(event);
-      if (event.defaultPrevented || disabled || orderedValues.length === 0) return;
-
-      const idx = getActiveSegmentIndex();
-      const len = orderedValues.length;
-
-      const move = (delta: number) => {
-        event.preventDefault();
-        const nextIdx = (idx + delta + len) % len;
-        const next = orderedValues[nextIdx];
-        if (next == null) return;
-        setValue(next);
-        queueMicrotask(() => {
-          focusItemByIndex(nextIdx);
-        });
-      };
-
-      switch (event.key) {
-        case "ArrowRight":
-        case "ArrowDown":
-          move(1);
-          break;
-        case "ArrowLeft":
-        case "ArrowUp":
-          move(-1);
-          break;
-        case "Home": {
-          event.preventDefault();
-          const first = orderedValues[0];
-          if (first == null) return;
-          setValue(first);
-          queueMicrotask(() => focusItemByIndex(0));
-          break;
-        }
-        case "End": {
-          event.preventDefault();
-          const last = orderedValues[orderedValues.length - 1];
-          if (last == null) return;
-          setValue(last);
-          queueMicrotask(() => focusItemByIndex(len - 1));
-          break;
-        }
-        default:
-          break;
-      }
-    },
-    [disabled, focusItemByIndex, getActiveSegmentIndex, onKeyDown, orderedValues, setValue],
-  );
-
-  const ctx = React.useMemo(
-    () => ({
-      value,
-      setValue,
-      disabled,
-      buttonSize,
-      orderedValues,
-      registerItem,
-      unregisterItem,
-    }),
-    [value, setValue, disabled, buttonSize, orderedValues, registerItem, unregisterItem],
-  );
-
-  return (
-    <ToggleGroupContext.Provider value={ctx}>
-      <div
-        ref={setRootRef}
-        role="group"
-        data-slot="toggle-group"
-        data-toggle-group-size={size}
-        className={cn(toggleGroupRootVariants({ size }), className)}
-        onKeyDown={handleKeyDown}
-        {...props}
-      >
-        {children}
-      </div>
-    </ToggleGroupContext.Provider>
-  );
-});
+);
 
 export type ToggleGroupItemProps = Omit<
   ButtonAsButtonProps,
-  "variant" | "size" | "zeroCorner" | "pressed" | "unchecked" | "type" | "href"
+  'variant' | 'size' | 'zeroCorner' | 'pressed' | 'unchecked' | 'type' | 'href'
 > & {
   value: string;
 };
 
-function ToggleGroupItem({ className, value: itemValue, disabled: itemDisabled, onClick, ...props }: ToggleGroupItemProps) {
-  const { value, setValue, disabled: groupDisabled, buttonSize, orderedValues, registerItem, unregisterItem } =
-    useToggleGroupContext("ToggleGroup.Item");
-
-  React.useLayoutEffect(() => {
-    registerItem(itemValue);
-    return () => {
-      unregisterItem(itemValue);
-    };
-  }, [itemValue, registerItem, unregisterItem]);
-
-  const hasSelection = value !== "" && orderedValues.includes(value);
-  const selected = value === itemValue && hasSelection;
+function ToggleGroupItem({
+  className,
+  value: itemValue,
+  disabled: itemDisabled,
+  onClick,
+  ...props
+}: ToggleGroupItemProps) {
+  const {
+    value,
+    selectValue,
+    disabled: groupDisabled,
+    buttonSize,
+    tabStopValue,
+  } = useToggleGroupContext('ToggleGroup.Item');
 
   const disabled = Boolean(groupDisabled || itemDisabled);
+  const selected = value !== '' && value === itemValue;
+  const focusSurfaceClassName = selected
+    ? cn(
+        'focus-visible:bg-components-controls-bg-secondary-default focus-visible:bg-[image:none]',
+        'data-[story-state=focused]:bg-components-controls-bg-secondary-default data-[story-state=focused]:bg-[image:none]',
+        'focus-visible:hover:bg-components-controls-bg-secondary-hover focus-visible:active:bg-components-controls-bg-secondary-active',
+      )
+    : cn(
+        'focus-visible:bg-components-controls-bg-secondary-default focus-visible:bg-[image:var(--gradient-brand-primary)]',
+        'data-[story-state=focused]:bg-components-controls-bg-secondary-default data-[story-state=focused]:bg-[image:var(--gradient-brand-primary)]',
+      );
+  const tabIndex =
+    disabled || tabStopValue == null
+      ? disabled
+        ? -1
+        : undefined
+      : tabStopValue === itemValue
+        ? 0
+        : -1;
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (disabled) return;
-    setValue(itemValue);
     onClick?.(event);
+    if (event.defaultPrevented || disabled) return;
+    selectValue(itemValue);
   };
 
   return (
     <Button
-      type="button"
-      aria-pressed={selected}
-      variant={selected ? "primary" : "tertiary"}
+      type='button'
+      role='radio'
+      aria-checked={selected}
+      tabIndex={tabIndex}
+      variant={selected ? 'secondary' : 'primary'}
       size={buttonSize}
       zeroCorner
-      unchecked={!selected}
       disabled={disabled}
-      className={cn("min-w-0 flex-1 !shrink", className)}
-      data-toggle-group-item=""
+      className={cn(
+        'min-w-0 flex-1 !shrink focus-visible:z-[1] focus-visible:border-0 data-[story-state=focused]:z-[1] data-[story-state=focused]:border-0',
+        '[&:first-child]:![border-top-left-radius:inherit]',
+        '[&:first-child]:![border-bottom-left-radius:inherit]',
+        '[&:last-child]:![border-top-right-radius:inherit]',
+        '[&:last-child]:![border-bottom-right-radius:inherit]',
+        focusSurfaceClassName,
+        className,
+      )}
+      data-toggle-group-item=''
+      data-toggle-group-value={itemValue}
+      data-state={selected ? 'on' : 'off'}
       onClick={handleClick}
       {...props}
     />
@@ -265,5 +389,12 @@ const ToggleGroup = {
   Item: ToggleGroupItem,
 };
 
-export { ToggleGroup, ToggleGroupRoot, ToggleGroupItem, toggleGroupRootVariants };
-export type ToggleGroupRootVariantProps = VariantProps<typeof toggleGroupRootVariants>;
+export {
+  ToggleGroup,
+  ToggleGroupRoot,
+  ToggleGroupItem,
+  toggleGroupRootVariants,
+};
+export type ToggleGroupRootVariantProps = VariantProps<
+  typeof toggleGroupRootVariants
+>;
