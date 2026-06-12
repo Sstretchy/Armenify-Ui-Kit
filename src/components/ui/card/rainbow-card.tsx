@@ -13,7 +13,7 @@ function useRainbowCardSize(): RainbowCardSize {
 }
 
 const rainbowCardRootVariants = cva(
-  "relative flex w-full max-w-[15.625rem] flex-col items-center justify-center overflow-hidden rounded-border-x-lg border border-solid border-semantic-border-brand-delicate text-center",
+  "relative flex w-full max-w-[15.625rem] flex-col items-center justify-center overflow-hidden rounded-border-x-lg inner-border inner-border-1 [--inner-border-color:var(--semantic-border-brand-delicate)] text-center",
   {
     variants: {
       size: {

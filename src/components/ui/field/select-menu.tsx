@@ -7,8 +7,8 @@ import { MenuItem, type MenuItemColor, type MenuItemSize } from "./menu-item";
 
 const selectMenuRootVariants = cva(
   cn(
-    "box-border flex w-full min-w-0 flex-col font-sans",
-    "border-[0.09375rem] border-solid border-semantic-border-ntrl-default",
+    "box-border flex w-full min-w-0 flex-col font-sans inner-border inner-border-1_5",
+    "[--inner-border-color:var(--semantic-border-ntrl-default)]",
     "shadow-input-shadow-outer antialiased",
   ),
   {
@@ -81,7 +81,7 @@ const SelectMenu = React.forwardRef<HTMLDivElement, SelectMenuProps>(function Se
       {[0, 1, 2, 3].map((i) => (
         <React.Fragment key={i}>
           {i > 0 ? <SelectMenuDivider tone={dividerTone} /> : null}
-          <MenuItem size={size} color={color} prefixText="Https://" selected={defaultSelectedIndex === i}>
+          <MenuItem size={size} color={color} prefixText="Https//" selected={defaultSelectedIndex === i}>
             Text
           </MenuItem>
         </React.Fragment>

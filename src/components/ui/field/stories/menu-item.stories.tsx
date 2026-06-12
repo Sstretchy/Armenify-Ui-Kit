@@ -7,89 +7,90 @@ const meta = {
   title: "UI/Field/MenuItem",
   component: MenuItem,
   tags: ["!autodocs"],
-  parameters: { layout: "padded", controls: { disable: true } },
-  args: { children: "Armenify.am", size: "md" as const, color: "ntrl" as const },
+  parameters: { layout: "centered", controls: { disable: true } },
+  args: { children: "Text", size: "sm" as const, color: "ntrl" as const },
 } satisfies Meta<typeof MenuItem>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const visualStates: MenuItemVisualState[] = ["default", "hover", "disabled", "selected"];
-
-function MatrixRow({
-  size,
-  color,
-  label,
-}: {
-  size: MenuItemSize;
+type FigmaSpecimen = {
   color: MenuItemColor;
-  label: string;
-}) {
+  size: MenuItemSize;
+  visualState: MenuItemVisualState;
+};
+
+const figmaSpecimens: FigmaSpecimen[] = [
+  { color: "ntrl", size: "sm", visualState: "default" },
+  { color: "ntrl", size: "sm", visualState: "hover" },
+  { color: "ntrl", size: "sm", visualState: "selected" },
+  { color: "ntrl", size: "sm", visualState: "disabled" },
+  { color: "ntrl", size: "md", visualState: "default" },
+  { color: "ntrl", size: "md", visualState: "hover" },
+  { color: "ntrl", size: "md", visualState: "selected" },
+  { color: "ntrl", size: "md", visualState: "disabled" },
+  { color: "ntrl", size: "lg", visualState: "default" },
+  { color: "ntrl", size: "lg", visualState: "hover" },
+  { color: "ntrl", size: "lg", visualState: "selected" },
+  { color: "ntrl", size: "lg", visualState: "disabled" },
+  { color: "brand", size: "sm", visualState: "default" },
+  { color: "brand", size: "sm", visualState: "hover" },
+  { color: "brand", size: "sm", visualState: "selected" },
+  { color: "brand", size: "sm", visualState: "disabled" },
+  { color: "brand", size: "md", visualState: "default" },
+  { color: "brand", size: "md", visualState: "hover" },
+  { color: "brand", size: "md", visualState: "selected" },
+  { color: "brand", size: "md", visualState: "disabled" },
+  { color: "brand", size: "lg", visualState: "default" },
+  { color: "brand", size: "lg", visualState: "hover" },
+  { color: "brand", size: "lg", visualState: "selected" },
+  { color: "brand", size: "lg", visualState: "disabled" },
+];
+
+const specimenWidthClassName = "w-[11.3125rem]";
+
+function specimenId({ color, size, visualState }: FigmaSpecimen) {
+  return `menu-item-${color}-${size}-${visualState}`;
+}
+
+function ComparisonFrame() {
   return (
-    <div className="flex flex-wrap items-stretch gap-2">
-      <span className="flex w-14 shrink-0 items-center text-font-size-xs text-semantic-text-ntrl-tertiary">{label}</span>
-      {visualStates.map((visualState) => (
+    <div className="pointer-events-none box-border flex w-[13.8125rem] flex-col gap-2.5 rounded border border-dashed border-semantic-border-brand-default bg-white p-5">
+      {figmaSpecimens.map((specimen) => (
         <MenuItem
-          key={visualState}
-          size={size}
-          color={color}
-          visualState={visualState}
-          selected={visualState === "selected"}
-          disabled={visualState === "disabled"}
-          prefixText="Https://"
-          className="min-w-[14rem] max-w-[16rem]"
+          key={specimenId(specimen)}
+          className={specimenWidthClassName}
+          size={specimen.size}
+          color={specimen.color}
+          visualState={specimen.visualState}
+          selected={specimen.visualState === "selected"}
+          disabled={specimen.visualState === "disabled"}
+          prefixText="Https//"
         >
-          Armenify.am
+          Text
         </MenuItem>
       ))}
     </div>
   );
 }
 
-export const Matrix: Story = {
-  render: () => (
-    <div className="pointer-events-none flex flex-col gap-10 p-4">
-      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-        Узел Figma «Menu item»: размеры sm / md / lg, ntrl / brand, состояния default / hover / disabled / selected (справа Check при
-        selected).
-      </p>
-      <div className="flex flex-wrap gap-2 text-font-size-xs text-semantic-text-ntrl-tertiary">
-        {visualStates.map((s) => (
-          <span key={s} className="min-w-[14rem] max-w-[16rem] pl-[calc(3.5rem+0.5rem)] capitalize">
-            {s}
-          </span>
-        ))}
-      </div>
-      <section className="flex flex-col gap-6">
-        <p className="text-font-size-xs font-medium text-semantic-text-ntrl-secondary">neutral</p>
-        {(["sm", "md", "lg"] as const).map((size) => (
-          <MatrixRow key={size} size={size} color="ntrl" label={size} />
-        ))}
-      </section>
-      <section className="flex flex-col gap-6">
-        <p className="text-font-size-xs font-medium text-semantic-text-ntrl-secondary">brand</p>
-        {(["sm", "md", "lg"] as const).map((size) => (
-          <MatrixRow key={size} size={size} color="brand" label={size} />
-        ))}
-      </section>
-    </div>
-  ),
+export const Comparison: Story = {
+  render: () => <ComparisonFrame />,
 };
 
 export const Interactive: Story = {
   render: function InteractiveRender() {
     const [selected, setSelected] = React.useState<string | null>("b");
     return (
-      <div className="flex max-w-md flex-col gap-1 p-4">
-        <p className="mb-2 text-font-size-sm text-semantic-text-ntrl-secondary">Клик переключает selected; hover через CSS.</p>
+      <div className="flex w-[11.3125rem] flex-col gap-0.5">
         {(["a", "b", "c"] as const).map((id) => (
           <MenuItem
             key={id}
-            size="md"
+            size="sm"
             color="ntrl"
             selected={selected === id}
-            prefixText="Https://"
+            prefixText="Https//"
             onClick={() => setSelected(id)}
           >
             Option {id.toUpperCase()}

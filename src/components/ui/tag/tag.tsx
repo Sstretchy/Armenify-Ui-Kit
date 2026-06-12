@@ -23,8 +23,8 @@ const tagVariants = cva("inline-flex items-center justify-center font-sans font-
       false: "border-0",
     },
     size: {
-      sm: "h-5 gap-2 rounded-border-xs px-2",
-      lg: "h-6 gap-2.5 rounded-border-sm px-2",
+      sm: "gap-2 rounded-border-xs px-2 py-0.5",
+      lg: "gap-2.5 rounded-border-sm px-2 py-0.5",
     },
   },
   compoundVariants: [
@@ -95,11 +95,6 @@ const tagTextWeightBySize: Record<TagSize, "medium" | "regular"> = {
   lg: "regular",
 };
 
-const tagTextOffsetBySize: Record<TagSize, string> = {
-  sm: "translate-y-[-0.08rem]",
-  lg: "translate-y-[-0.08rem]",
-};
-
 type SharedTagProps = VariantProps<typeof tagVariants> & {
   children: React.ReactNode;
   showRemove?: boolean;
@@ -145,7 +140,7 @@ const Tag = React.forwardRef<HTMLButtonElement | HTMLSpanElement, TagProps>(func
       as="span"
       variant={tagTextVariantBySize[resolvedSize]}
       weight={tagTextWeightBySize[resolvedSize]}
-      className={cn("whitespace-nowrap leading-inherit text-current", tagTextOffsetBySize[resolvedSize])}
+      className="whitespace-nowrap text-current"
     >
       {children}
     </Typography>

@@ -1,3 +1,15 @@
+@keyframes am-dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.375rem) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @layer utilities {
   .rounded-full {
     border-radius: 100%;
@@ -129,6 +141,38 @@
     border-bottom-width: calc(0.5rem * calc(1 - var(--tw-divide-y-reverse)));
   }
 
+  /* Inner optical border that never changes layout. */
+  .inner-border {
+    position: relative;
+    --inner-border-width: 0.0625rem;
+  }
+  .inner-border::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 var(--inner-border-width) var(--inner-border-color, currentColor);
+    pointer-events: none;
+  }
+  .inner-border-0 {
+    --inner-border-width: 0rem;
+  }
+  .inner-border-1 {
+    --inner-border-width: 0.0625rem;
+  }
+  .inner-border-1_5 {
+    --inner-border-width: 0.09375rem;
+  }
+  .inner-border-2 {
+    --inner-border-width: 0.125rem;
+  }
+  .inner-border-3 {
+    --inner-border-width: 0.1875rem;
+  }
+  .inner-border-6 {
+    --inner-border-width: 0.375rem;
+  }
+
   .ring-offset-0 {
     --tw-ring-offset-width: 0rem;
   }
@@ -150,5 +194,11 @@
       border-width, border-radius;
     transition-duration: var(--control-transition-duration);
     transition-timing-function: var(--control-transition-timing);
+  }
+
+  .control-dropdown-enter {
+    transform-origin: top center;
+    will-change: transform, opacity;
+    animation: am-dropdown-enter 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }

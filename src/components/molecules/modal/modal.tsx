@@ -32,12 +32,13 @@ const overlayToneClassName: Record<ModalOverlayTone, string> = {
 
 const panelShellClassName: Record<ModalColor, string> = {
   brand:
-    "border border-solid border-semantic-border-brand-default bg-semantic-bg-brand-primary shadow-input-shadow-outer",
+    "inner-border inner-border-1 [--inner-border-color:var(--semantic-border-brand-default)] bg-semantic-bg-brand-primary shadow-input-shadow-outer",
   "brand-dark":
-    "border border-solid border-semantic-border-brand-default-inverse bg-semantic-bg-brand-primary-inverse shadow-input-shadow-outer",
-  ntrl: "border border-solid border-semantic-border-ntrl-default bg-semantic-bg-ntrl-secondary shadow-input-shadow-outer",
+    "inner-border inner-border-1 [--inner-border-color:var(--semantic-border-brand-default-inverse)] bg-semantic-bg-brand-primary-inverse shadow-input-shadow-outer",
+  ntrl:
+    "inner-border inner-border-1 [--inner-border-color:var(--semantic-border-ntrl-default)] bg-semantic-bg-ntrl-secondary shadow-input-shadow-outer",
   "ntrl-dark":
-    "border border-solid border-semantic-border-ntrl-default-inverse bg-semantic-bg-ntrl-secondary-inverse shadow-input-shadow-outer",
+    "inner-border inner-border-1 [--inner-border-color:var(--semantic-border-ntrl-default-inverse)] bg-semantic-bg-ntrl-secondary-inverse shadow-input-shadow-outer",
 };
 
 const headerStripClassName: Record<ModalColor, string> = {

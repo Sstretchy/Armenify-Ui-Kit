@@ -1,25 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { X } from "phosphor-strokes-icons";
 
+import { cn } from "@/lib/utils";
+
+import { ArmenifyIcon } from "../../icon";
 import { TextInputInnerContent, type TextInputInnerLayout } from "../text-input-inner-content";
-
-const layouts: TextInputInnerLayout[] = [
-  "default",
-  "iconLeft",
-  "iconRight",
-  "iconBoth",
-  "currency",
-  "clear",
-  "comboBox",
-  "select",
-  "search",
-  "multiselect",
-];
+import type { TextInputColor } from "../text-input";
 
 const meta = {
   title: "UI/Field/TextInputInnerContent",
   component: TextInputInnerContent,
   tags: ["!autodocs"],
-  parameters: { layout: "padded", controls: { disable: true } },
+  parameters: { layout: "fullscreen", controls: { disable: true } },
   args: { layout: "default" as const, color: "ntrl" as const, disabled: false, size: "sm" as const },
 } satisfies Meta<typeof TextInputInnerContent>;
 
@@ -27,44 +19,97 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const AllVariants: Story = {
-  render: () => (
-    <div className="flex flex-col gap-10 p-4">
-      <p className="max-w-xl text-font-size-sm text-semantic-text-ntrl-secondary">
-        Содержимое строки поля по{" "}
-        <a
-          className="text-components-typography-brand-light-label underline"
-          href="https://www.figma.com/design/btCKgn6RrWiteyBN0bViU1/Armenify?node-id=145-6199"
-          rel="noreferrer"
-          target="_blank"
-        >
-          макету 145:6199
-        </a>
-        : все типы × ntrl/brand × active/disabled.
-      </p>
-      {(["ntrl", "brand"] as const).map((color) => (
-        <section key={color} className="flex flex-col gap-4">
-          <h3 className="text-font-size-xs font-medium uppercase tracking-wide text-semantic-text-ntrl-secondary">
-            color: {color}
-          </h3>
-          {([false, true] as const).map((disabled) => (
-            <div key={String(disabled)} className="flex flex-col gap-2">
-              <p className="text-font-size-xs text-semantic-text-ntrl-tertiary">{disabled ? "disabled" : "default"}</p>
-              <div className="flex flex-col gap-2 rounded-border-md border border-semantic-border-ntrl-default bg-semantic-bg-ntrl-primary p-3">
-                {layouts.map((layout) => (
-                  <div
-                    key={layout}
-                    className="rounded-border-sm border border-dashed border-semantic-border-ntrl-default px-2 py-1.5"
-                  >
-                    <div className="mb-1 text-font-size-xxs text-semantic-text-ntrl-tertiary">{layout}</div>
-                    <TextInputInnerContent layout={layout} color={color} disabled={disabled} size="sm" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
+type TextInputInnerContentSpecimen = {
+  color: TextInputColor;
+  disabled: boolean;
+  layout: TextInputInnerLayout;
+};
+
+const layoutOrder: TextInputInnerLayout[] = [
+  "default",
+  "iconLeft",
+  "iconRight",
+  "iconBoth",
+  "currency",
+  "clear",
+  "search",
+  "comboBox",
+  "select",
+  "multiselect",
+];
+
+const specimenOrder: TextInputInnerContentSpecimen[] = ([
+  { color: "ntrl", disabled: false },
+  { color: "ntrl", disabled: true },
+  { color: "brand", disabled: false },
+  { color: "brand", disabled: true },
+] as const).flatMap(({ color, disabled }) =>
+  layoutOrder.map((layout) => ({
+    color,
+    disabled,
+    layout,
+  })),
+);
+
+const figmaCompareBorderColor = "#8b5cf6";
+const comparisonFrameStyle = { width: "21.6875rem", borderColor: figmaCompareBorderColor } as const;
+
+function FigmaDemoTags({ disabled }: { disabled: boolean }) {
+  const chipClassName = cn(
+    "inline-flex h-4 shrink-0 items-center justify-center gap-1.5 overflow-hidden rounded-border-xxs px-1.5",
+    disabled
+      ? "bg-semantic-bg-brand-disabled text-semantic-text-brand-disabled"
+      : "bg-components-tags-bg-default text-components-tags-text-default",
+  );
+
+  return (
+    <>
+      {["a", "b", "c", "d"].map((key) => (
+        <span key={key} className={chipClassName}>
+          <span className="whitespace-nowrap text-font-size-xxs-input leading-[var(--font-font-height-xxs-input)]">tag text</span>
+          <ArmenifyIcon icon={X} size="xxxx-small" strokeWeight="bold" className="text-current" aria-hidden />
+        </span>
       ))}
+    </>
+  );
+}
+
+function TextInputInnerContentSpecimenRow({ color, disabled, layout }: TextInputInnerContentSpecimen) {
+  const hidePrefix = layout === "default" && color === "ntrl" && !disabled;
+
+  return (
+    <div className="w-full">
+      <TextInputInnerContent
+        layout={layout}
+        color={color}
+        disabled={disabled}
+        size="sm"
+        valueText="Text"
+        className="w-full"
+        tags={layout === "multiselect" ? <FigmaDemoTags disabled={disabled} /> : undefined}
+        {...(hidePrefix ? { pretext: false } : {})}
+      />
     </div>
-  ),
+  );
+}
+
+function ComparisonFrame() {
+  return (
+    <div className="rounded border border-dashed bg-white px-4 py-2" style={comparisonFrameStyle}>
+      <div className="flex flex-col gap-6">
+        {[0, 10, 20, 30].map((startIndex) => (
+          <div key={startIndex} className="flex flex-col gap-5">
+            {specimenOrder.slice(startIndex, startIndex + 10).map((specimen) => {
+              const key = `${specimen.color}-${specimen.disabled ? "disabled" : "default"}-${specimen.layout}`;
+              return <TextInputInnerContentSpecimenRow key={key} {...specimen} />;
+            })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export const AllVariants: Story = {
+  render: () => <ComparisonFrame />,
 };

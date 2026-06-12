@@ -8,7 +8,7 @@ const meta = {
   title: "UI/Field/SelectMenu",
   component: SelectMenu,
   tags: ["!autodocs"],
-  parameters: { layout: "padded", controls: { disable: true } },
+  parameters: { layout: "centered", controls: { disable: true } },
   args: { size: "md" as const, color: "ntrl" as const },
 } satisfies Meta<typeof SelectMenu>;
 
@@ -16,55 +16,55 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const AllSizes: Story = {
-  render: () => (
-    <div className="flex flex-col gap-10 p-4">
-      <p className="max-w-xl text-font-size-sm text-semantic-text-ntrl-secondary">
-        Готовое меню из{" "}
-        <a
-          className="text-components-typography-brand-light-label underline"
-          href="https://www.figma.com/design/btCKgn6RrWiteyBN0bViU1/Armenify?node-id=234-24025"
-          rel="noreferrer"
-          target="_blank"
-        >
-          Figma «Select menu»
-        </a>
-        : три размера (sm / md / lg) × ntrl / brand, разделители и четыре пункта по умолчанию.
-      </p>
-      <div className="flex flex-wrap gap-8">
-        {(["ntrl", "brand"] as const).map((color) => (
-          <div key={color} className="flex flex-col gap-4">
-            <p className="text-font-size-xs font-medium capitalize text-semantic-text-ntrl-secondary">{color}</p>
-            <div className="flex flex-wrap items-start gap-6">
-              {(["sm", "md", "lg"] as const).map((size) => (
-                <div key={size} className="flex flex-col gap-1">
-                  <span className="text-font-size-xs text-semantic-text-ntrl-tertiary">{size}</span>
-                  <SelectMenu size={size} color={color} className="w-[11.3125rem]" />
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+type FigmaSpecimen = {
+  color: "ntrl" | "brand";
+  size: "sm" | "md" | "lg";
+};
+
+const figmaSpecimens: FigmaSpecimen[] = [
+  { color: "ntrl", size: "sm" },
+  { color: "ntrl", size: "md" },
+  { color: "ntrl", size: "lg" },
+  { color: "brand", size: "sm" },
+  { color: "brand", size: "md" },
+  { color: "brand", size: "lg" },
+];
+
+const menuWidthClassName = "w-[15rem]";
+
+function specimenId({ color, size }: FigmaSpecimen) {
+  return `select-menu-${color}-${size}`;
+}
+
+function ComparisonFrame() {
+  return (
+    <div className="pointer-events-none box-border flex w-[13.8125rem] flex-col gap-5 rounded border border-dashed border-semantic-border-brand-default bg-white p-5">
+      {figmaSpecimens.map((specimen) => (
+        <SelectMenu key={specimenId(specimen)} className={menuWidthClassName} size={specimen.size} color={specimen.color} />
+      ))}
     </div>
-  ),
+  );
+}
+
+export const Comparison: Story = {
+  render: () => <ComparisonFrame />,
 };
 
 export const CustomItems: Story = {
   render: function CustomItemsRender() {
     const [value, setValue] = React.useState("a");
     return (
-      <div className="max-w-xs p-4">
+      <div className="w-[11.3125rem]">
         <SelectMenu size="md" color="ntrl">
-          <MenuItem prefixText="Https://" selected={value === "a"} onClick={() => setValue("a")}>
+          <MenuItem prefixText="Https//" selected={value === "a"} onClick={() => setValue("a")}>
             Option A
           </MenuItem>
           <SelectMenuDivider tone="ntrl" />
-          <MenuItem prefixText="Https://" disabled>
+          <MenuItem prefixText="Https//" disabled>
             Disabled
           </MenuItem>
           <SelectMenuDivider tone="ntrl" />
-          <MenuItem prefixText="Https://" selected={value === "b"} onClick={() => setValue("b")}>
+          <MenuItem prefixText="Https//" selected={value === "b"} onClick={() => setValue("b")}>
             Option B
           </MenuItem>
         </SelectMenu>

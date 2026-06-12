@@ -26,6 +26,15 @@
   --bold-xx-lg-28: 0.17915625rem;
   --bold-xxx-lg-32: 0.20475rem;
   --bold-xxxx-lg-36: 0.23034375rem;
-  /* Figma Local variables / bold / caret-12, normalized to rem. */
+
+  /* Figma local variable / bold / caret-12, normalized to rem. */
   --bold-caret-12: 0.2rem;
+
+  /* Figma Menu Item selected Check, normalized to rem. */
+  --slim-check-12: 0.09rem;
+  --slim-check-14: 0.1rem;
+  --slim-check-16: 0.11rem;
+  --bold-check-12: 0.102375rem;
+  --bold-check-14: 0.11484375rem;
+  --bold-check-16: 0.12796875rem;
 }

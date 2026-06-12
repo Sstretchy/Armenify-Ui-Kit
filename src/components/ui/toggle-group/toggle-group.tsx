@@ -12,7 +12,7 @@ function toggleGroupSizeToButtonSize(size: ToggleGroupSize): ButtonSize {
 }
 
 const toggleGroupRootVariants = cva(
-  "flex w-full min-w-0 items-stretch overflow-hidden border-[0.09375rem] border-solid border-semantic-border-brand-default shadow-control-shadow-outer outline-none",
+  "flex w-full min-w-0 items-stretch overflow-hidden inner-border inner-border-1_5 [--inner-border-color:var(--semantic-border-brand-default)] shadow-control-shadow-outer outline-none",
   {
     variants: {
       size: {
