@@ -4,6 +4,7 @@ import { CaretDown, TelegramLogo, WhatsappLogo } from "phosphor-strokes-icons";
 import { cn } from "@/lib/utils";
 
 import { ArmenifyIcon } from "../../ui/icon";
+import { controlDropdownEnterClassName } from "../../ui/control-transition";
 
 import { InputBase } from "../../ui/field/input-base";
 import { InputFieldIcon } from "../../ui/field/input-field-icon";
@@ -255,7 +256,13 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
     const channelTriggerId = React.useId();
     const channelListId = React.useId();
     const rootRef = React.useRef<HTMLDivElement>(null);
+    const channelTriggerRef = React.useRef<HTMLButtonElement>(null);
+    const channelOptionRefs = React.useRef<Array<HTMLButtonElement | null>>([]);
+    const pendingChannelFocusIndexRef = React.useRef<number | null>(null);
     const [channelMenuOpen, setChannelMenuOpen] = React.useState(false);
+    const channelOptions = ["telegram", "whatsapp"] as const;
+    const selectedChannelIndex = channelOptions.indexOf(channel);
+    const [activeChannelIndex, setActiveChannelIndex] = React.useState<number>(selectedChannelIndex === -1 ? 0 : selectedChannelIndex);
 
     const str = value !== undefined ? String(value) : undefined;
     const invalid = str != null && str.length > 0 && !channelPattern[channel].test(str);
@@ -276,8 +283,150 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
     }, [channelMenuOpen, disabled]);
 
     React.useEffect(() => {
-      if (disabled) setChannelMenuOpen(false);
-    }, [disabled]);
+      if (disabled) {
+        pendingChannelFocusIndexRef.current = null;
+        setChannelMenuOpen(false);
+        return;
+      }
+
+      if (!channelMenuOpen) {
+        setActiveChannelIndex(selectedChannelIndex === -1 ? 0 : selectedChannelIndex);
+        return;
+      }
+
+      if (pendingChannelFocusIndexRef.current == null) {
+        return;
+      }
+
+      const rafId = window.requestAnimationFrame(() => {
+        const nextIndex = pendingChannelFocusIndexRef.current;
+        if (nextIndex == null) {
+          return;
+        }
+
+        const nextOption = channelOptionRefs.current[nextIndex];
+        nextOption?.focus();
+        pendingChannelFocusIndexRef.current = null;
+      });
+
+      return () => window.cancelAnimationFrame(rafId);
+    }, [channelMenuOpen, disabled, selectedChannelIndex]);
+
+    const focusChannelOption = React.useCallback((index: number) => {
+      setActiveChannelIndex(index);
+      channelOptionRefs.current[index]?.focus();
+    }, []);
+
+    const queueOpenWithChannelFocus = React.useCallback((index: number) => {
+      pendingChannelFocusIndexRef.current = index;
+      setActiveChannelIndex(index);
+      setChannelMenuOpen(true);
+    }, []);
+
+    const moveChannelIndex = React.useCallback(
+      (currentIndex: number, direction: 1 | -1): number => {
+        const nextIndex = currentIndex + direction;
+        if (nextIndex < 0) {
+          return channelOptions.length - 1;
+        }
+        if (nextIndex >= channelOptions.length) {
+          return 0;
+        }
+
+        return nextIndex;
+      },
+      [channelOptions.length],
+    );
+
+    const handleChannelTriggerKeyDown = React.useCallback(
+      (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        switch (event.key) {
+          case "ArrowDown":
+            event.preventDefault();
+            if (channelMenuOpen) {
+              focusChannelOption(moveChannelIndex(activeChannelIndex, 1));
+              return;
+            }
+            queueOpenWithChannelFocus(activeChannelIndex);
+            return;
+          case "ArrowUp":
+            event.preventDefault();
+            if (channelMenuOpen) {
+              focusChannelOption(moveChannelIndex(activeChannelIndex, -1));
+              return;
+            }
+            queueOpenWithChannelFocus(activeChannelIndex);
+            return;
+          case "Home":
+            event.preventDefault();
+            if (channelMenuOpen) {
+              focusChannelOption(0);
+              return;
+            }
+            queueOpenWithChannelFocus(0);
+            return;
+          case "End":
+            event.preventDefault();
+            if (channelMenuOpen) {
+              focusChannelOption(channelOptions.length - 1);
+              return;
+            }
+            queueOpenWithChannelFocus(channelOptions.length - 1);
+            return;
+          case "Enter":
+          case " ":
+            event.preventDefault();
+            if (channelMenuOpen) {
+              focusChannelOption(activeChannelIndex);
+              return;
+            }
+            queueOpenWithChannelFocus(activeChannelIndex);
+            return;
+          case "Escape":
+            if (channelMenuOpen) {
+              event.preventDefault();
+              setChannelMenuOpen(false);
+            }
+        }
+      },
+      [activeChannelIndex, channelMenuOpen, channelOptions.length, focusChannelOption, moveChannelIndex, queueOpenWithChannelFocus],
+    );
+
+    const handleChannelOptionKeyDown = React.useCallback(
+      (event: React.KeyboardEvent<HTMLButtonElement>, optionIndex: number) => {
+        switch (event.key) {
+          case "ArrowDown":
+            event.preventDefault();
+            focusChannelOption(moveChannelIndex(optionIndex, 1));
+            return;
+          case "ArrowUp":
+            event.preventDefault();
+            focusChannelOption(moveChannelIndex(optionIndex, -1));
+            return;
+          case "Home":
+            event.preventDefault();
+            focusChannelOption(0);
+            return;
+          case "End":
+            event.preventDefault();
+            focusChannelOption(channelOptions.length - 1);
+            return;
+          case "Escape":
+            event.preventDefault();
+            setChannelMenuOpen(false);
+            channelTriggerRef.current?.focus();
+            return;
+          case "Enter":
+          case " ":
+            event.preventDefault();
+            channelOptionRefs.current[optionIndex]?.click();
+            return;
+          case "Tab":
+            setChannelMenuOpen(false);
+        }
+      },
+      [channelOptions.length, focusChannelOption, moveChannelIndex],
+    );
 
     return (
       <InputBase
@@ -294,7 +443,18 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
         sideLabel={shell.sideLabel}
         helperSpace={shell.helperSpace}
       >
-        <div ref={rootRef} className="relative w-full min-w-0">
+        <div
+          ref={rootRef}
+          className="relative w-full min-w-0"
+          onBlur={(event) => {
+            const nextFocusedNode = event.relatedTarget as Node | null;
+            if (rootRef.current?.contains(nextFocusedNode)) {
+              return;
+            }
+
+            setChannelMenuOpen(false);
+          }}
+        >
           <TextInputChrome size={size} color={fc} tone={fieldTone} disabled={disabled} visualState={shell.visualState} fieldClassName={shell.fieldClassName}>
             <div className="flex w-full min-w-0 items-center gap-2">
               <InputFieldIcon icon={leftIcon} size={size} color={ic} weight={fc === "brand" && !disabled ? "bold" : "slim"} />
@@ -314,18 +474,20 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
               </label>
               <div className="relative min-w-0 max-w-[42%] shrink-0">
                 <button
+                  ref={channelTriggerRef}
                   id={channelTriggerId}
                   type="button"
                   disabled={disabled}
                   aria-expanded={channelMenuOpen}
                   aria-haspopup="listbox"
-                  aria-controls={channelMenuOpen ? channelListId : undefined}
+                  aria-controls={channelListId}
                   className={cn(
                     "relative w-full min-w-22 max-w-full cursor-pointer truncate border-0 bg-transparent py-0 pl-0 pr-5 text-left font-sans outline-none",
                     "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-semantic-border-ntrl-default-focused",
                     textInputFieldTextClassName(fc, disabled ? "disabled" : "default", false),
                   )}
                   onClick={() => !disabled && setChannelMenuOpen((o) => !o)}
+                  onKeyDown={handleChannelTriggerKeyDown}
                 >
                   {channelMenuLabel[channel]}
                 </button>
@@ -347,18 +509,34 @@ const ChannelComboTextInputField = React.forwardRef<HTMLInputElement, ChannelCom
             </div>
           </TextInputChrome>
           {channelMenuOpen && !disabled ? (
-            <div id={channelListId} className="absolute right-0 top-full z-10 mt-1 min-w-0">
-              <SelectMenu size={size} color={menuColor} className="min-w-36 w-max max-w-48">
-                {(["telegram", "whatsapp"] as const).map((ch) => (
+            <div
+              id={channelListId}
+              className={cn("absolute right-0 top-full z-10 mt-1 min-w-0 origin-top-right", controlDropdownEnterClassName)}
+            >
+              <SelectMenu size={size} color={menuColor} role="listbox" aria-label="Тип связи" className="min-w-36 w-max max-w-48">
+                {channelOptions.map((ch, index) => (
                   <MenuItem
                     key={ch}
                     size={size}
                     color={menuColor}
+                    id={`${channelListId}-option-${index}`}
+                    role="option"
                     selected={channel === ch}
+                    tabIndex={activeChannelIndex === index ? 0 : -1}
                     showIcons={false}
+                    ref={(node) => {
+                      channelOptionRefs.current[index] = node;
+                    }}
+                    onFocus={() => setActiveChannelIndex(index)}
+                    onMouseMove={() => setActiveChannelIndex(index)}
+                    onKeyDown={(event) => handleChannelOptionKeyDown(event, index)}
                     onClick={() => {
                       onChannelChange(ch);
+                      setActiveChannelIndex(index);
                       setChannelMenuOpen(false);
+                      window.requestAnimationFrame(() => {
+                        channelTriggerRef.current?.focus();
+                      });
                     }}
                   >
                     {channelMenuLabel[ch]}
@@ -380,7 +558,14 @@ export type TagMultiSelectFieldProps = FieldKitBaseProps & {
   inputTone?: TextInputTone;
   tags: TagMultiSelectFieldItem[];
   onRemove: (id: string) => void;
+  options?: TagMultiSelectFieldItem[];
+  onAddTag?: (item: TagMultiSelectFieldItem) => void;
   filterInputProps?: Omit<TextInputProps, "color" | "tone" | "size" | "pretext" | "prefix">;
+  menu?: React.ReactNode;
+  menuOpen?: boolean;
+  defaultMenuOpen?: boolean;
+  onMenuOpenChange?: (open: boolean) => void;
+  closeOnSelect?: boolean;
 };
 
 const TagMultiSelectField = React.forwardRef<HTMLInputElement, TagMultiSelectFieldProps>(function TagMultiSelectField(
@@ -393,7 +578,14 @@ const TagMultiSelectField = React.forwardRef<HTMLInputElement, TagMultiSelectFie
     fieldClassName,
     tags,
     onRemove,
+    options,
+    onAddTag,
     filterInputProps,
+    menu,
+    menuOpen,
+    defaultMenuOpen = false,
+    onMenuOpenChange,
+    closeOnSelect = false,
     className,
     ...baseRest
   },
@@ -404,6 +596,43 @@ const TagMultiSelectField = React.forwardRef<HTMLInputElement, TagMultiSelectFie
   const it = inputTone ?? tone;
   const disabled = Boolean(baseRest.disabled);
   const tagSize = inputTagSizeForTextInputField(sz);
+  const menuColor: MenuItemColor = fc === "brand" ? "brand" : "ntrl";
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const filterInputId = React.useId();
+  const availableOptions = options ?? [];
+  const [internalOpen, setInternalOpen] = React.useState(defaultMenuOpen);
+  const isMenuOpenControlled = menuOpen !== undefined;
+  const open = isMenuOpenControlled ? Boolean(menuOpen) : internalOpen;
+  const hasMenu = menu != null || availableOptions.length > 0;
+  const selectedTagIds = new Set(tags.map((tag) => tag.id));
+  const { className: filterInputClassName, onFocus: onFilterFocus, ...restFilterInputProps } = filterInputProps ?? {};
+
+  const setOpen = React.useCallback(
+    (next: boolean) => {
+      onMenuOpenChange?.(next);
+      if (!isMenuOpenControlled) {
+        setInternalOpen(next);
+      }
+    },
+    [isMenuOpenControlled, onMenuOpenChange],
+  );
+
+  React.useEffect(() => {
+    if (!open || disabled) return;
+    const onPointerDown = (event: PointerEvent) => {
+      const node = rootRef.current;
+      if (!node || node.contains(event.target as Node)) return;
+      setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown, true);
+    return () => document.removeEventListener("pointerdown", onPointerDown, true);
+  }, [open, disabled, setOpen]);
+
+  React.useEffect(() => {
+    if (disabled) {
+      setOpen(false);
+    }
+  }, [disabled, setOpen]);
 
   const tagsNode = (
     <>
@@ -415,24 +644,78 @@ const TagMultiSelectField = React.forwardRef<HTMLInputElement, TagMultiSelectFie
       {filterInputProps ? (
         <TextInput
           ref={ref}
+          id={filterInputId}
           size={sz}
           color={fc}
           tone={it}
           pretext={false}
-          className="min-w-24 flex-1 basis-24"
+          className={cn("min-w-24 flex-1 basis-24", filterInputClassName)}
           disabled={disabled}
-          {...filterInputProps}
+          onFocus={(event) => {
+            if (hasMenu && !disabled) {
+              setOpen(true);
+            }
+            onFilterFocus?.(event);
+          }}
+          {...restFilterInputProps}
         />
       ) : null}
     </>
   );
 
+  const menuNode =
+    menu != null ? (
+      <SelectMenu size={sz} color={menuColor} className="w-full min-w-0">
+        {menu}
+      </SelectMenu>
+    ) : availableOptions.length > 0 ? (
+      <SelectMenu size={sz} color={menuColor} className="w-full min-w-0">
+        {availableOptions.map((option) => {
+          const selected = selectedTagIds.has(option.id);
+          return (
+            <MenuItem
+              key={option.id}
+              size={sz}
+              color={menuColor}
+              selected={selected}
+              showIcons={false}
+              onClick={() => {
+                if (!selected) {
+                  onAddTag?.(option);
+                }
+                if (closeOnSelect) {
+                  setOpen(false);
+                }
+              }}
+            >
+              {option.label}
+            </MenuItem>
+          );
+        })}
+      </SelectMenu>
+    ) : null;
+
   return (
-    <InputBase className={className} {...baseRest} size={sz} color={color} tone={tone} disabled={disabled}>
-      <TextInputChrome size={sz} color={fc} tone={it} disabled={disabled} visualState={visualState} fieldClassName={fieldClassName}>
-        <TextInputInnerContent layout="multiselect" color={fc} disabled={disabled} size={sz} tags={tagsNode} showCaret={false} />
-      </TextInputChrome>
-    </InputBase>
+    <div
+      ref={rootRef}
+      className={cn("relative w-full min-w-0", className)}
+      onFocusCapture={() => {
+        if (hasMenu && !disabled) {
+          setOpen(true);
+        }
+      }}
+    >
+      <InputBase {...baseRest} size={sz} color={color} tone={tone} disabled={disabled}>
+        <TextInputChrome size={sz} color={fc} tone={it} disabled={disabled} visualState={visualState} fieldClassName={fieldClassName}>
+          <TextInputInnerContent layout="multiselect" color={fc} disabled={disabled} size={sz} tags={tagsNode} showCaret={false} />
+        </TextInputChrome>
+      </InputBase>
+      {open && menuNode ? (
+        <div className={cn("absolute left-0 top-full z-10 mt-1 w-full min-w-0", controlDropdownEnterClassName)}>
+          {menuNode}
+        </div>
+      ) : null}
+    </div>
   );
 });
 

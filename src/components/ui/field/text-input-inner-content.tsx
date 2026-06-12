@@ -327,7 +327,7 @@ const TextInputInnerContent = React.forwardRef<HTMLDivElement, TextInputInnerCon
 
     const rootClass = cn(
       textInputRootVariants({ size }),
-      "min-w-0 items-center gap-1",
+      "w-full min-w-0 items-center gap-1",
       justifyBetween && "justify-between",
       layout === "comboBox" && "gap-2",
       layout === "currency" && "gap-0.5",

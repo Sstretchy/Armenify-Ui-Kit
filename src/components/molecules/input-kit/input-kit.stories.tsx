@@ -40,7 +40,25 @@ export const Presets: Story = {
       { id: "2", label: "Beta" },
       { id: "3", label: "Gamma" },
     ]);
+    const [tagFilter, setTagFilter] = React.useState("");
     const [ta, setTa] = React.useState("");
+
+    const tagCatalog = [
+      { id: "1", label: "Alpha" },
+      { id: "2", label: "Beta" },
+      { id: "3", label: "Gamma" },
+      { id: "4", label: "Delta" },
+      { id: "5", label: "Design" },
+      { id: "6", label: "Dropdown" },
+    ];
+
+    const normalizedTagFilter = tagFilter.trim().toLowerCase();
+    const availableTagOptions = tagCatalog.filter((option) => {
+      const alreadySelected = tags.some((tag) => tag.id === option.id);
+      if (alreadySelected) return false;
+      if (!normalizedTagFilter) return true;
+      return option.label.toLowerCase().includes(normalizedTagFilter);
+    });
 
     return (
       <div className="flex max-w-lg flex-col gap-8 p-4">
@@ -68,23 +86,37 @@ export const Presets: Story = {
           value={contact}
           onChange={(e) => setContact(e.target.value)}
         />
-        <CommaMultiSelectField
-          labelText="Comma multiselect"
-          options={[
-            { value: "a", label: "Alpha" },
-            { value: "b", label: "Beta" },
-            { value: "c", label: "Gamma" },
-          ]}
-          value={multi}
-          onChange={setMulti}
-          defaultMenuOpen
-        />
-        <TagMultiSelectField
-          labelText="Tags + filter"
-          tags={tags}
-          onRemove={(id) => setTags((t) => t.filter((x) => x.id !== id))}
-          filterInputProps={{ placeholder: "Фильтр…" }}
-        />
+        <div className="pb-32">
+          <CommaMultiSelectField
+            labelText="Comma multiselect"
+            options={[
+              { value: "a", label: "Alpha" },
+              { value: "b", label: "Beta" },
+              { value: "c", label: "Gamma" },
+            ]}
+            value={multi}
+            onChange={setMulti}
+            defaultMenuOpen
+          />
+        </div>
+        <div className="pb-32">
+          <TagMultiSelectField
+            labelText="Tags + filter"
+            tags={tags}
+            options={availableTagOptions}
+            onAddTag={(item) => {
+              setTags((current) => (current.some((tag) => tag.id === item.id) ? current : [...current, item]));
+              setTagFilter("");
+            }}
+            onRemove={(id) => setTags((current) => current.filter((item) => item.id !== id))}
+            defaultMenuOpen
+            filterInputProps={{
+              placeholder: "Фильтр…",
+              value: tagFilter,
+              onChange: (e) => setTagFilter(e.target.value),
+            }}
+          />
+        </div>
         <TextAreaField labelText="TextArea" rows={4} value={ta} onChange={(e) => setTa(e.target.value)} />
       </div>
     );
