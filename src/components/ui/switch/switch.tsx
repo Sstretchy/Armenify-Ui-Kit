@@ -1,229 +1,188 @@
 import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-import { controlInteractiveTransitionClassName } from "../control-transition";
+type SwitchState = "off" | "on" | "disabled-off" | "disabled-on";
+export type SwitchSize = "md" | "lg";
+export type SwitchVariant = "primary" | "secondary";
 
-const switchTrackVariants = cva(
-  cn(
-    "relative box-border shrink-0 overflow-hidden rounded-full border-[0.09375rem] border-solid shadow-control-shadow-outer",
-    controlInteractiveTransitionClassName,
-    "transition-[background-color,background-image,border-color,opacity,box-shadow] duration-[var(--control-transition-duration,250ms)] ease-[var(--control-transition-timing,cubic-bezier(0.4,0,0.2,1))]",
-    "peer-focus-visible:outline-none peer-focus-visible:shadow-control-shadow-outer-focused",
-  ),
-  {
-    variants: {
-      size: {
-        md: "h-[1.125rem] w-10",
-        lg: "h-5 w-11",
-      },
-      variant: {
-        primary: "",
-        secondary: "",
-      },
-      on: {
-        true: "",
-        false: "",
-      },
-      disabled: {
-        true: "",
-        false: "",
-      },
-    },
-    compoundVariants: [
-      {
-        variant: "primary",
-        on: false,
-        disabled: false,
-        class:
-          "border-primitive-colors-brand-150 bg-components-controls-bg-primary shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]",
-      },
-      {
-        variant: "primary",
-        on: true,
-        disabled: false,
-        class:
-          "border-primitive-colors-brand-150 bg-[image:var(--gradient-brand-primary)] shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]",
-      },
-      {
-        variant: "primary",
-        on: false,
-        disabled: true,
-        class: "border-components-controls-border-disabled bg-components-controls-bg-disabled shadow-control-shadow-outer",
-      },
-      {
-        variant: "primary",
-        on: true,
-        disabled: true,
-        class:
-          "border-primitive-colors-brand-150 bg-components-controls-bg-primary shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]",
-      },
+const switchTrackBaseClassName = "relative isolate block shrink-0 overflow-hidden rounded-[0.625rem] shadow-control-shadow-inner";
 
-      {
-        variant: "secondary",
-        on: false,
-        disabled: false,
-        class:
-          "border-transparent bg-components-controls-bg-primary shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]",
-      },
-      {
-        variant: "secondary",
-        on: true,
-        disabled: false,
-        class:
-          "border-transparent bg-components-controls-bg-secondary-default shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]",
-      },
-      {
-        variant: "secondary",
-        on: false,
-        disabled: true,
-        class: "border-transparent bg-components-controls-bg-disabled shadow-control-shadow-outer",
-      },
-      {
-        variant: "secondary",
-        on: true,
-        disabled: true,
-        class:
-          "border-transparent bg-components-controls-bg-secondary-default opacity-40 shadow-[var(--control-shadow-outer),var(--control-shadow-inner)]",
-      },
-    ],
-    defaultVariants: {
-      size: "md",
-      variant: "primary",
-      on: false,
-      disabled: false,
-    },
-  },
+const switchTrackInteractiveClassName = cn(
+  "group-has-[:focus-visible]:shadow-[var(--control-shadow-outer-focused),var(--control-shadow-inner)]",
 );
 
-const switchThumbVariants = cva(
-  cn(
-    "pointer-events-none absolute top-1/2 z-[1] box-border -translate-y-1/2 rounded-full border-[0.09375rem] border-solid shadow-control-shadow-outer",
-    "transition-[left,background-color,border-color,box-shadow] duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-  ),
-  {
-    variants: {
-      size: {
-        md: "h-[1.125rem] w-4.5",
-        lg: "h-5 w-5",
-      },
-      variant: {
-        primary: "",
-        secondary: "",
-      },
-      on: {
-        true: "",
-        false: "",
-      },
-      disabled: {
-        true: "",
-        false: "",
-      },
-    },
-    compoundVariants: [
-      { size: "md", on: false, class: "left-0" },
-      { size: "md", on: true, class: "left-[calc(100%-theme(spacing.4.5))]" },
-      { size: "lg", on: false, class: "left-0" },
-      { size: "lg", on: true, class: "left-[calc(100%-theme(spacing.5))]" },
+const switchFillBaseClassName =
+  "pointer-events-none absolute inset-y-0 left-0 rounded-[inherit] transition-[width,opacity,background-color,background-image] duration-[var(--control-transition-duration,250ms)] ease-[var(--control-transition-timing,cubic-bezier(0.4,0,0.2,1))]";
 
-      {
-        variant: "primary",
-        on: false,
-        disabled: false,
-        class: "border-primitive-colors-brand-150 bg-components-controls-bg-primary",
-      },
-      {
-        variant: "primary",
-        on: true,
-        disabled: false,
-        class: "border-primitive-colors-brand-150 bg-components-controls-bg-primary",
-      },
-      {
-        variant: "primary",
-        on: false,
-        disabled: true,
-        class: "border-components-controls-border-disabled bg-components-controls-bg-primary",
-      },
-      {
-        variant: "primary",
-        on: true,
-        disabled: true,
-        class: "border-components-controls-border-disabled bg-components-controls-bg-primary",
-      },
+const switchThumbBaseClassName =
+  "pointer-events-none absolute left-0 top-0 z-[1] block rounded-full transition-[translate,background-color,background-image] duration-[var(--control-transition-duration,250ms)] ease-[var(--control-transition-timing,cubic-bezier(0.4,0,0.2,1))]";
 
-      {
-        variant: "secondary",
-        on: false,
-        disabled: false,
-        class: "border-components-controls-bg-primary bg-components-controls-bg-secondary-default",
-      },
-      {
-        variant: "secondary",
-        on: true,
-        disabled: false,
-        class: "border-components-controls-bg-secondary-default bg-components-controls-bg-primary",
-      },
-      {
-        variant: "secondary",
-        on: false,
-        disabled: true,
-        class: "border-components-controls-border-disabled bg-components-controls-bg-primary",
-      },
-      {
-        variant: "secondary",
-        on: true,
-        disabled: true,
-        class: "border-components-controls-border-disabled bg-components-controls-bg-primary",
-      },
-    ],
-    defaultVariants: {
-      size: "md",
-      variant: "primary",
-      on: false,
-      disabled: false,
-    },
+const switchThumbFillBaseClassName =
+  "absolute inset-0.5 rounded-full bg-components-controls-bg-primary shadow-control-shadow-inner transition-[background-color] duration-[var(--control-transition-duration,250ms)] ease-[var(--control-transition-timing,cubic-bezier(0.4,0,0.2,1))]";
+
+const switchTrackSizeClassNameBySize: Record<SwitchSize, string> = {
+  md: "h-4.5 w-10",
+  lg: "h-5 w-11",
+};
+
+const switchTrackClassNameByVariantAndState: Record<SwitchVariant, Record<SwitchState, string>> = {
+  primary: {
+    off: "bg-components-controls-bg-primary",
+    on: "bg-components-controls-bg-primary",
+    "disabled-off": "bg-components-controls-bg-disabled",
+    "disabled-on": "bg-components-controls-bg-disabled",
   },
-);
+  secondary: {
+    off: "bg-components-controls-bg-primary",
+    on: "bg-components-controls-bg-primary",
+    "disabled-off": "bg-components-controls-bg-disabled",
+    "disabled-on": "bg-components-controls-bg-disabled",
+  },
+};
 
-export type SwitchSize = NonNullable<VariantProps<typeof switchTrackVariants>["size"]>;
-export type SwitchVariant = NonNullable<VariantProps<typeof switchTrackVariants>["variant"]>;
+const switchThumbSizeClassNameBySize: Record<SwitchSize, string> = {
+  md: "size-4.5",
+  lg: "size-5",
+};
 
-export type SwitchProps = Omit<React.ComponentPropsWithoutRef<"input">, "size" | "type"> & {
+const switchFillClassNameByVariantAndState: Record<SwitchVariant, Record<SwitchState, string>> = {
+  primary: {
+    off: "w-0 bg-[image:var(--gradient-brand-primary)] opacity-100",
+    on: "w-full bg-[image:var(--gradient-brand-primary)] opacity-100",
+    "disabled-off": "w-0 bg-[image:var(--gradient-brand-primary)] opacity-20",
+    "disabled-on": "w-full bg-[image:var(--gradient-brand-primary)] opacity-20",
+  },
+  secondary: {
+    off: "w-0 bg-components-controls-bg-secondary-default opacity-100",
+    on: "w-full bg-components-controls-bg-secondary-default opacity-100",
+    "disabled-off": "w-0 bg-components-controls-bg-secondary-default opacity-20",
+    "disabled-on": "w-full bg-components-controls-bg-secondary-default opacity-20",
+  },
+};
+
+const switchThumbShellClassNameByVariantAndState: Record<SwitchVariant, Record<SwitchState, string>> = {
+  primary: {
+    off: "bg-[image:var(--gradient-brand-primary)]",
+    on: "bg-[image:var(--gradient-brand-primary)]",
+    "disabled-off": "bg-components-controls-border-disabled",
+    "disabled-on": "bg-components-controls-border-disabled",
+  },
+  secondary: {
+    off: "bg-components-controls-bg-primary",
+    on: "bg-transparent",
+    "disabled-off": "bg-components-controls-border-disabled",
+    "disabled-on": "bg-transparent",
+  },
+};
+
+const switchThumbFillClassNameByVariantAndState: Record<SwitchVariant, Record<SwitchState, string>> = {
+  primary: {
+    off: "bg-components-controls-bg-primary",
+    on: "bg-components-controls-bg-primary",
+    "disabled-off": "bg-components-controls-bg-primary",
+    "disabled-on": "bg-components-controls-bg-primary",
+  },
+  secondary: {
+    off: "bg-components-controls-bg-secondary-default",
+    on: "bg-components-controls-bg-primary",
+    "disabled-off": "bg-components-controls-bg-primary",
+    "disabled-on": "bg-components-controls-bg-primary",
+  },
+};
+
+const switchThumbTranslateClassNameBySizeAndState: Record<SwitchSize, Record<SwitchState, string>> = {
+  md: {
+    off: "translate-x-0",
+    on: "translate-x-[1.375rem]",
+    "disabled-off": "translate-x-0",
+    "disabled-on": "translate-x-[1.375rem]",
+  },
+  lg: {
+    off: "translate-x-0",
+    on: "translate-x-6",
+    "disabled-off": "translate-x-0",
+    "disabled-on": "translate-x-6",
+  },
+};
+
+function resolveSwitchState(checked: boolean, disabled: boolean): SwitchState {
+  if (disabled) {
+    return checked ? "disabled-on" : "disabled-off";
+  }
+
+  return checked ? "on" : "off";
+}
+
+function switchTrackVariants({
+  variant,
+  size,
+  interactive,
+  state,
+}: {
+  variant: SwitchVariant;
+  size: SwitchSize;
+  interactive: boolean;
+  state: SwitchState;
+}): string {
+  return cn(
+    switchTrackBaseClassName,
+    switchTrackSizeClassNameBySize[size],
+    switchTrackClassNameByVariantAndState[variant][state],
+    interactive && switchTrackInteractiveClassName,
+  );
+}
+
+function switchFillVariants(variant: SwitchVariant, state: SwitchState): string {
+  return cn(switchFillBaseClassName, switchFillClassNameByVariantAndState[variant][state]);
+}
+
+function switchThumbVariants(variant: SwitchVariant, size: SwitchSize, state: SwitchState): string {
+  return cn(
+    switchThumbBaseClassName,
+    switchThumbSizeClassNameBySize[size],
+    switchThumbShellClassNameByVariantAndState[variant][state],
+    switchThumbTranslateClassNameBySizeAndState[size][state],
+  );
+}
+
+function switchThumbFillVariants(variant: SwitchVariant, state: SwitchState): string {
+  return cn(switchThumbFillBaseClassName, switchThumbFillClassNameByVariantAndState[variant][state]);
+}
+
+export type SwitchProps = Omit<React.ComponentPropsWithoutRef<"input">, "type" | "size"> & {
   size?: SwitchSize;
   variant?: SwitchVariant;
 };
 
 const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(function Switch(
-  { className, size = "md", variant = "primary", disabled, checked, defaultChecked, onChange, ...inputProps },
+  { className, size = "md", variant = "primary", disabled = false, checked, defaultChecked, onChange, ...inputProps },
   ref,
 ) {
-  const [uncontrolledChecked, setUncontrolledChecked] = React.useState(Boolean(defaultChecked));
+  const [uncontrolledChecked, setUncontrolledChecked] = React.useState(() => Boolean(defaultChecked));
   const isControlled = checked !== undefined;
-  const resolvedOn = isControlled ? Boolean(checked) : uncontrolledChecked;
+  const resolvedChecked = isControlled ? Boolean(checked) : uncontrolledChecked;
+  const state = resolveSwitchState(resolvedChecked, disabled);
+  const interactive = !disabled;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!isControlled) {
-      setUncontrolledChecked(e.target.checked);
+      setUncontrolledChecked(event.target.checked);
     }
-    onChange?.(e);
-  };
 
-  const sz = size ?? "md";
-  const v = variant ?? "primary";
-  const isDisabled = Boolean(disabled);
+    onChange?.(event);
+  };
 
   return (
     <label
       data-slot="switch"
-      data-switch-variant={v}
-      data-switch-size={sz}
-      className={cn(
-        "inline-flex cursor-pointer select-none items-center has-[:disabled]:cursor-not-allowed",
-        className,
-      )}
+      data-switch-size={size}
+      data-switch-variant={variant}
+      data-switch-state={state}
+      className={cn("group inline-flex cursor-pointer select-none items-center has-[:disabled]:cursor-not-allowed", className)}
     >
       <input
+        {...inputProps}
         ref={ref}
         type="checkbox"
         role="switch"
@@ -231,27 +190,17 @@ const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(function Switch(
         checked={isControlled ? checked : undefined}
         defaultChecked={!isControlled ? defaultChecked : undefined}
         onChange={handleChange}
-        className="peer sr-only"
-        aria-checked={resolvedOn}
-        {...inputProps}
+        aria-checked={resolvedChecked}
+        className="sr-only"
       />
-      <span
-        className={switchTrackVariants({ size: sz, variant: v, on: resolvedOn, disabled: isDisabled })}
-        aria-hidden
-      >
-        {isDisabled && resolvedOn && v === "primary" ? (
-          <span
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[image:var(--gradient-brand-primary)] opacity-20"
-            aria-hidden
-          />
-        ) : null}
-        <span
-          className={switchThumbVariants({ size: sz, variant: v, on: resolvedOn, disabled: isDisabled })}
-          aria-hidden
-        />
+      <span data-slot="switch-track" className={switchTrackVariants({ variant, size, state, interactive })} aria-hidden>
+        <span data-slot="switch-fill" className={switchFillVariants(variant, state)} aria-hidden />
+        <span data-slot="switch-thumb" className={switchThumbVariants(variant, size, state)} aria-hidden>
+          <span data-slot="switch-thumb-fill" className={switchThumbFillVariants(variant, state)} aria-hidden />
+        </span>
       </span>
     </label>
   );
 });
 
-export { Switch, switchTrackVariants, switchThumbVariants };
+export { Switch, switchFillVariants, switchThumbFillVariants, switchThumbVariants, switchTrackVariants };

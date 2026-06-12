@@ -1,65 +1,108 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Switch, type SwitchVariant } from "../switch";
+import { cn } from "@/lib/utils";
+
+import { Switch, type SwitchSize, type SwitchVariant } from "../switch";
 
 const meta = {
   title: "UI/Switch",
   component: Switch,
   tags: ["!autodocs"],
-  parameters: { layout: "padded", controls: { disable: true } },
+  parameters: {
+    layout: "centered",
+    controls: { disable: true },
+  },
 } satisfies Meta<typeof Switch>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const variants: SwitchVariant[] = ["primary", "secondary"];
-const sizes = ["md", "lg"] as const;
+function noop() {}
 
-export const Matrix: Story = {
+function StaticSwitch({
+  checked,
+  disabled = false,
+  size = "md",
+  variant = "primary",
+  className,
+}: {
+  checked: boolean;
+  disabled?: boolean;
+  size?: SwitchSize;
+  variant?: SwitchVariant;
+  className?: string;
+}) {
+  return (
+    <Switch
+      checked={checked}
+      disabled={disabled}
+      size={size}
+      variant={variant}
+      onChange={noop}
+      tabIndex={-1}
+      aria-label={[variant, size, checked ? "Checked" : "Unchecked", disabled ? "disabled" : "default"].join(" ")}
+      className={cn("pointer-events-none", className)}
+    />
+  );
+}
+
+const specimenSwitches = [
+  { checked: false, variant: "primary", className: "left-5 top-5" },
+  { checked: true, variant: "primary", className: "left-20 top-5" },
+  { checked: false, disabled: true, variant: "primary", className: "left-[8.75rem] top-5" },
+  { checked: true, disabled: true, variant: "primary", className: "left-[12.5rem] top-5" },
+  { checked: false, variant: "secondary", className: "left-5 top-[3.625rem]" },
+  { checked: true, variant: "secondary", className: "left-20 top-[3.625rem]" },
+  { checked: false, disabled: true, variant: "secondary", className: "left-[8.75rem] top-[3.625rem]" },
+  { checked: true, disabled: true, variant: "secondary", className: "left-[12.5rem] top-[3.625rem]" },
+  { checked: true, disabled: true, size: "lg", variant: "secondary", className: "left-5 top-24" },
+  { checked: false, size: "lg", variant: "primary", className: "left-[5.25rem] top-24" },
+  { checked: true, size: "lg", variant: "primary", className: "left-[9.25rem] top-24" },
+  { checked: false, disabled: true, size: "lg", variant: "primary", className: "left-5 top-[8.5rem]" },
+  { checked: true, disabled: true, size: "lg", variant: "primary", className: "left-[5.25rem] top-[8.5rem]" },
+  { checked: false, size: "lg", variant: "secondary", className: "left-[9.25rem] top-[8.5rem]" },
+  { checked: true, size: "lg", variant: "secondary", className: "left-5 top-44" },
+  { checked: false, disabled: true, size: "lg", variant: "secondary", className: "left-[5.25rem] top-44" },
+] as const;
+
+export const Specimen: Story = {
   render: () => (
-    <div className="flex flex-col gap-10 p-4">
-      <p className="max-w-xl text-font-size-sm text-semantic-text-ntrl-secondary">
-        Тоглы по{" "}
-        <a
-          className="text-components-typography-brand-light-label underline"
-          href="https://www.figma.com/design/btCKgn6RrWiteyBN0bViU1/Armenify?node-id=115-3757"
-          rel="noreferrer"
-          target="_blank"
-        >
-          макету 115:3757
-        </a>
-        : primary / secondary, размеры md / lg, вкл / выкл / disabled.
-      </p>
-      {variants.map((variant) => (
-        <div key={variant} className="flex flex-col gap-3">
-          <p className="text-font-size-sm font-medium capitalize text-semantic-text-ntrl-primary">{variant}</p>
-          <div className="flex flex-wrap items-end gap-8">
-            {sizes.map((size) => (
-              <div key={size} className="flex flex-col items-center gap-2">
-                <span className="text-font-size-xxs-input text-components-typography-ntrl-light-sub-label">{size}</span>
-                <div className="flex gap-4">
-                  <Switch variant={variant} size={size} defaultChecked aria-label="Вкл" />
-                  <Switch variant={variant} size={size} aria-label="Выкл" />
-                  <Switch variant={variant} size={size} defaultChecked disabled aria-label="Вкл disabled" />
-                  <Switch variant={variant} size={size} disabled aria-label="Выкл disabled" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="relative h-[13.5rem] w-[16.5625rem]">
+      {specimenSwitches.map(({ className, ...switchProps }) => (
+        <StaticSwitch key={className} className={cn("absolute", className)} {...switchProps} />
       ))}
     </div>
   ),
 };
 
-export const Controlled: Story = {
-  render: function Controlled() {
-    const [on, setOn] = React.useState(true);
+export const Interactive: Story = {
+  parameters: {
+    layout: "padded",
+  },
+  render: function InteractiveRender() {
+    const [primaryMdChecked, setPrimaryMdChecked] = React.useState(false);
+    const [secondaryLgChecked, setSecondaryLgChecked] = React.useState(true);
+
     return (
-      <div className="flex flex-col gap-4 p-4">
-        <Switch checked={on} onChange={(e) => setOn(e.target.checked)} aria-label="Уведомления" />
+      <div className="flex items-center gap-4 p-4">
+        <Switch
+          checked={primaryMdChecked}
+          onChange={(event) => {
+            setPrimaryMdChecked(event.target.checked);
+          }}
+          aria-label="Interactive primary medium switch"
+        />
+        <Switch
+          checked={secondaryLgChecked}
+          size="lg"
+          variant="secondary"
+          onChange={(event) => {
+            setSecondaryLgChecked(event.target.checked);
+          }}
+          aria-label="Interactive secondary large switch"
+        />
       </div>
     );
   },

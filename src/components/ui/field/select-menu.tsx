@@ -7,7 +7,7 @@ import { MenuItem, type MenuItemColor, type MenuItemSize } from "./menu-item";
 
 const selectMenuRootVariants = cva(
   cn(
-    "box-border flex w-full min-w-0 flex-col font-sans inner-border inner-border-1_5",
+    "box-border flex w-full min-w-0 flex-col font-sans inner-border inner-border-2",
     "[--inner-border-color:var(--semantic-border-ntrl-default)]",
     "shadow-input-shadow-outer antialiased",
   ),

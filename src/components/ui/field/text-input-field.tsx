@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { TextInput, type TextInputProps } from "./text-input";
 
 const textInputFieldRootVariants = cva(
-  "box-border flex w-full min-w-0 items-center overflow-hidden font-sans antialiased transition-[background-color,box-shadow] duration-200 ease-out [box-shadow:inset_0_0_0_0.09375rem_var(--input-border-color),var(--input-outer-shadow)]",
+  "box-border flex w-full min-w-0 items-center overflow-hidden font-sans antialiased transition-[background-color,box-shadow] duration-200 ease-out [box-shadow:inset_0_0_0_0.125rem_var(--input-border-color),var(--input-outer-shadow)]",
   {
     variants: {
       size: {

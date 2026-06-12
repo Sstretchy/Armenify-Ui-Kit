@@ -1,7 +1,8 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Slider, type SliderVariant } from "../slider";
+import { Typography } from "../../typography";
+import { Slider, type SliderSize, type SliderVariant } from "../slider";
 
 const meta = {
   title: "UI/Slider",
@@ -14,40 +15,82 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const variants: SliderVariant[] = ["primary", "secondary"];
-const sizes = ["sm", "md"] as const;
+const PRIMARY_ON_VALUE = (165 / 231) * 100;
+const MID_ON_VALUE = (100 / 231) * 100;
+const SPECIMEN_STEP = 0.01;
+const SPECIMEN_FRAME_CLASS_NAME = "flex w-[16.9375rem] flex-col gap-5 p-5";
+const SPECIMEN_SLIDER_CLASS_NAME = "min-h-0 py-0";
+
+type SpecimenRow = {
+  ariaLabel: string;
+  disabled?: boolean;
+  size: SliderSize;
+  value: number;
+  variant: SliderVariant;
+};
+
+const specimenRows: readonly SpecimenRow[] = [
+  { ariaLabel: "Primary off small", variant: "primary", size: "sm", value: 0 },
+  { ariaLabel: "Primary on small", variant: "primary", size: "sm", value: PRIMARY_ON_VALUE },
+  { ariaLabel: "Primary active small", variant: "primary", size: "sm", value: PRIMARY_ON_VALUE },
+  { ariaLabel: "Primary off small disabled", variant: "primary", size: "sm", value: 0, disabled: true },
+  { ariaLabel: "Primary on small disabled", variant: "primary", size: "sm", value: MID_ON_VALUE, disabled: true },
+  { ariaLabel: "Secondary off small", variant: "secondary", size: "sm", value: 0 },
+  { ariaLabel: "Secondary on small", variant: "secondary", size: "sm", value: MID_ON_VALUE },
+  { ariaLabel: "Secondary off small disabled", variant: "secondary", size: "sm", value: 0, disabled: true },
+  { ariaLabel: "Secondary on small disabled", variant: "secondary", size: "sm", value: MID_ON_VALUE, disabled: true },
+  { ariaLabel: "Primary off medium", variant: "primary", size: "md", value: 0 },
+  { ariaLabel: "Primary on medium", variant: "primary", size: "md", value: PRIMARY_ON_VALUE },
+  { ariaLabel: "Primary off medium disabled", variant: "primary", size: "md", value: 0, disabled: true },
+  { ariaLabel: "Primary on medium disabled", variant: "primary", size: "md", value: MID_ON_VALUE, disabled: true },
+  { ariaLabel: "Secondary off medium", variant: "secondary", size: "md", value: 0 },
+  { ariaLabel: "Secondary on medium", variant: "secondary", size: "md", value: MID_ON_VALUE },
+  { ariaLabel: "Secondary off medium disabled", variant: "secondary", size: "md", value: 0, disabled: true },
+  { ariaLabel: "Secondary on medium disabled", variant: "secondary", size: "md", value: MID_ON_VALUE, disabled: true },
+];
+
+const focusRows: readonly SpecimenRow[] = [
+  { ariaLabel: "Primary focus small", variant: "primary", size: "sm", value: PRIMARY_ON_VALUE },
+  { ariaLabel: "Secondary focus small", variant: "secondary", size: "sm", value: MID_ON_VALUE },
+  { ariaLabel: "Primary focus medium", variant: "primary", size: "md", value: PRIMARY_ON_VALUE },
+  { ariaLabel: "Secondary focus medium", variant: "secondary", size: "md", value: MID_ON_VALUE },
+];
 
 export const Matrix: Story = {
+  parameters: { layout: "centered" },
   render: () => (
-    <div className="flex max-w-xl flex-col gap-10 p-4">
-      <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-        Слайдер по{" "}
-        <a
-          className="text-components-typography-brand-light-label underline"
-          href="https://www.figma.com/design/btCKgn6RrWiteyBN0bViU1/Armenify?node-id=115-3786"
-          rel="noreferrer"
-          target="_blank"
-        >
-          макету 115:3786
-        </a>
-        : primary / secondary, sm / md; клавишный фокус на ручке — как у кнопок.
-      </p>
-      {variants.map((variant) => (
-        <div key={variant} className="flex flex-col gap-4">
-          <p className="text-font-size-sm font-medium capitalize text-semantic-text-ntrl-primary">{variant}</p>
-          {sizes.map((size) => (
-            <div key={size} className="flex flex-col gap-2">
-              <span className="text-font-size-xxs-input text-components-typography-ntrl-light-sub-label">{size}</span>
-              <div className="flex flex-col gap-3">
-                <Slider variant={variant} size={size} defaultValue={0} aria-label={`${variant} ${size} 0`} />
-                <Slider variant={variant} size={size} defaultValue={40} aria-label={`${variant} ${size} 40`} />
-                <Slider variant={variant} size={size} defaultValue={100} aria-label={`${variant} ${size} 100`} />
-                <Slider variant={variant} size={size} defaultValue={55} disabled aria-label={`${variant} ${size} disabled`} />
-                <Slider variant={variant} size={size} defaultValue={0} storyFocused aria-label={`${variant} ${size} focus demo`} />
-              </div>
-            </div>
-          ))}
-        </div>
+    <div className={SPECIMEN_FRAME_CLASS_NAME}>
+      {specimenRows.map((row) => (
+        <Slider
+          key={row.ariaLabel}
+          aria-label={row.ariaLabel}
+          className={SPECIMEN_SLIDER_CLASS_NAME}
+          defaultValue={row.value}
+          disabled={row.disabled}
+          size={row.size}
+          step={SPECIMEN_STEP}
+          variant={row.variant}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const FocusVisible: Story = {
+  parameters: { layout: "centered" },
+  render: () => (
+    <div className={SPECIMEN_FRAME_CLASS_NAME}>
+      {focusRows.map((row) => (
+        <Slider
+          key={row.ariaLabel}
+          aria-label={row.ariaLabel}
+          className={SPECIMEN_SLIDER_CLASS_NAME}
+          defaultValue={row.value}
+          size={row.size}
+          step={SPECIMEN_STEP}
+          storyFocused
+          variant={row.variant}
+        />
       ))}
     </div>
   ),
@@ -55,11 +98,14 @@ export const Matrix: Story = {
 
 export const Controlled: Story = {
   render: function Controlled() {
-    const [v, setV] = React.useState(35);
+    const [value, setValue] = React.useState(35);
+
     return (
-      <div className="flex max-w-md flex-col gap-4 p-4">
-        <Slider value={v} onValueChange={setV} aria-label="Громкость" />
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">{v}</p>
+      <div className="flex w-[14.4375rem] flex-col gap-4 p-4">
+        <Slider aria-label="Volume" size="md" value={value} onValueChange={setValue} />
+        <Typography variant="sm" tone="muted">
+          {value}
+        </Typography>
       </div>
     );
   },

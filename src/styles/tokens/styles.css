@@ -13,8 +13,8 @@
   --control-shadow-pressed: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0.5), 0 0.0625rem 0.125rem 0 rgba(42, 52, 134, 0.35);
   --control-shadow-pressed-inner: inset 0.25rem 0.25rem 0.25rem 0 rgba(42, 52, 134, 0.5);
   --input-shadow-outer: 0 0.0625rem 0.0625rem 0 rgba(42, 52, 134, 0.35);
-  --input-error-shadow-outer: 0 0.0625rem 0.0625rem 0 rgba(42, 52, 134, 0.35), 0 0 0.03125rem 0.09375rem rgba(255, 61, 85, 0.25);
-  --input-success-shadow-outer: 0 0.0625rem 0.0625rem 0 rgba(42, 52, 134, 0.35), 0 0 0.03125rem 0.09375rem rgba(163, 201, 4, 0.35);
+  --input-error-shadow-outer: 0 0.0625rem 0.0625rem 0 rgba(42, 52, 134, 0.35), 0 0 0.03125rem 0.125rem rgba(255, 61, 85, 0.25);
+  --input-success-shadow-outer: 0 0.0625rem 0.0625rem 0 rgba(42, 52, 134, 0.35), 0 0 0.03125rem 0.125rem rgba(163, 201, 4, 0.35);
 
   --gradient-brand-primary: linear-gradient(69.8823382924deg, var(--primitive-colors-brand-150) 0%, var(--primitive-colors-brand-400) 50%, var(--primitive-colors-brand-600) 100%);
   --gradient-brand-primary-inverse: linear-gradient(69.8823382924deg, var(--primitive-colors-brand-600) 0%, var(--primitive-colors-brand-400) 50%, var(--primitive-colors-brand-150) 100%);

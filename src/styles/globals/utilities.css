@@ -160,9 +160,6 @@
   .inner-border-1 {
     --inner-border-width: 0.0625rem;
   }
-  .inner-border-1_5 {
-    --inner-border-width: 0.09375rem;
-  }
   .inner-border-2 {
     --inner-border-width: 0.125rem;
   }

@@ -113,7 +113,16 @@ export {
   type GlassCardSize,
   type GlassCardRootVariantProps,
 } from "./card";
-export { Switch, switchThumbVariants, switchTrackVariants, type SwitchProps, type SwitchSize, type SwitchVariant } from "./switch";
+export {
+  Switch,
+  switchFillVariants,
+  switchThumbFillVariants,
+  switchThumbVariants,
+  switchTrackVariants,
+  type SwitchProps,
+  type SwitchSize,
+  type SwitchVariant,
+} from "./switch";
 export {
   Slider,
   sliderFillVariants,
