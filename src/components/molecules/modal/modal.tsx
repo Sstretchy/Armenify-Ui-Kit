@@ -4,6 +4,7 @@ import { X } from "phosphor-strokes-icons";
 
 import { cn } from "@/lib/utils";
 import { ArmenifyIcon, ghostButtonSizeToArmenifyIconSize } from "@/components/ui/icon";
+import { Button, type ButtonAsButtonProps, type ButtonVariant } from "@/components/ui/button";
 import { ghostButtonVariants } from "@/components/ui/button/ghost-button";
 import "./modal.css";
 
@@ -85,6 +86,13 @@ const footerBorderClassName: Record<ModalColor, string> = {
   "brand-dark": "border-t border-solid border-semantic-border-brand-delicate-inverse",
   ntrl: "border-t border-solid border-semantic-border-ntrl-delicate",
   "ntrl-dark": "border-t border-solid border-semantic-border-ntrl-delicate-inverse",
+};
+
+const footerActionVariant: Record<ModalColor, { cancel: ButtonVariant; success: ButtonVariant }> = {
+  brand: { cancel: "secondary", success: "primary" },
+  "brand-dark": { cancel: "tertiary", success: "primary" },
+  ntrl: { cancel: "outlined", success: "secondary" },
+  "ntrl-dark": { cancel: "tertiary", success: "primary" },
 };
 
 export type ModalRootProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root> & {
@@ -263,6 +271,58 @@ const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(function 
   );
 });
 
+type ModalActionButtonProps = Omit<ButtonAsButtonProps, "children" | "href" | "onClick" | "type">;
+
+export type ModalActionsProps = {
+  cancelLabel?: React.ReactNode;
+  successLabel?: React.ReactNode;
+  onCancel?: React.MouseEventHandler<HTMLButtonElement>;
+  onSuccess?: React.MouseEventHandler<HTMLButtonElement>;
+  cancelButtonProps?: ModalActionButtonProps;
+  successButtonProps?: ModalActionButtonProps;
+};
+
+function ModalActions({
+  cancelLabel = "Отмена",
+  successLabel = "Готово",
+  onCancel,
+  onSuccess,
+  cancelButtonProps,
+  successButtonProps,
+}: ModalActionsProps) {
+  const { color } = useModalContext();
+  const actionVariant = footerActionVariant[color];
+  const { variant: cancelVariant, size: cancelSize, ...cancelRest } = cancelButtonProps ?? {};
+  const { variant: successVariant, size: successSize, ...successRest } = successButtonProps ?? {};
+
+  return (
+    <>
+      <DialogPrimitive.Close asChild>
+        <Button
+          {...cancelRest}
+          type="button"
+          variant={cancelVariant ?? actionVariant.cancel}
+          size={cancelSize ?? "sm"}
+          onClick={onCancel}
+        >
+          {cancelLabel}
+        </Button>
+      </DialogPrimitive.Close>
+      <DialogPrimitive.Close asChild>
+        <Button
+          {...successRest}
+          type="button"
+          variant={successVariant ?? actionVariant.success}
+          size={successSize ?? "sm"}
+          onClick={onSuccess}
+        >
+          {successLabel}
+        </Button>
+      </DialogPrimitive.Close>
+    </>
+  );
+}
+
 export type ModalCloseProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>;
 
 const ModalClose = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Close>, ModalCloseProps>(
@@ -297,6 +357,7 @@ const Modal = {
   Description: ModalDescription,
   Body: ModalBody,
   Footer: ModalFooter,
+  Actions: ModalActions,
   Close: ModalClose,
 };
 
@@ -312,5 +373,6 @@ export {
   ModalDescription,
   ModalBody,
   ModalFooter,
+  ModalActions,
   ModalClose,
 };

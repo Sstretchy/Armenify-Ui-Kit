@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import "./accordion.css";
 
 import { ArmenifyIcon, type ArmenifyIconSize } from "@/components/ui/icon";
+import { Typography, type TypographyVariant } from "@/components/ui/typography";
 
 import { controlInteractiveTransitionClassName } from "@/components/ui/control-transition";
 
@@ -31,7 +32,7 @@ function useAccordionStyle(): AccordionStyleContextValue {
 }
 
 const accordionItemVariants = cva(
-  "min-w-0 w-full overflow-hidden rounded-border-md border-0 shadow-control-shadow-outer outline-none",
+  "min-w-0 w-full overflow-hidden border-0 outline-none",
   {
     variants: {
       disabled: {
@@ -45,7 +46,7 @@ const accordionItemVariants = cva(
 
 const accordionTriggerVariants = cva(
   cn(
-    "group flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 border-0 border-b border-solid text-left font-sans font-medium outline-none",
+    "group flex w-full min-w-0 cursor-pointer items-center justify-between gap-2 border-0 border-b border-solid text-left outline-none",
     controlInteractiveTransitionClassName,
     "focus-visible:relative focus-visible:z-[1] focus-visible:shadow-control-shadow-outer-focused",
     "transition-[background-color,border-color,color] duration-200 ease-out",
@@ -54,17 +55,17 @@ const accordionTriggerVariants = cva(
     variants: {
       color: {
         brand:
-          "border-semantic-border-brand-delicate bg-semantic-bg-brand-secondary text-components-typography-brand-light-content-light hover:bg-semantic-bg-brand-secondary-hover active:bg-semantic-bg-brand-secondary-active data-[state=open]:bg-semantic-bg-brand-secondary-active",
+          "border-semantic-border-brand-delicate bg-semantic-bg-brand-secondary text-components-typography-brand-light-content-light hover:bg-semantic-bg-brand-secondary-hover active:bg-semantic-bg-brand-secondary-active data-[story-state=hover]:bg-semantic-bg-brand-secondary-hover data-[story-state=active]:bg-semantic-bg-brand-secondary-active data-[state=open]:bg-semantic-bg-brand-secondary-active",
         "brand-dark":
-          "border-semantic-border-brand-delicate-inverse bg-semantic-bg-brand-secondary-inverse text-components-typography-brand-dark-content-light hover:bg-semantic-bg-brand-secondary-inverse-hover active:bg-semantic-bg-brand-secondary-inverse-active data-[state=open]:bg-semantic-bg-brand-secondary-inverse-active",
+          "border-semantic-border-brand-delicate-inverse bg-semantic-bg-brand-secondary-inverse text-components-typography-brand-dark-content-light hover:bg-semantic-bg-brand-secondary-inverse-hover active:bg-semantic-bg-brand-secondary-inverse-active data-[story-state=hover]:bg-semantic-bg-brand-secondary-inverse-hover data-[story-state=active]:bg-semantic-bg-brand-secondary-inverse-active data-[state=open]:bg-semantic-bg-brand-secondary-inverse-active",
         ntrl:
-          "items-center border-semantic-border-ntrl-delicate bg-semantic-bg-ntrl-secondary text-components-typography-ntrl-light-content-light hover:bg-semantic-bg-ntrl-secondary-hover active:bg-semantic-bg-ntrl-secondary-active data-[state=open]:bg-semantic-bg-ntrl-secondary-active",
+          "border-semantic-border-ntrl-delicate bg-semantic-bg-ntrl-secondary text-components-typography-ntrl-light-content-light hover:bg-semantic-bg-ntrl-secondary-hover active:bg-semantic-bg-ntrl-secondary-active data-[story-state=hover]:bg-semantic-bg-ntrl-secondary-hover data-[story-state=active]:bg-semantic-bg-ntrl-secondary-active data-[state=open]:bg-semantic-bg-ntrl-secondary-active",
         "ntrl-dark":
-          "items-start border-semantic-border-ntrl-delicate-inverse bg-semantic-bg-ntrl-tertiary-inverse text-components-typography-ntrl-dark-content-light hover:bg-semantic-bg-ntrl-tertiary-inverse-hover active:bg-semantic-bg-ntrl-tertiary-inverse-active data-[state=open]:bg-semantic-bg-ntrl-tertiary-inverse-active",
+          "border-semantic-border-ntrl-delicate-inverse bg-semantic-bg-ntrl-tertiary-inverse text-components-typography-ntrl-dark-content-light hover:bg-semantic-bg-ntrl-tertiary-inverse-hover active:bg-semantic-bg-ntrl-tertiary-inverse-active data-[story-state=hover]:bg-semantic-bg-ntrl-tertiary-inverse-hover data-[story-state=active]:bg-semantic-bg-ntrl-tertiary-inverse-active data-[state=open]:bg-semantic-bg-ntrl-tertiary-inverse-active",
       },
       size: {
-        sm: "p-3 text-font-size-sm leading-[var(--font-font-height-sm)]",
-        md: "p-4 text-font-size-base leading-[var(--font-font-height-base)]",
+        sm: "p-3",
+        md: "p-4",
       },
     },
     defaultVariants: { color: "brand", size: "sm" },
@@ -72,8 +73,8 @@ const accordionTriggerVariants = cva(
 );
 
 const contentPadding: Record<AccordionSize, string> = {
-  sm: "p-3 text-font-size-xs leading-[var(--font-font-height-xs)]",
-  md: "p-4 text-font-size-sm leading-[var(--font-font-height-sm)]",
+  sm: "p-3",
+  md: "p-4",
 };
 
 const contentBg: Record<AccordionColor, string> = {
@@ -93,6 +94,23 @@ const contentText: Record<AccordionColor, string> = {
 const caretSize: Record<AccordionSize, ArmenifyIconSize> = {
   sm: "xx-small",
   md: "x-small",
+};
+
+const itemShadow: Record<AccordionColor, string> = {
+  brand: "shadow-control-shadow-outer",
+  "brand-dark": "",
+  ntrl: "shadow-control-shadow-outer",
+  "ntrl-dark": "",
+};
+
+const triggerTextVariant: Record<AccordionSize, TypographyVariant> = {
+  sm: "base",
+  md: "lg",
+};
+
+const contentTextVariant: Record<AccordionSize, TypographyVariant> = {
+  sm: "sm",
+  md: "base",
 };
 
 export type AccordionRootProps = React.ComponentPropsWithoutRef<typeof AccordionRootPrimitive> & {
@@ -127,12 +145,13 @@ const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(funct
   { className, disabled, ...props },
   ref,
 ) {
+  const { color } = useAccordionStyle();
   return (
     <AccordionItemPrimitive
       ref={ref}
       data-slot="accordion-item"
       disabled={disabled}
-      className={cn(accordionItemVariants({ disabled: Boolean(disabled) }), className)}
+      className={cn(accordionItemVariants({ disabled: Boolean(disabled) }), itemShadow[color], className)}
       {...props}
     />
   );
@@ -155,7 +174,15 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerPro
         className={cn(accordionTriggerVariants({ color, size }), className)}
         {...props}
       >
-        <span className="min-w-0 flex-1 truncate">{children}</span>
+        <Typography
+          asChild
+          variant={triggerTextVariant[size]}
+          weight="medium"
+          font="sans"
+          className="min-w-0 flex-1 truncate"
+        >
+          <span>{children}</span>
+        </Typography>
         <span className="accordion-chevron inline-flex shrink-0 text-current" aria-hidden>
           <ArmenifyIcon
             icon={CaretDown}
@@ -186,16 +213,19 @@ const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>
       )}
       {...props}
     >
-      <div
+      <Typography
+        as="div"
+        variant={contentTextVariant[size]}
+        font="sans"
         className={cn(
-          "font-medium antialiased",
+          "min-w-0",
           contentPadding[size],
           contentBg[color],
           contentText[color],
         )}
       >
         {children}
-      </div>
+      </Typography>
     </AccordionContentPrimitive>
   );
 });

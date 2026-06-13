@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Modal, type ModalColor } from "../modal";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Modal, type ModalColor } from "../modal";
 
 const meta = {
   title: "Molecules/Modal",
@@ -18,54 +18,18 @@ type Story = StoryObj<typeof meta>;
 const demoBody =
   "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.";
 
-function ModalFooterActions({ color }: { color: ModalColor }) {
+function getSuccessLabel(color: ModalColor) {
   switch (color) {
     case "brand":
-      return (
-        <>
-          <Button variant="secondary" size="sm">
-            Отмена
-          </Button>
-          <Button variant="primary" size="sm">
-            Готово
-          </Button>
-        </>
-      );
+      return "Готово";
     case "brand-dark":
-      return (
-        <>
-          <Button variant="tertiary" size="sm">
-            Отмена
-          </Button>
-          <Button variant="primary" size="sm">
-            Принять
-          </Button>
-        </>
-      );
+      return "Принять";
     case "ntrl":
-      return (
-        <>
-          <Button variant="outlined" size="sm">
-            Отмена
-          </Button>
-          <Button variant="secondary" size="sm">
-            Далее
-          </Button>
-        </>
-      );
+      return "Далее";
     case "ntrl-dark":
-      return (
-        <>
-          <Button variant="tertiary" size="sm">
-            Отмена
-          </Button>
-          <Button variant="primary" size="sm">
-            Сохранить
-          </Button>
-        </>
-      );
+      return "Сохранить";
     default:
-      return null;
+      return "Готово";
   }
 }
 
@@ -91,7 +55,7 @@ function ModalDemo({ color }: { color: ModalColor }) {
           </Modal.Header>
           <Modal.Body>{demoBody}</Modal.Body>
           <Modal.Footer>
-            <ModalFooterActions color={color} />
+            <Modal.Actions successLabel={getSuccessLabel(color)} />
           </Modal.Footer>
         </Modal.Content>
       </Modal.Portal>
@@ -127,15 +91,22 @@ export const Colors: Story = {
           >
             250:12534
           </a>
-          . Разметка и a11y —{" "}
-          <a className="underline" href="https://www.radix-ui.com/primitives/docs/components/dialog" rel="noreferrer" target="_blank">
+          . Разметка и a11y -{" "}
+          <a
+            className="underline"
+            href="https://www.radix-ui.com/primitives/docs/components/dialog"
+            rel="noreferrer"
+            target="_blank"
+          >
             Radix Dialog
           </a>
           .
         </p>
         {colors.map((color) => (
           <div key={color} className="flex flex-col gap-2">
-            <span className="text-font-size-xxs-input font-medium capitalize text-semantic-text-ntrl-primary">{color}</span>
+            <span className="text-font-size-xxs-input font-medium capitalize text-semantic-text-ntrl-primary">
+              {color}
+            </span>
             <ModalDemo color={color} />
           </div>
         ))}
