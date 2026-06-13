@@ -1,9 +1,9 @@
 import * as React from "react";
-import { SealCheck, X } from "phosphor-strokes-icons";
+import { SealCheck } from "phosphor-strokes-icons";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { ArmenifyIcon, ghostButtonSizeToArmenifyIconSize } from "@/components/ui/icon";
+import { ArmenifyIcon } from "@/components/ui/icon";
 import { ghostButtonVariants } from "@/components/ui/button/ghost-button";
 
 export type AlertState = "error" | "success" | "warning" | "info";
@@ -22,7 +22,7 @@ function useAlertStyle(): AlertStyleContextValue {
 
 const alertRootVariants = cva(
   [
-    "flex w-full max-w-[25rem] items-start justify-center gap-2 overflow-hidden rounded-border-x-lg border-[0.15625rem] border-dashed p-3 backdrop-blur-[0.75rem]",
+    "flex w-full max-w-[25rem] items-start justify-center gap-2 overflow-hidden rounded-border-x-lg border-[0.125rem] border-dashed p-3 backdrop-blur-[1.5rem]",
     "font-sans antialiased",
   ],
   {
@@ -42,42 +42,42 @@ const alertRootVariants = cva(
       {
         theme: "dark",
         state: "error",
-        class: "border-semantic-status-error-default bg-semantic-status-base-overlay",
+        class: "[border-color:var(--semantic-status-error-default)] bg-semantic-status-base-overlay",
       },
       {
         theme: "dark",
         state: "success",
-        class: "border-semantic-status-success-default bg-semantic-status-base-overlay",
+        class: "[border-color:var(--semantic-status-success-default)] bg-semantic-status-base-overlay",
       },
       {
         theme: "dark",
         state: "warning",
-        class: "border-semantic-status-warning-default bg-semantic-status-base-overlay",
+        class: "[border-color:var(--semantic-status-warning-default)] bg-semantic-status-base-overlay",
       },
       {
         theme: "dark",
         state: "info",
-        class: "border-semantic-status-info-default bg-semantic-status-base-overlay",
+        class: "[border-color:var(--semantic-status-info-default)] bg-semantic-status-base-overlay",
       },
       {
         theme: "light",
         state: "error",
-        class: "border-semantic-status-error-bright bg-semantic-status-base-overlay-inverse",
+        class: "[border-color:var(--semantic-status-error-bright)] bg-semantic-status-base-overlay-inverse",
       },
       {
         theme: "light",
         state: "success",
-        class: "border-semantic-status-success-bright bg-semantic-status-base-overlay-inverse",
+        class: "[border-color:var(--semantic-status-success-bright)] bg-semantic-status-base-overlay-inverse",
       },
       {
         theme: "light",
         state: "warning",
-        class: "border-semantic-status-warning-bright bg-semantic-status-base-overlay-inverse",
+        class: "[border-color:var(--semantic-status-warning-bright)] bg-semantic-status-base-overlay-inverse",
       },
       {
         theme: "light",
         state: "info",
-        class: "border-semantic-status-info-bright bg-semantic-status-base-overlay-inverse",
+        class: "[border-color:var(--semantic-status-info-bright)] bg-semantic-status-base-overlay-inverse",
       },
     ],
     defaultVariants: { state: "error", theme: "dark" },
@@ -88,6 +88,32 @@ const alertMessageText: Record<AlertTheme, string> = {
   dark: "text-semantic-status-base-default",
   light: "text-semantic-status-base-default-inverse",
 };
+
+function AlertCloseIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      className={cn("size-4 shrink-0", className)}
+      fill="none"
+    >
+      <path
+        d="M12.5 3.5 3.5 12.5"
+        stroke="currentColor"
+        strokeWidth="1.8375"
+        strokeLinecap="butt"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12.5 12.5 3.5 3.5"
+        stroke="currentColor"
+        strokeWidth="1.8375"
+        strokeLinecap="butt"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export type AlertRootProps = React.ComponentPropsWithoutRef<"div"> & {
   state?: AlertState;
@@ -177,11 +203,16 @@ const AlertClose = React.forwardRef<HTMLButtonElement, AlertCloseProps>(function
       type={type}
       data-slot="alert-close"
       aria-label="Закрыть"
-      className={cn(ghostButtonVariants({ variant: ghostVariant, size: "xxxs" }), "shrink-0 self-start", alertMessageText[theme], className)}
+      className={cn(
+        ghostButtonVariants({ variant: ghostVariant, size: "info" }),
+        "shrink-0 self-start",
+        alertMessageText[theme],
+        className,
+      )}
       {...props}
     >
-      <span className="relative z-[1] inline-flex shrink-0 items-center justify-center">
-        <ArmenifyIcon icon={X} size={ghostButtonSizeToArmenifyIconSize.xxxs} strokeWeight="bold" />
+      <span className="relative z-[1] inline-flex size-4 shrink-0 items-center justify-center">
+        <AlertCloseIcon />
       </span>
     </button>
   );
