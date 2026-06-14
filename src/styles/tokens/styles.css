@@ -21,4 +21,6 @@
   --gradient-card-rainbow1: linear-gradient(180deg, rgba(209, 223, 252, 0.35) 0%, rgba(96, 132, 242, 0.35) 50%, rgba(109, 96, 246, 0.35) 100%);
   --gradient-card-rainbow2: linear-gradient(180deg, rgba(209, 223, 252, 0.35) 0%, rgba(96, 132, 242, 0.35) 50%, rgba(109, 96, 246, 0.35) 100%);
   --gradient-card-rainbow3: linear-gradient(180deg, rgba(209, 223, 252, 0.35) 0%, rgba(96, 132, 242, 0.35) 50%, rgba(42, 52, 134, 0.35) 100%);
+  --shadow-card-rainbow-default: 0 0 1.65rem 0.4125rem rgba(0, 0, 0, 0.4);
+  --shadow-card-rainbow-glow: 0 0 2.5rem 0 rgba(255, 255, 255, 0.3);
 }

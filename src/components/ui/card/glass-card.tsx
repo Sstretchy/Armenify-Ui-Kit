@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export type GlassCardSize = "sm" | "md" | "lg";
 
 const glassCardRootVariants = cva(
-  "relative flex w-full flex-col items-stretch justify-center overflow-hidden rounded-border-x-lg inner-border inner-border-1 [--inner-border-color:var(--semantic-border-brand-delicate)] bg-primitive-colors-brand-400/20 backdrop-blur-[0.75rem]",
+  "relative flex w-full flex-col items-stretch justify-center overflow-hidden rounded-border-x-lg inner-border inner-border-1 [--inner-border-color:var(--semantic-border-brand-delicate)] bg-primitive-colors-brand-400/20 [-webkit-backdrop-filter:blur(6.25rem)] [backdrop-filter:blur(6.25rem)]",
   {
     variants: {
       size: {

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 export type RainbowCardType = "rainbow1" | "rainbow2" | "rainbow3";
 export type RainbowCardSize = "sm" | "md" | "lg" | "x-lg";
+export type RainbowCardShadowVariant = "default" | "glow";
 
 const RainbowCardSizeContext = React.createContext<RainbowCardSize>("x-lg");
 
@@ -13,21 +14,37 @@ function useRainbowCardSize(): RainbowCardSize {
 }
 
 const rainbowCardRootVariants = cva(
-  "relative flex w-full max-w-[15.625rem] flex-col items-center justify-center overflow-hidden rounded-border-x-lg inner-border inner-border-1 [--inner-border-color:var(--semantic-border-brand-delicate)] text-center",
+  "relative flex w-[15.625rem] flex-col items-center justify-center overflow-hidden rounded-border-x-lg inner-border inner-border-1 [--inner-border-color:var(--semantic-border-brand-delicate)] text-center",
   {
     variants: {
       size: {
         sm: "gap-0 px-4 py-6",
         md: "gap-0 px-5 py-7",
         lg: "gap-0 px-6 py-8",
-        "x-lg": "gap-0 px-8 py-10",
+        "x-lg": "gap-0 px-6 py-10",
       },
       shadow: {
-        true: "shadow-[0_0_1.65rem_0.4125rem_rgba(0,0,0,0.4)]",
+        true: "",
         false: "",
       },
+      shadowVariant: {
+        default: "",
+        glow: "",
+      },
     },
-    defaultVariants: { size: "x-lg", shadow: true },
+    compoundVariants: [
+      {
+        shadow: true,
+        shadowVariant: "default",
+        class: "shadow-[var(--shadow-card-rainbow-default)]",
+      },
+      {
+        shadow: true,
+        shadowVariant: "glow",
+        class: "shadow-[var(--shadow-card-rainbow-glow)]",
+      },
+    ],
+    defaultVariants: { size: "x-lg", shadow: true, shadowVariant: "default" },
   },
 );
 
@@ -44,14 +61,14 @@ const titleClassName: Record<RainbowCardSize, string> = {
   sm: "font-medium text-font-size-lg leading-[var(--font-font-height-lg)]",
   md: "font-medium text-font-size-xl leading-[var(--font-font-height-xl)]",
   lg: "font-medium text-font-size-2xl leading-[var(--font-font-height-2xl)]",
-  "x-lg": "font-medium text-font-size-2xl leading-[var(--font-font-height-2xl)]",
+  "x-lg": "font-medium text-font-size-3xl leading-[var(--font-font-height-3xl)]",
 };
 
 const descriptionClassName: Record<RainbowCardSize, string> = {
   sm: "font-normal text-font-size-base leading-[var(--font-font-height-base)]",
   md: "font-normal text-font-size-lg leading-[var(--font-font-height-lg)]",
   lg: "font-normal text-font-size-xl leading-[var(--font-font-height-xl)]",
-  "x-lg": "font-normal text-font-size-xl leading-[var(--font-font-height-xl)]",
+  "x-lg": "font-normal text-font-size-2xl leading-[var(--font-font-height-2xl)]",
 };
 
 const bodyGapClassName: Record<RainbowCardSize, string> = {
@@ -65,12 +82,23 @@ export type RainbowCardRootProps = React.ComponentPropsWithoutRef<"div"> & {
   type?: RainbowCardType;
   size?: RainbowCardSize;
   shadow?: boolean;
+  shadowVariant?: RainbowCardShadowVariant;
   title?: React.ReactNode;
   description?: React.ReactNode;
 };
 
 const RainbowCardRoot = React.forwardRef<HTMLDivElement, RainbowCardRootProps>(function RainbowCardRoot(
-  { className, type = "rainbow1", size = "x-lg", shadow = true, title, description, children, ...props },
+  {
+    className,
+    type = "rainbow1",
+    size = "x-lg",
+    shadow = true,
+    shadowVariant = "default",
+    title,
+    description,
+    children,
+    ...props
+  },
   ref,
 ) {
   const showDefault = children == null && (title != null || description != null);
@@ -82,7 +110,8 @@ const RainbowCardRoot = React.forwardRef<HTMLDivElement, RainbowCardRootProps>(f
         data-slot="rainbow-card"
         data-rainbow-card-type={type}
         data-rainbow-card-size={sz}
-        className={cn(rainbowCardRootVariants({ size: sz, shadow }), className)}
+        data-rainbow-card-shadow-variant={shadow ? shadowVariant : "none"}
+        className={cn(rainbowCardRootVariants({ size: sz, shadow, shadowVariant }), className)}
         {...props}
       >
         <div className={rainbowOverlayClassName[type]} aria-hidden />
