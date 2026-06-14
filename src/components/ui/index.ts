@@ -94,6 +94,7 @@ export {
 } from "./field/select-menu";
 export { Select, type SelectProps } from "./field/select";
 export { Checkbox, checkboxBoxVariants, type CheckboxProps, type CheckboxSize, type CheckboxVariant } from "./checkbox";
+export { Bubble, bubbleVariants, type BubbleProps, type BubbleSpeaker, type BubbleState } from "./bubble";
 export {
   RainbowCard,
   RainbowCardRoot,
@@ -105,6 +106,7 @@ export {
   type RainbowCardDescriptionProps,
   type RainbowCardType,
   type RainbowCardSize,
+  type RainbowCardShadowVariant,
   type RainbowCardRootVariantProps,
   GlassCard,
   GlassCardRoot,

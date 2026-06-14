@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { RainbowCard, type RainbowCardSize, type RainbowCardType } from "../rainbow-card";
+import {
+  RainbowCard,
+  type RainbowCardShadowVariant,
+  type RainbowCardSize,
+  type RainbowCardType,
+} from "../rainbow-card";
 
 const meta = {
   title: "UI/RainbowCard",
@@ -15,51 +20,69 @@ type Story = StoryObj<typeof meta>;
 const title = "Умное повторение";
 const description = "Задай свой темп и ограничения — мы построим учебный план вокруг них.";
 
-export const Default: Story = {
+const types: RainbowCardType[] = ["rainbow1", "rainbow2", "rainbow3"];
+const sizes: RainbowCardSize[] = ["x-lg", "lg", "md", "sm"];
+const shadowModes: ReadonlyArray<{
+  shadow: boolean;
+  shadowVariant: RainbowCardShadowVariant;
+}> = [
+  { shadow: true, shadowVariant: "default" },
+  { shadow: true, shadowVariant: "glow" },
+  { shadow: false, shadowVariant: "default" },
+];
+
+function SlotPreview() {
+  return (
+    <>
+      <RainbowCard.Title>{title}</RainbowCard.Title>
+      <RainbowCard.Description>{description}</RainbowCard.Description>
+    </>
+  );
+}
+
+export const FigmaReference: Story = {
+  parameters: { layout: "fullscreen" },
   render: () => (
-    <div className="flex justify-center bg-semantic-bg-ntrl-secondary-inverse p-8">
-      <RainbowCard.Root type="rainbow1" title={title} description={description} />
+    <div className="min-h-screen overflow-x-auto bg-[#757575] p-6">
+      <div className="grid w-fit grid-cols-6 gap-5">
+        {sizes.flatMap((size) =>
+          shadowModes.flatMap(({ shadow, shadowVariant }) =>
+            types.map((type) => (
+              <RainbowCard.Root
+                key={`${size}-${shadow}-${shadowVariant}-${type}`}
+                type={type}
+                size={size}
+                shadow={shadow}
+                shadowVariant={shadowVariant}
+              >
+                <SlotPreview />
+              </RainbowCard.Root>
+            )),
+          ),
+        )}
+      </div>
     </div>
   ),
 };
 
-export const Matrix: Story = {
-  render: () => {
-    const types: RainbowCardType[] = ["rainbow1", "rainbow2", "rainbow3"];
-    const sizes: RainbowCardSize[] = ["sm", "md", "lg", "x-lg"];
-    return (
-      <div className="flex flex-col gap-10 p-4">
-        <p className="text-font-size-sm text-semantic-text-ntrl-secondary">
-          Макет:{" "}
-          <a
-            className="text-components-typography-brand-light-label underline"
-            href="https://www.figma.com/design/btCKgn6RrWiteyBN0bViU1/Armenify?node-id=297-12878"
-            rel="noreferrer"
-            target="_blank"
-          >
-            297:12878
-          </a>
-          . Три градиента (blend), размеры sm–x-lg, тень on/off.
-        </p>
-        <div className="flex flex-wrap justify-center gap-6 bg-semantic-bg-ntrl-secondary-inverse p-8">
-          {types.flatMap((type) =>
-            sizes.flatMap((size) =>
-              [false, true].map((shadow) => (
-                <RainbowCard.Root
-                  key={`${type}-${size}-${shadow}`}
-                  type={type}
-                  size={size}
-                  shadow={shadow}
-                  title={title}
-                  description={description}
-                />
-              )),
-            ),
-          )}
-        </div>
-      </div>
-    );
-  },
+export const Default: Story = {
+  render: () => (
+    <div className="flex justify-center bg-semantic-bg-ntrl-secondary-inverse p-8">
+      <RainbowCard.Root type="rainbow1" size="x-lg">
+        <SlotPreview />
+      </RainbowCard.Root>
+    </div>
+  ),
+};
+
+export const GlowShadow: Story = {
+  render: () => (
+    <div className="flex justify-center bg-semantic-bg-ntrl-secondary-inverse p-8">
+      <RainbowCard.Root type="rainbow1" size="x-lg" shadowVariant="glow">
+        <SlotPreview />
+      </RainbowCard.Root>
+    </div>
+  ),
 };
 
 export const Compound: Story = {

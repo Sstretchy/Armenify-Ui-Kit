@@ -9,6 +9,7 @@ export {
   type RainbowCardDescriptionProps,
   type RainbowCardType,
   type RainbowCardSize,
+  type RainbowCardShadowVariant,
   type RainbowCardRootVariantProps,
 } from "./rainbow-card";
 export {
